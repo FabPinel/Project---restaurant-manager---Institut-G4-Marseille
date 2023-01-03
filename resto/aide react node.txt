@@ -1,0 +1,5 @@
+
+Si il y a une erreur quand vous faites touch server.js il faut l'installer : npm install touch-cli -g
+et ensuite il faut autoriser les scripts : Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+installer cors pour cela il faut faire 'npm i cors'
+penser à ouvrir un terminal par localhost
