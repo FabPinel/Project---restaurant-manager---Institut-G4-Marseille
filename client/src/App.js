@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import Icon from '@mdi/react';
-import { mdiAccount, mdiFireExtinguisher, mdiMenu, mdiSeat } from '@mdi/js';
-
+import { mdiAccount, mdiApple, mdiFireExtinguisher, mdiMenu, mdiMusic, mdiSeat } from '@mdi/js';
+import { Example } from "./components/list";
 
 function App() {
 
@@ -20,8 +20,9 @@ useEffect(() => {
 
   return (
     
-<div className="w-10 h-10 bg-slate-200">
-<p><Icon path={mdiSeat} />ICONE TEST</p>
+<div className="w-full  bg-slate-200">  {/* Mettre tous les components dans cette div */ }
+
+<p class="w-10 h-10 m-auto mt-4"><Icon path={mdiMusic} /></p>
 
  {(typeof backendData.users === 'undefined') ? (
   <p>Loading...</p>  
@@ -31,8 +32,13 @@ useEffect(() => {
   ))
  )}
 
+
 </div>
+
+
+
   )
 }
+
 
 export default App;
