@@ -3,7 +3,11 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}",
 ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'BProjet': '#2b2d42'
+      },
+    },
   },
   plugins: [],
 }
