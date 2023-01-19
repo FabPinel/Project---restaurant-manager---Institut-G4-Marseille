@@ -17,16 +17,18 @@ import {
   TruckIcon,
   CakeIcon,
   ChartPieIcon,
+  ArchiveBoxIcon,
 } from '@heroicons/react/24/outline';
 
 const navigation = [
   { name: 'Dashboard', href: '#', icon: ChartPieIcon, current: true },
   { name: 'Salle', href: '#', icon: RectangleGroupIcon, current: false },
   { name: 'Réservation', href: '#', icon: QueueListIcon, current: false },
-  { name: 'Gestion des stocks', href: '#', icon: TruckIcon, current: false },
+  { name: 'Gestion des stocks', href: '#', icon: ArchiveBoxIcon, current: false },
   { name: 'Menus', href: '#', icon: ClipboardIcon, current: false },
   { name: 'Plats', href: '#', icon: CakeIcon, current: false },
   { name: 'Planning', href: '#', icon: CalendarDaysIcon, current: false },
+  { name: 'Fournisseur', href: '#', icon: TruckIcon, current: false },
 ]
 
 function classNames(...classes) {
@@ -71,7 +73,7 @@ function Navbar() {
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-gray-800">
+                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-bleu">
                   <Transition.Child
                     as={Fragment}
                     enter="ease-in-out duration-300"
@@ -107,8 +109,8 @@ function Navbar() {
                           href={item.href}
                           className={classNames(
                             item.current
-                              ? 'bg-gray-900 text-white'
-                              : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                              ? 'bg-rouge2 text-white'
+                              : 'text-gray-300 hover:bg-gris hover:text-white',
                             'group flex items-center px-2 py-2 text-base font-medium rounded-md'
                           )}
                         >
@@ -124,23 +126,6 @@ function Navbar() {
                       ))}
                     </nav>
                   </div>
-                  <div className="flex flex-shrink-0 bg-gray-700 p-4">
-                    <a href="#" className="group block flex-shrink-0">
-                      <div className="flex items-center">
-                        <div>
-                          <img
-                            className="inline-block h-10 w-10 rounded-full"
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            alt=""
-                          />
-                        </div>
-                        <div className="ml-3">
-                          <p className="text-base font-medium text-white">Tom Cook</p>
-                          <p className="text-sm font-medium text-gray-400 group-hover:text-gray-300">View profile</p>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
                 </Dialog.Panel>
               </Transition.Child>
               <div className="w-14 flex-shrink-0">{/* Force sidebar to shrink to fit close icon */}</div>
@@ -151,7 +136,7 @@ function Navbar() {
         {/* Static sidebar for desktop */}
         <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex min-h-0 flex-1 flex-col bg-BProjet">
+          <div className="flex min-h-0 flex-1 flex-col bg-bleu">
             <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
               <div className="flex flex-shrink-0 items-center px-4">
                 <img
@@ -166,7 +151,7 @@ function Navbar() {
                     key={item.name}
                     href={item.href}
                     className={classNames(
-                      item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                      item.current ? 'bg-rouge2 text-white' : 'text-gray-300 hover:bg-gris hover:text-white',
                       'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                     )}
                   >
@@ -185,10 +170,10 @@ function Navbar() {
           </div>
         </div>
         <div className="flex flex-1 flex-col md:pl-64">
-          <div className="sticky top-0 z-10 bg-gray-100 pl-1 pt-1 sm:pl-3 sm:pt-3 md:hidden">
+          <div className="sticky top-0 z-10 bg-bleu pl-1 pt-1 sm:pl-3 sm:pt-3 md:hidden">
             <button
               type="button"
-              className="-ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              className="-ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-blanc hover:text-gris focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
               onClick={() => setSidebarOpen(true)}
             >
               <span className="sr-only">Open sidebar</span>
