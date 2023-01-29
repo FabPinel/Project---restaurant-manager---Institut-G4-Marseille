@@ -56,7 +56,7 @@ console.log(categories);
             <p className='text-bleu text-center text-2xl'>MENU DU JOUR</p>
           </div>
           </div>
-          <div className='w-full h-80 border-2 border-dotted border-black mt-10'>test div planning</div>
+          <div className='w-full h-80 border-double border-8 border-rouge1 mt-10'>test div planning</div>
           </div>
         </section>
     </React.Fragment>
