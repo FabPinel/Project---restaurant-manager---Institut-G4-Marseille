@@ -11,6 +11,12 @@ module.exports = {
         'rouge1': '#ef233c',
         'rouge2': '#d90429'
       },
+      width: {
+        '': '',
+      },
+      padding: {
+        '5': '5px',
+      }
     },
   },
   plugins: [],
