@@ -29,7 +29,7 @@ function Salle() {
 
           <div className="flex-grow">
             <div className={toggleState === 1 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
-              <div className='w-1/6 text-right mr-10 border border-gris rounded-xl mt-20 mb-5'>
+              <div className='w-1/6 text-right border border-gris rounded-xl m-auto mt-10'>
                 <p className='text-bleu text-center text-2xl'>Salle 1</p>
               </div>
               <button class="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 ml-4">
