@@ -13,7 +13,7 @@ const dataBase = mysqli.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: 'resto',
+    database: 'restaurant_manager',
 })
 
 dataBase.connect(function(err) {   if (err) throw err;   console.log("Connecté à la base de données MySQL!"); });
