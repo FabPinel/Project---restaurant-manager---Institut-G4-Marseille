@@ -79,16 +79,16 @@ function SideBar() {
                   <ul className="mt-5 space-y-1 px-2">
                     {SidebarData.map((item, index) => (
                       <li key={item.id}>
-                      <NavLink
-                        to={item.path}
-                        className={`text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md ${location.pathname === item.path ? 'selected' : ''}`}
-                      >
-                        <span
-                          className='text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6'
-                          aria-hidden="true"
-                        >{item.icon}</span>
-                        {item.title}
-                      </NavLink>
+                        <NavLink
+                          to={item.path}
+                          className={`text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md ${location.pathname === item.path ? 'selected' : ''}`}
+                        >
+                          <span
+                            className='text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6'
+                            aria-hidden="true"
+                          >{item.icon}</span>
+                          {item.title}
+                        </NavLink>
                       </li>
                     ))}
                   </ul>
@@ -119,10 +119,10 @@ function SideBar() {
                 <li key={item.id} >
                   <NavLink
                     to={item.path}
-                    className={`text-blanc hover:bg-gray-700 hover:text-rouge1 group flex items-center px-2 py-2 text-base font-medium rounded-md ${location.pathname === item.path ? 'selected' : ''}`}
+                    className={`text-blanc hover:bg-gray-700 hover:text-rouge1 group flex items-center px-2 py-2 text-base duration-500 font-medium rounded-md ${location.pathname === item.path ? 'selected' : ''}`}
                   >
                     <span
-                      className="text-blanc group-hover:text-rouge1 mr-4 flex-shrink-0 h-6 w-6"
+                      className="text-blanc group-hover:text-rouge1 mr-4 flex-shrink-0 h-6 w-6 duration-500"
                       aria-hidden="true">
                       {item.icon}
                     </span>
