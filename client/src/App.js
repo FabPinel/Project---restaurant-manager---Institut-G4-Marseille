@@ -34,9 +34,9 @@ export default App;
 //       <p>Loading...</p>  
 //     ): (
 //       backendData.users.map((user, i) => (
-//         <p class="text-blue-700 text-6xl" key={i}>{user}</p>
+//         <p className="text-blue-700 text-6xl" key={i}>{user}</p>
 //       ))
 //     )}
 
-/* <p class="w-10 h-10 m-auto mt-4"><Icon path={mdiMusic} /></p> */
+/* <p className="w-10 h-10 m-auto mt-4"><Icon path={mdiMusic} /></p> */
 
