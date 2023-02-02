@@ -119,7 +119,7 @@ function SideBar() {
                 <li key={item.id} >
                   <NavLink
                     to={item.path}
-                    className={`text-blanc hover:bg-gray-700 hover:text-rouge1 group flex items-center px-2 py-2 text-base duration-500 font-medium rounded-md ${location.pathname === item.path ? 'selected' : ''}`}
+                    className={`text-blanc hover:text-rouge1 group flex items-center px-2 py-2 text-base duration-500 font-medium rounded-md ${location.pathname === item.path ? 'selected' : ''}`}
                   >
                     <span
                       className="text-blanc group-hover:text-rouge1 mr-4 flex-shrink-0 h-6 w-6 duration-500"
