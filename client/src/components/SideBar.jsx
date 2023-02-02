@@ -76,29 +76,22 @@ function SideBar() {
                       alt="Your Company"
                     />
                   </div>
-                  <nav className="mt-5 space-y-1 px-2">
+                  <ul className="mt-5 space-y-1 px-2">
                     {SidebarData.map((item, index) => (
+                      <li key={item.id}>
                       <NavLink
-                        key={item.title}
                         to={item.path}
-                        className={classNames(
-                          item.active
-                            ? 'bg-gray-900 text-white'
-                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'group flex items-center px-2 py-2 text-base font-medium rounded-md'
-                        )}
+                        className={`text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md ${location.pathname === item.path ? 'selected' : ''}`}
                       >
                         <span
-                          className={classNames(
-                            item.active ? 'text-gray-300' : 'text-gray-400 group-hover:text-gray-300',
-                            'mr-4 flex-shrink-0 h-6 w-6'
-                          )}
+                          className='text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6'
                           aria-hidden="true"
                         >{item.icon}</span>
                         {item.title}
                       </NavLink>
+                      </li>
                     ))}
-                  </nav>
+                  </ul>
                 </div>
 
               </Dialog.Panel>
@@ -129,8 +122,7 @@ function SideBar() {
                     className={`text-blanc hover:bg-gray-700 hover:text-rouge1 group flex items-center px-2 py-2 text-base font-medium rounded-md ${location.pathname === item.path ? 'selected' : ''}`}
                   >
                     <span
-                      className={`text-blanc group-hover:text-rouge1 mr-4 flex-shrink-0 h-6 w-6 ${window.location.pathname === item.path ? 'icon-active' : ''
-                        }`}
+                      className="text-blanc group-hover:text-rouge1 mr-4 flex-shrink-0 h-6 w-6"
                       aria-hidden="true">
                       {item.icon}
                     </span>
