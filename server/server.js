@@ -13,7 +13,7 @@ const dataBase = mysqli.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: 'resto',
+    database: 'restaurant_manager',
 })
 
 dataBase.connect(function(err) {   if (err) throw err;   console.log("Connecté à la base de données MySQL!"); });
@@ -21,6 +21,23 @@ dataBase.connect(function(err) {   if (err) throw err;   console.log("Connecté 
 app.get("/categories", (req, res) => { // pour chaque nouvelle requete il faut changer le "/" 
   const q = "SELECT * FROM categories"
   dataBase.query(q,(err,data)=>{
+    if(err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+// REQUETES PAGE SALLE
+app.get("/tables-salle1", (req, res) => {
+  const t = "SELECT * FROM `tables` WHERE salle = 'Salle1'"
+  dataBase.query(t,(err,data)=>{
+    if(err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+app.get("/nombres-reservations-salle1", (req, res) => {
+  const nbr = "SELECT count(reservation) FROM `tables` HAVING count(reservation) IS NOT NULL"
+  dataBase.query(nbr,(err,data)=>{
     if(err) return res.json(err)
     return res.json(data)
   })

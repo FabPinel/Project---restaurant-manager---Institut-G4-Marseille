@@ -1,5 +1,7 @@
 import React from 'react';
-import { useState } from "react";
+import { useEffect, useState } from 'react'
+import axios from 'axios';
+import * as FaIcons from 'react-icons/rx'
 
 function Salle() {
   const [toggleState, setToggleState] = useState(1);
@@ -8,6 +10,37 @@ function Salle() {
     setToggleState(index);
   };
 
+  const [tableSalle1, setSalles] = useState([]);
+
+  useEffect(() => {
+    const fetchAllSalle = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/tables-salle1");
+        setSalles(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllSalle();
+  }, []);
+
+  console.log(tableSalle1);
+
+  const [reservationSalle1, setReservationSalles1] = useState([]);
+
+  useEffect(() => {
+    const fetchAllReservationSalle1 = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/nombres-reservations-salle1");
+        setReservationSalles1(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllReservationSalle1();
+  }, []);
+
+  console.log(reservationSalle1);
   return (
     <React.Fragment>
       <section>
@@ -29,7 +62,7 @@ function Salle() {
 
           <div className="flex-grow">
             <div className={toggleState === 1 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
-              <div className='w-1/6 text-right border border-gris rounded-xl m-auto mt-10'>
+              <div className='w-1/6 text-right border border-gris rounded-xl m-auto mt-20 mb-5 '>
                 <p className='text-bleu text-center text-2xl'>Salle 1</p>
               </div>
               <button class="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 ml-4">
@@ -40,21 +73,33 @@ function Salle() {
               </button>
               <div className='w-full text-right mr-10 mt-2 flex flex-row'>
                 <div className='w-1/6 text-right mr-10 border border-gris rounded-xl mt-20 basis-1/4 md:basis-1/3'>
-                  <p className='text-bleu text-center text-2xl'>Réservation: 0</p>
+                  <p className='text-bleu text-center text-2xl'>Réservation: </p>
                 </div>
                 <div className='w-1/6 text-right mr-10 border border-gris rounded-xl mt-20 basis-1/4 md:basis-1/3'>
-                  <p className='text-bleu text-center text-2xl'>Nbr Couverts: 2</p>
+                  <p className='text-bleu text-center text-2xl'>Nbr Couverts: </p>
                 </div>
                 <div className='w-1/6 text-right mr-10 border border-gris rounded-xl mt-20 basis-1/4 md:basis-1/3'>
-                  <p className='text-bleu text-center text-2xl'>Nbr Tables: 1</p>
+                  <p className='text-bleu text-center text-2xl'>Nbr Tables: </p>
                 </div>
               </div>
-              <div className='w-1/6 text-right mr-10 border border-gris rounded-xl mt-20'>
-                <p className='text-bleu text-center text-2xl'>1</p>
-              </div>
-              <div className='w-1/6 text-right mr-10 border border-gris rounded-xl mt-1'>
-                <p className='text-bleu text-center text-2xl'>Satut: Libre</p>
-                <p className='text-bleu text-center text-2xl'>Nbr de couverts: 2</p>
+              <div className='flex flex-wrap'>
+                {
+                  tableSalle1.map((salle1) => (
+                    <div className='w-96'>
+                      <div className='text-right mr-10 border border-gris rounded-xl mt-20 p-1'>
+                        <button type="button" class="text-white bg-bleu hover:bg-gris duration-500 rounded-md">
+                          <div><FaIcons.RxCross2 size={20} /></div>
+                          <span class="sr-only">Icon description</span>
+                        </button>
+                        <p className='text-bleu text-center text-2xl'>{salle1.numeroTable}</p>
+                      </div>
+                      <div className='text-right mr-10 border border-gris rounded-xl mt-1'>
+                        <p className='text-bleu text-center text-2xl'>Statut: {salle1.statutTable}</p>
+                        <p className='text-bleu text-center text-2xl'>Nbr de couverts: {salle1.placeTable}</p>
+                      </div>
+                    </div>
+                  ))
+                }
               </div>
             </div>
 
@@ -66,7 +111,7 @@ function Salle() {
 
             <div className={toggleState === 3 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
               <div className='w-1/6 text-right mr-10 border border-gris rounded-xl mt-20'>
-                <p className='text-bleu text-center text-2xl'>Terasse</p>
+                <p className='text-bleu text-center text-2xl'>Terrasse</p>
               </div>
             </div>
           </div>
