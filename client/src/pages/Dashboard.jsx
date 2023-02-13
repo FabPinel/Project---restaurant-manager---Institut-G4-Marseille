@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 
 
-const Categories = () => {
+ const Categories = () => {   //   il faut que ce soit une const et pas une fonction pour avoir des requetes sql
  const [categories, setCategories] = useState([]);
 
  useEffect(() => {

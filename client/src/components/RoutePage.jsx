@@ -8,6 +8,8 @@ import Menu from '../pages/Menu';
 import Plat from '../pages/Plat';
 import Planning from '../pages/Planning';
 import Fournisseur from '../pages/Fournisseur';
+import { render } from "react-dom";
+
 
 const RoutePage = () => {
   return (
