@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 03 fév. 2023 à 10:45
+-- Généré le : lun. 13 fév. 2023 à 13:11
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -305,7 +305,7 @@ CREATE TABLE IF NOT EXISTS `tables` (
   `placeTable` int(1) NOT NULL,
   `reservation` int(11) DEFAULT NULL,
   `salle` varchar(30) NOT NULL,
-  `statutTable` varchar(20) NOT NULL,
+  `statutTable` varchar(20) NOT NULL DEFAULT 'Libre',
   PRIMARY KEY (`numeroTable`),
   KEY `reservation` (`reservation`),
   KEY `salle` (`salle`),
@@ -318,8 +318,8 @@ CREATE TABLE IF NOT EXISTS `tables` (
 
 INSERT INTO `tables` (`numeroTable`, `placeTable`, `reservation`, `salle`, `statutTable`) VALUES
 (1, 2, NULL, 'Salle1', 'Libre'),
-(2, 4, NULL, 'Salle1', 'Libre'),
-(3, 6, NULL, 'Salle1', 'Libre');
+(2, 2, NULL, 'Salle1', 'Libre'),
+(3, 2, NULL, 'Salle1', 'Libre');
 
 --
 -- Contraintes pour les tables déchargées
