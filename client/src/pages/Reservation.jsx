@@ -4,7 +4,7 @@ function Reservation() {
   return (
     <React.Fragment>
         <section>
-            <div class="bg-teal-600 w-40 h-40">Reservation</div>
+            <div className="bg-teal-600 w-40 h-40">Reservation</div>
         </section>
     </React.Fragment>
   )
