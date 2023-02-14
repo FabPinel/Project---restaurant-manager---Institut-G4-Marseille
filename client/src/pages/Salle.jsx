@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import * as FaIcons from 'react-icons/rx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Salle() {
   const [toggleState, setToggleState] = useState(1);
@@ -103,28 +103,30 @@ function Salle() {
                 <p className='text-bleu text-center text-2xl'>Salle 1</p>
               </div>
               <button onClick={() => setShow(!show)} className="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 ml-4">
-                +
+                Ajouter
               </button>
               <button className="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500">
                 Fusion
               </button>
               {show &&
-                <div className='w-60 bg-gray-50 border border-gris rounded-xl m-auto mt-20 mb-5 p-2'>
-                  <button type="button" onClick={() => setShow(!show)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md">
-                    <div><FaIcons.RxCross2 size={20} /></div>
-                    <span className="sr-only">Icon description</span>
-                  </button>
-                  <div className='m-auto mt-2 mb-5 p-2 flex flex-col justify-center items-center'>
-                    <div className='form'>
-                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Numéro: </label>
-                      <input type="number" name="numeroTable" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
-                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Nombre de couverts: </label>
-                      <input type="number" name="placeTable" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
-                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Salle: </label>
-                      <input type="text" name="salle" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
-                      <button onClick={handleClick} className="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 mt-4">
-                        Ajouter
-                      </button>
+                <div className='w-full h-full bg-noirTransparent border border-gris rounded-xl m-auto mt-20 mb-5 p-2 absolute'>
+                  <div className='w-60 bg-gray-50 border border-gris rounded-xl m-auto mt-20 mb-5 p-2 absolute'>
+                    <button type="button" onClick={() => setShow(!show)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md">
+                      <div><FaIcons.RxCross2 size={20} /></div>
+                      <span className="sr-only">Icon description</span>
+                    </button>
+                    <div className='m-auto mt-2 mb-5 p-2 flex flex-col justify-center items-center'>
+                      <div className='form'>
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Numéro: </label>
+                        <input type="number" name="numeroTable" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Nombre de couverts: </label>
+                        <input type="number" name="placeTable" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Salle: </label>
+                        <input type="text" name="salle" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
+                        <button onClick={handleClick} className="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 mt-4">
+                          Ajouter
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -145,9 +147,11 @@ function Salle() {
                   tableSalle1.map((salle1) => (
                     <div className='w-96' key={salle1.numeroTable}>
                       <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-20 p-1'>
+                        <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2"><Link to={`/UpdateTable/${salle1.numeroTable}`}>
+                          <div><FaIcons.RxPencil1 size={20} /></div>
+                        </Link></button>
                         <button onClick={() => handleDelete(salle1.numeroTable)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md">
-                          <div><FaIcons.RxCross2 size={20} /></div>
-                          <span className="sr-only">Icon description</span>
+                          <div><FaIcons.RxCross2 size={20} /></div>                        <span className="sr-only">Icon description</span>
                         </button>
                         <p className='text-bleu text-center text-2xl'>{salle1.numeroTable}</p>
                       </div>

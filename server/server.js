@@ -81,6 +81,21 @@ app.delete("/table-delete/:id", (req, res) => {
     return res.json("Table suprimé avec succès.")
   })
 })
+
+app.put("/tableUpdate/:id", (req, res) => {
+  const tableId = req.params.id;
+  const q = "UPDATE `tables` SET `placeTable`=?, `salle`=?, `statutTable`=? WHERE numeroTable=?";
+  const values = [
+    req.body.placeTable,
+    req.body.salle,
+    req.body.statutTable,
+  ];
+
+  dataBase.query(q, [...values, tableId], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Table mise à jour avec succès.")
+  })
+})
 //-------------------------------------------------------------------------------------------------
 
 // REQUETES PAGE PLANNING-----------------------------------------------------------------------------
