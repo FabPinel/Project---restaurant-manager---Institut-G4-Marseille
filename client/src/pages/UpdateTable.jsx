@@ -18,7 +18,6 @@ function UpdateTable() {
         statutTable: "",
     });
 
-
     const handleChange = (e) => {
         setTable(prev => ({ ...prev, [e.target.name]: e.target.value }))
     };
@@ -41,9 +40,10 @@ function UpdateTable() {
             <section>
                 <h1 className="m-auto text-center text-3xl font-bold mt-10">Modification de la table {tableId} </h1>
                 <div>
-                    <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2"><Link to={`/Salle`}>
-                        <div><FaIcons.RxArrowLeft size={40} /></div>
-                    </Link></button>
+                    <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2">
+                        <Link to={`/Salle`}>
+                            <div><FaIcons.RxArrowLeft size={40} /></div>
+                        </Link></button>
                 </div>
                 <div className='w-60 bg-gray-50 border border-gris rounded-xl m-auto mt-20 mb-5 p-2'>
                     <div className='m-auto mt-2 mb-5 p-2 flex flex-col justify-center items-center'>
@@ -51,17 +51,32 @@ function UpdateTable() {
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Nombre de couverts: </label>
                             <input type="number" name="placeTable" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Salle: </label>
-                            <input type="text" name="salle" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
+                            <select type="text" name="salle" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' >
+                                <option selected></option>
+                                <option value="Salle1">Salle1</option>
+                                <option value="Salle2">Salle2</option>
+                                <option value="Terrasse">Terrasse</option>
+                            </select>
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Satut: </label>
-                            <input type="text" name="statutTable" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
+                            <select type="text" name="statutTable" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' >
+                                <option selected></option>
+                                <option value="Libre">Libre</option>
+                                <option value="Occupée">Occupée</option>
+                                <option value="Réservée">Réservée</option>
+                            </select>
                             <button onClick={handleClick} className="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 mt-4">
                                 Sauvegarder
+                            </button>
+                            <button className="bg-rouge1 hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 mt-4">
+                                <Link to={`/Salle`}>
+                                    <div>Annuler</div>
+                                </Link>
                             </button>
                         </div>
                     </div>
                 </div>
             </section>
-        </React.Fragment>
+        </React.Fragment >
     )
 }
 

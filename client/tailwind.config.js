@@ -9,8 +9,7 @@ module.exports = {
         'gris': '#8d99ae',
         'blanc': '#edf2f4',
         'rouge1': '#ef233c',
-        'rouge2': '#d90429',
-        'noirTransparent': '#00000042'
+        'rouge2': '#d90429'
       },
       width: {
         '': '',
