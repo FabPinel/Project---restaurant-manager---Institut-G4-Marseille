@@ -86,3 +86,41 @@ app.get("/api", (req, res) => {
 })
 
 app.listen(5000, () => { console.log("le Server est lancé sur le port 5000") })
+
+
+// REQUETES PAGE PLATS-----------------------------------------------------------------------------
+
+app.get("/Plat", (req, res) => {
+  const t = "SELECT * FROM `plats`"
+  dataBase.query(t, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+app.post("/plat-add", (req, res) => {
+  const q = "INSERT INTO `plats` (`nomPlat`, `descriptionPlat`, `prixPlat`, `categorie`) VALUES (?)"
+  const values = [
+    req.body.nomPlat,
+    req.body.descriptionPlat,
+    req.body.prixPlat,
+    req.body.categorie,
+  ];
+
+  dataBase.query(q, [values], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Plats ajoutée avec succès.")
+  })
+})
+
+app.delete("/plat-delete/:id", (req, res) => {
+  const PlatsId = req.params.id;
+  const q = "DELETE FROM `plats` WHERE nomPlat = ?"
+
+  dataBase.query(q, [PlatsId], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Plat suprimé avec succès.")
+  })
+})
+//---
+
