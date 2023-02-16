@@ -173,6 +173,11 @@ function Salle() {
                         <p className='text-bleu text-center text-2xl'>Couverts: {salle1.placeTable}</p>
                         <div className='flex justify-center p-1'>
                           <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                            <Link to={`/CommandesTable/${salle1.numeroTable}`}>
+                              <FaIconsBootStrap.FaCoffee size={16} />
+                            </Link>
+                          </button>
+                          <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
                             <Link to={`/UpdateTable/${salle1.numeroTable}`}>
                               <FaIconsBootStrap.FaPencilAlt size={16} />
                             </Link>
