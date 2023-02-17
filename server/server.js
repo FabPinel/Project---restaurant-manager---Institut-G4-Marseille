@@ -96,6 +96,41 @@ app.put("/tableUpdate/:id", (req, res) => {
   })
 })
 
+//UPDATE STATUT TO OCCUPEE
+app.put("/tableUpdate-occupee/:numeroTable", (req, res) => {
+  const tableId = req.params.numeroTable;
+  const q = "UPDATE `tables` SET `statutTable`='Occupée' WHERE numeroTable=?";
+
+  dataBase.query(q, [tableId], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Statut de la table mise à jour avec succès en occupée.")
+  })
+})
+
+//UPDATE STATUT TO RESERVEE
+app.put("/tableUpdate-reservee/:numeroTable", (req, res) => {
+  const tableId = req.params.numeroTable;
+  const q = "UPDATE `tables` SET `statutTable`='Réservée' WHERE numeroTable=?";
+
+  dataBase.query(q, [tableId], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Statut de la table mise à jour avec succès en résevée.")
+  })
+})
+
+//UPDATE STATUT TO LIBRE
+app.put("/tableUpdate-libre/:numeroTable", (req, res) => {
+  const tableId = req.params.numeroTable;
+  const q = "UPDATE `tables` SET `statutTable`='Libre' WHERE numeroTable=?";
+
+  dataBase.query(q, [tableId], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Statut de la table mise à jour avec succès en libre.")
+  })
+})
+
+
+
 //CREATE COMMANDE
 app.post("/commande-add/:numeroTable", (req, res) => {
   const q = "INSERT INTO `commandestables` (`table`, `dateCommande`) VALUES (?, CONVERT_TZ(NOW(),'+00:00','+01:00'))";
@@ -144,6 +179,28 @@ app.get("/historique-commandes/:numeroTable", (req, res) => {
     return res.json(data);
   });
 });
+
+//DELETE PLAT COMMANDE
+app.delete("/plat-commande-delete/:id", (req, res) => {
+  const tableId = req.params.id;
+  const q = "DELETE FROM `contenircommandes` WHERE id = ?"
+
+  dataBase.query(q, [tableId], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Plat suprimé avec succès.")
+  })
+})
+
+//DELETE COMMANDE
+app.delete("/commande-delete/:id", (req, res) => {
+  const tableId = req.params.id;
+  const q = "DELETE FROM `commandestables` WHERE numeroCommande = ?"
+
+  dataBase.query(q, [tableId], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Commande suprimée avec succès.")
+  })
+})
 //-------------------------------------------------------------------------------------------------
 
 // REQUETES PAGE PLANNING-----------------------------------------------------------------------------

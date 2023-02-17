@@ -62,6 +62,15 @@ function HistoriqueCommandeTable() {
 
     console.log(historiquecommande);
 
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete("http://localhost:5000/plat-commande-delete/" + id)
+            navigate(0);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
         <React.Fragment>
             <section>
@@ -119,12 +128,12 @@ function HistoriqueCommandeTable() {
                     </tr>
                 </thead>
                 {historiquecommande.map((histoCommande) => (
-                    <tr key={historiquecommande.commande}>
+                    <tr key={histoCommande.id}>
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 border-solid border-2">{histoCommande.commande}</td>
                         <td className="whitespace-nowrap px-8 py-4 text-sm text-gray-500 border-solid border-2">{histoCommande.platCommande}</td>
                         <td className="whitespace-nowrap px-10 py-4 text-sm text-gray-500 border-solid border-2">{histoCommande.quantitePlat}</td>
                         <td className="whitespace-nowrap px-10 py-4 text-sm text-gray-500 border-solid border-2">
-                            <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                            <button onClick={() => handleDelete(histoCommande.id)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
                                 <FaIconsBootStrap.FaTrashAlt size={16} />
                             </button>
                         </td>

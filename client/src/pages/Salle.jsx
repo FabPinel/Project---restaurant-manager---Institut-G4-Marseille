@@ -79,6 +79,36 @@ function Salle() {
 
   const [show, setShow] = useState(false);
 
+  const statusChange = async (numeroTable, statutTable) => {
+    if (statutTable === "Libre") {
+      try {
+        await axios.put("http://localhost:5000/tableUpdate-occupee/" + numeroTable)
+        navigate(0);
+      } catch (err) {
+        console.log(err);
+      }
+      console.log("Changement de statut de Libre a Occupée")
+    }
+    if (statutTable === "Occupée") {
+      try {
+        await axios.put("http://localhost:5000/tableUpdate-reservee/" + numeroTable)
+        navigate(0);
+      } catch (err) {
+        console.log(err);
+      }
+      console.log("Changement de statut de Libre à Réservée")
+    }
+    if (statutTable === "Réservée") {
+      try {
+        await axios.put("http://localhost:5000/tableUpdate-libre/" + numeroTable)
+        navigate(0);
+      } catch (err) {
+        console.log(err);
+      }
+      console.log("Changement de statut de Libre à Libre")
+    }
+  }
+
   return (
     <React.Fragment>
       <section>
@@ -169,7 +199,7 @@ function Salle() {
                         <p className='text-bleu text-center text-2xl'>{salle1.numeroTable}</p>
                       </div>
                       <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1'>
-                        <p className='text-bleu text-center text-2xl'>Statut: {salle1.statutTable}</p>
+                        <p className='text-bleu text-center text-2xl cursor-pointer hover:text-rouge1 duration-500' onClick={() => statusChange(salle1.numeroTable, salle1.statutTable)}>Statut: {salle1.statutTable}</p>
                         <p className='text-bleu text-center text-2xl'>Couverts: {salle1.placeTable}</p>
                         <div className='flex justify-center p-1'>
                           <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
