@@ -30,6 +30,7 @@ app.get("/categories", (req, res) => { // pour chaque nouvelle requete il faut c
 })
 
 // REQUETES PAGE SALLE--------------------------------------------------------------------------------
+//AFFICHAGE TABLES SALLE1
 app.get("/tables-salle1", (req, res) => {
   const t = "SELECT * FROM `tables` WHERE salle = 'Salle1'"
   dataBase.query(t, (err, data) => {
@@ -38,19 +39,30 @@ app.get("/tables-salle1", (req, res) => {
   })
 })
 
+//TOTAL RESERVATION SALLE1
 app.get("/nombres-reservations-salle1", (req, res) => {
-  const nbr = "SELECT count(reservation) FROM `tables` HAVING count(reservation) IS NOT NULL"
+  const nbr = "SELECT count(statutTable) FROM `tables`  WHERE salle = 'Salle1' AND statutTable = 'Réservée' HAVING count(statutTable) IS NOT NULL"
   dataBase.query(nbr, (err, data) => {
     if (err) return res.json(err)
-    return res.json(data)
+    return res.json(data[0]['count(statutTable)'])
   })
 })
 
-app.get("/nombres-reservations-salle1", (req, res) => {
-  const nbr = "SELECT count(reservation) FROM `tables` HAVING count(reservation) IS NOT NULL"
+//TOTAL NBR COUVERT SALLE1
+app.get("/nombres-couverts-salle1", (req, res) => {
+  const nbr = "SELECT sum(placeTable) FROM `tables`  WHERE salle = 'Salle1'"
   dataBase.query(nbr, (err, data) => {
     if (err) return res.json(err)
-    return res.json(data)
+    return res.json(data[0]['sum(placeTable)'])
+  })
+})
+
+//TOTAL TABLE SALLE1
+app.get("/nombres-tables-salle1", (req, res) => {
+  const nbr = "SELECT count(numeroTable) FROM `tables`  WHERE salle = 'Salle1'"
+  dataBase.query(nbr, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data[0]['count(numeroTable)'])
   })
 })
 
@@ -158,7 +170,7 @@ app.post("/commande-plat-add/:numeroCommande", (req, res) => {
   })
 })
 
-//AFFICHER COMMANDE
+//AFFICHER COMMANDES
 app.get("/commandes/:numeroTable", (req, res) => {
   const t = "SELECT * FROM `commandestables` WHERE `table` = ?"
   const table = req.params.numeroTable

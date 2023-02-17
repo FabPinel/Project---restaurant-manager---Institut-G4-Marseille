@@ -31,7 +31,7 @@ function Salle() {
   const [reservationSalle1, setReservationSalles1] = useState([]);
 
   useEffect(() => {
-    const fetchAllReservationSalle1 = async () => {
+    const fetchAllReservationSalle1 = async e => {
       try {
         const res = await axios.get("http://localhost:5000/nombres-reservations-salle1");
         setReservationSalles1(res.data);
@@ -42,7 +42,33 @@ function Salle() {
     fetchAllReservationSalle1();
   }, []);
 
-  console.log(reservationSalle1);
+  const [couvertsSalle1, setCouvertsSalles1] = useState([]);
+
+  useEffect(() => {
+    const fetchAllCouvertsSalle1 = async e => {
+      try {
+        const res = await axios.get("http://localhost:5000/nombres-couverts-salle1");
+        setCouvertsSalles1(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllCouvertsSalle1();
+  }, []);
+
+  const [tablesSalle1, setTablesSalles1] = useState([]);
+
+  useEffect(() => {
+    const fetchAllTablesSalle1 = async e => {
+      try {
+        const res = await axios.get("http://localhost:5000/nombres-tables-salle1");
+        setTablesSalles1(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllTablesSalle1();
+  }, []);
 
   const navigate = useNavigate()
 
@@ -82,23 +108,14 @@ function Salle() {
   const statusChange = async (numeroTable, statutTable) => {
     if (statutTable === "Libre") {
       try {
-        await axios.put("http://localhost:5000/tableUpdate-occupee/" + numeroTable)
-        navigate(0);
-      } catch (err) {
-        console.log(err);
-      }
-      console.log("Changement de statut de Libre a Occupée")
-    }
-    if (statutTable === "Occupée") {
-      try {
         await axios.put("http://localhost:5000/tableUpdate-reservee/" + numeroTable)
         navigate(0);
       } catch (err) {
         console.log(err);
       }
-      console.log("Changement de statut de Libre à Réservée")
+      console.log("Changement de statut de Libre a Réservée")
     }
-    if (statutTable === "Réservée") {
+    if (statutTable === "Occupée") {
       try {
         await axios.put("http://localhost:5000/tableUpdate-libre/" + numeroTable)
         navigate(0);
@@ -106,6 +123,15 @@ function Salle() {
         console.log(err);
       }
       console.log("Changement de statut de Libre à Libre")
+    }
+    if (statutTable === "Réservée") {
+      try {
+        await axios.put("http://localhost:5000/tableUpdate-occupee/" + numeroTable)
+        navigate(0);
+      } catch (err) {
+        console.log(err);
+      }
+      console.log("Changement de statut de Libre à Occupée")
     }
   }
 
@@ -182,20 +208,20 @@ function Salle() {
               }
               <div className='w-full text-right mr-10 mt-2 flex flex-row'>
                 <div className='bg-gray-50 w-1/6 text-right mr-10 border border-gris rounded-xl mt-20 basis-1/4 md:basis-1/3'>
-                  <p className='text-bleu text-center text-2xl'>Réservation: </p>
+                  <p className='text-bleu text-center text-2xl'>Réservation: {reservationSalle1}</p>
                 </div>
                 <div className='bg-gray-50 w-1/6 text-right mr-10 border border-gris rounded-xl mt-20 basis-1/4 md:basis-1/3'>
-                  <p className='text-bleu text-center text-2xl'>Nbr Couverts: </p>
+                  <p className='text-bleu text-center text-2xl'>Nbr Couverts: {couvertsSalle1}</p>
                 </div>
                 <div className='bg-gray-50 w-1/6 text-right mr-10 border border-gris rounded-xl mt-20 basis-1/4 md:basis-1/3'>
-                  <p className='text-bleu text-center text-2xl'>Nbr Tables: </p>
+                  <p className='text-bleu text-center text-2xl'>Nbr Tables: {tablesSalle1}</p>
                 </div>
               </div>
-              <div className='flex flex-wrap'>
+              <div className='flex flex-wrap justify-center'>
                 {
                   tableSalle1.map((salle1) => (
                     <div className='w-72' key={salle1.numeroTable}>
-                      <div className='bg-gray-50 mr-10 border border-gris rounded-xl mt-20 p-1'>
+                      <div className={`${salle1.statutTable === 'Libre' ? 'bg-green-200' : salle1.statutTable === 'Occupée' ? 'bg-red-200' : salle1.statutTable === 'Réservée' ? 'bg-orange-200' : 'bg-gray-200'} mr-10 border border-gris rounded-xl mt-20 p-1`}>
                         <p className='text-bleu text-center text-2xl'>{salle1.numeroTable}</p>
                       </div>
                       <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1'>
