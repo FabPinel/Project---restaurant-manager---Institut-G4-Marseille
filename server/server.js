@@ -124,3 +124,18 @@ app.delete("/plat-delete/:id", (req, res) => {
 })
 //---
 
+app.put("/PlatUpdate/:id", (req, res) => {
+  const PlatsId = req.params.id;
+  const q = "UPDATE `plats` SET `nomPlat`=?, `descriptionPlat`=?, `prixPlat`=?, `categorie`=? WHERE id=?";
+  const values = [
+    req.body.nomPlat,
+    req.body.descriptionPlat,
+    req.body.prixPlat,
+    req.body.categorie,
+  ];
+
+  dataBase.query(q, [...values, PlatsId], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Plats mise à jour avec succès.")
+  })
+})

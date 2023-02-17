@@ -121,12 +121,13 @@ function Plat() {
                         <p className='text-bleu text-center text-2xl'>{Plats.nomPlat}</p>
                       </div>
                       <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1'>
-                        <p className='text-bleu text-center text-2xl'>Catégories {Plats.categorie}</p>
+                        <p className='text-bleu text-center text-2xl'>Catégories : {Plats.categorie}</p>
                         <p className='text-bleu text-center text-2xl'>Description : {Plats.descriptionPlat}</p>
                         <p className='text-bleu text-center text-2xl'>Prix {Plats.prixPlat}</p>
+                        
                         <div className='flex justify-center p-1'>
                           <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
-                            <Link to={`/UpdatePlats/${Plats.nomPlat}`}>
+                            <Link to={`/PlatUpdate/${Plats.Id}`}>
                               <FaIconsBootStrap.FaPencilAlt size={16} />
                             </Link>
                           </button>

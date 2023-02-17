@@ -8,6 +8,7 @@ import Menu from '../pages/Menu';
 import Plat from '../pages/Plat';
 import Planning from '../pages/Planning';
 import Fournisseur from '../pages/Fournisseur';
+import PlatUpdate from '../pages/PlatUpdate';
 
 const RoutePage = () => {
   return (
@@ -21,6 +22,7 @@ const RoutePage = () => {
           <Route path='/Stock' element={<Stock/>}/>
           <Route path='/Menu' element={<Menu/>}/>
           <Route path='/Plat' element={<Plat/>}/>
+          <Route path='/PlatUpdate/:id' element={<PlatUpdate/>}/>
           <Route path='/Planning' element={<Planning/>}/>
           <Route path='/Fournisseur' element={<Fournisseur/>}/>
         </Routes>   
