@@ -58,6 +58,15 @@ function CommandesTable() {
         navigate(-1);
     }
 
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete("http://localhost:5000/commande-delete/" + id)
+            navigate(0);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
         <React.Fragment>
             <section>
@@ -104,6 +113,9 @@ function CommandesTable() {
                                 <Link to={`/HistoriqueCommandeTable/${commande.numeroCommande}`}>
                                     <FaIconsBootStrap.FaEye size={16} />
                                 </Link>
+                            </button>
+                            <button onClick={() => handleDelete(commande.numeroCommande)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                                <FaIconsBootStrap.FaTrashAlt size={16} />
                             </button>
                         </td>
                     </tr>
