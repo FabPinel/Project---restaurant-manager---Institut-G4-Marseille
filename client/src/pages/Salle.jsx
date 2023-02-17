@@ -3,10 +3,28 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 // import * as FaIcons from 'react-icons/rx';
 import * as FaIconsBootStrap from 'react-icons/fa';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Salle() {
   const [toggleState, setToggleState] = useState(1);
+  const [notification, setNotification] = useState({ message: "", show: false });
+  const navigate = (n) => console.log(n);
+
+  useEffect(() => {
+    const storedNotification = JSON.parse(localStorage.getItem("notification"));
+    if (storedNotification) {
+      setNotification(storedNotification);
+      localStorage.removeItem("notification");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (notification.show) {
+      setTimeout(() => {
+        setNotification({ ...notification, show: false });
+      }, 3000);
+    }
+  }, [notification]);
 
   const toggleTab = (index) => {
     setToggleState(index);
@@ -70,8 +88,6 @@ function Salle() {
     fetchAllTablesSalle1();
   }, []);
 
-  const navigate = useNavigate()
-
   const [table, setTable] = useState({
     numeroTable: "",
     placeTable: "",
@@ -82,13 +98,16 @@ function Salle() {
     setTable(prev => ({ ...prev, [e.target.name]: e.target.value }))
   };
 
+
   console.log(table);
 
-  const handleClick = async e => {
-    e.preventDefault()
+  const handleClick = async (e) => {
+    e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/table-add", table)
+      await axios.post("http://localhost:5000/table-add", table);
       navigate(0);
+      localStorage.setItem("notification", JSON.stringify({ message: "Table ajoutée avec succès.", show: true }));
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -96,12 +115,19 @@ function Salle() {
 
   const handleDelete = async (numeroTable) => {
     try {
-      await axios.delete("http://localhost:5000/table-delete/" + numeroTable)
-      navigate(0);
+      await axios.delete("http://localhost:5000/table-delete/" + numeroTable);
+      const message = "Table Supprimée avec succès.";
+      localStorage.setItem("notification", JSON.stringify({ message, show: true }));
+      window.location.reload();
     } catch (err) {
       console.log(err);
+      let message = "Une erreur s'est produite lors de la suppression de la table.";
+      if (err.response && err.response.status === 409) {
+        message = "Cette table est utilisée dans une commande en cours. Supprimez la commande avant de supprimer la table.";
+      }
+      localStorage.setItem("notification", JSON.stringify({ message, show: true }));
     }
-  }
+  };
 
   const [show, setShow] = useState(false);
 
@@ -109,7 +135,7 @@ function Salle() {
     if (statutTable === "Libre") {
       try {
         await axios.put("http://localhost:5000/tableUpdate-reservee/" + numeroTable)
-        navigate(0);
+        window.location.reload();
       } catch (err) {
         console.log(err);
       }
@@ -118,7 +144,7 @@ function Salle() {
     if (statutTable === "Occupée") {
       try {
         await axios.put("http://localhost:5000/tableUpdate-libre/" + numeroTable)
-        navigate(0);
+        window.location.reload();
       } catch (err) {
         console.log(err);
       }
@@ -127,7 +153,7 @@ function Salle() {
     if (statutTable === "Réservée") {
       try {
         await axios.put("http://localhost:5000/tableUpdate-occupee/" + numeroTable)
-        navigate(0);
+        window.location.reload();
       } catch (err) {
         console.log(err);
       }
@@ -156,6 +182,11 @@ function Salle() {
 
           <div className="flex-grow">
             <div className={toggleState === 1 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
+              {notification.show && (
+                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded absolute right-0 transition duration-500 shadow-2xl " role="alert">
+                  <strong className="font-bold">{notification.message}</strong>
+                </div>
+              )}
               <div className='bg-gray-50 w-1/6 text-right border border-gris rounded-xl m-auto mt-24 mb-5 '>
                 <p className='text-bleu text-center text-2xl'>Salle 1</p>
               </div>
@@ -220,7 +251,7 @@ function Salle() {
               <div className='flex flex-wrap justify-center'>
                 {
                   tableSalle1.map((salle1) => (
-                    <div className='w-72 transition duration-500 transform hover:-translate-y-5' key={salle1.numeroTable}>
+                    <div className='w-72 transition duration-500 transform hover:-translate-y-2' key={salle1.numeroTable}>
                       <div className={`${salle1.statutTable === 'Libre' ? 'bg-green-200' : salle1.statutTable === 'Occupée' ? 'bg-red-200' : salle1.statutTable === 'Réservée' ? 'bg-orange-200' : 'bg-gray-200'} mr-10 border border-gris rounded-xl mt-20 p-1`}>
                         <p className='text-bleu text-center text-2xl'>{salle1.numeroTable}</p>
                       </div>
