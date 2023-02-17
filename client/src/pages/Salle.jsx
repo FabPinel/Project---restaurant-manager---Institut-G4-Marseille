@@ -108,23 +108,14 @@ function Salle() {
   const statusChange = async (numeroTable, statutTable) => {
     if (statutTable === "Libre") {
       try {
-        await axios.put("http://localhost:5000/tableUpdate-occupee/" + numeroTable)
-        navigate(0);
-      } catch (err) {
-        console.log(err);
-      }
-      console.log("Changement de statut de Libre a Occupée")
-    }
-    if (statutTable === "Occupée") {
-      try {
         await axios.put("http://localhost:5000/tableUpdate-reservee/" + numeroTable)
         navigate(0);
       } catch (err) {
         console.log(err);
       }
-      console.log("Changement de statut de Libre à Réservée")
+      console.log("Changement de statut de Libre a Réservée")
     }
-    if (statutTable === "Réservée") {
+    if (statutTable === "Occupée") {
       try {
         await axios.put("http://localhost:5000/tableUpdate-libre/" + numeroTable)
         navigate(0);
@@ -132,6 +123,15 @@ function Salle() {
         console.log(err);
       }
       console.log("Changement de statut de Libre à Libre")
+    }
+    if (statutTable === "Réservée") {
+      try {
+        await axios.put("http://localhost:5000/tableUpdate-occupee/" + numeroTable)
+        navigate(0);
+      } catch (err) {
+        console.log(err);
+      }
+      console.log("Changement de statut de Libre à Occupée")
     }
   }
 
@@ -221,7 +221,7 @@ function Salle() {
                 {
                   tableSalle1.map((salle1) => (
                     <div className='w-72' key={salle1.numeroTable}>
-                      <div className='bg-gray-50 mr-10 border border-gris rounded-xl mt-20 p-1'>
+                      <div className={`${salle1.statutTable === 'Libre' ? 'bg-green-200' : salle1.statutTable === 'Occupée' ? 'bg-red-200' : salle1.statutTable === 'Réservée' ? 'bg-orange-200' : 'bg-gray-200'} mr-10 border border-gris rounded-xl mt-20 p-1`}>
                         <p className='text-bleu text-center text-2xl'>{salle1.numeroTable}</p>
                       </div>
                       <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1'>
