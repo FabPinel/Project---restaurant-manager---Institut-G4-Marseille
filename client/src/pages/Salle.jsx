@@ -220,7 +220,7 @@ function Salle() {
               <div className='flex flex-wrap justify-center'>
                 {
                   tableSalle1.map((salle1) => (
-                    <div className='w-72' key={salle1.numeroTable}>
+                    <div className='w-72 transition duration-500 transform hover:-translate-y-5' key={salle1.numeroTable}>
                       <div className={`${salle1.statutTable === 'Libre' ? 'bg-green-200' : salle1.statutTable === 'Occupée' ? 'bg-red-200' : salle1.statutTable === 'Réservée' ? 'bg-orange-200' : 'bg-gray-200'} mr-10 border border-gris rounded-xl mt-20 p-1`}>
                         <p className='text-bleu text-center text-2xl'>{salle1.numeroTable}</p>
                       </div>
@@ -228,20 +228,36 @@ function Salle() {
                         <p className={`${salle1.statutTable === 'Libre' ? 'hover:text-green-500' : salle1.statutTable === 'Occupée' ? 'hover:text-red-500' : salle1.statutTable === 'Réservée' ? 'hover:text-orange-500' : 'text-bleu'} text-center text-2xl cursor-pointer duration-500`} onClick={() => statusChange(salle1.numeroTable, salle1.statutTable)}>Statut: {salle1.statutTable}</p>
                         <p className='text-bleu text-center text-2xl'>Couverts: {salle1.placeTable}</p>
                         <div className='flex justify-center p-1'>
-                          <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
-                            <Link to={`/CommandesTable/${salle1.numeroTable}`}>
-                              <FaIconsBootStrap.FaCoffee size={16} />
-                            </Link>
-                          </button>
-                          <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
-                            <Link to={`/UpdateTable/${salle1.numeroTable}`}>
-                              <FaIconsBootStrap.FaPencilAlt size={16} />
-                            </Link>
-                          </button>
-                          <button onClick={() => handleDelete(salle1.numeroTable)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md text-center p-1">
-                            <FaIconsBootStrap.FaTrashAlt size={16} />
-                          </button>
+                          <div className="relative group">
+                            <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                              <Link to={`/CommandesTable/${salle1.numeroTable}`}>
+                                <FaIconsBootStrap.FaCoffee size={16} />
+                              </Link>
+                            </button>
+                            <div className="w-24 border border-gris opacity-0 bg-white text-bleu text-center text-sm rounded-md py-2 absolute z-10 group-hover:opacity-100 group-hover:transition-opacity duration-300 transition-opacity ease-in-out delay-100 bottom-full left-1/2 transform -translate-x-1/2">
+                              Commandes
+                            </div>
+                          </div>
+                          <div className="relative group">
+                            <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                              <Link to={`/UpdateTable/${salle1.numeroTable}`}>
+                                <FaIconsBootStrap.FaPencilAlt size={16} />
+                              </Link>
+                            </button>
+                            <div className="w-24 border border-gris opacity-0 bg-white text-bleu text-center text-sm rounded-md py-2 absolute z-10 group-hover:opacity-100 group-hover:transition-opacity duration-300 transition-opacity ease-in-out delay-100 bottom-full left-1/2 transform -translate-x-1/2">
+                              Editer
+                            </div>
+                          </div>
+                          <div className="relative group">
+                            <button onClick={() => handleDelete(salle1.numeroTable)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md text-center p-1">
+                              <FaIconsBootStrap.FaTrashAlt size={16} />
+                            </button>
+                            <div className="w-24 border border-gris opacity-0 bg-white text-bleu text-center text-sm rounded-md py-2 absolute z-10 group-hover:opacity-100 group-hover:transition-opacity duration-300 transition-opacity ease-in-out delay-100 bottom-full left-1/2 transform -translate-x-1/2">
+                              Supprimer
+                            </div>
+                          </div>
                         </div>
+
                       </div>
                     </div>
                   ))
