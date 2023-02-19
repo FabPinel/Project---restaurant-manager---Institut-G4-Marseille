@@ -73,6 +73,11 @@ const handleClick2 = async e => {
             className="inline-flex items-center justify-center rounded-md border border-transparent bg-bleu px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gris sm:w-auto">
             Nouvelle réservation
           </button>
+          <button
+            type="button" onClick={() => setShow(!show)}
+            className="inline-flex items-center justify-center rounded-md border border-transparent bg-bleu px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gris sm:w-auto">
+            Ajouter un client
+          </button>
         </div>
       </div> 
   <div className="mt-8 flex flex-col">
@@ -100,7 +105,7 @@ const handleClick2 = async e => {
                     <th
                       scope="col"
                       className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 w-64">
-                      Date
+                      Date et heure
                     </th>
                     <th
                       scope="col"
