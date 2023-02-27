@@ -39,6 +39,14 @@ app.get("/tables-salle1", (req, res) => {
   })
 })
 
+app.get("/plats-commande", (req, res) => {
+  const t = "SELECT * FROM `plats` WHERE categorie = 'Plats'"
+  dataBase.query(t, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
 //TOTAL RESERVATION SALLE1
 app.get("/nombres-reservations-salle1", (req, res) => {
   const nbr = "SELECT count(statutTable) FROM `tables`  WHERE salle = 'Salle1' AND statutTable = 'Réservée' HAVING count(statutTable) IS NOT NULL"

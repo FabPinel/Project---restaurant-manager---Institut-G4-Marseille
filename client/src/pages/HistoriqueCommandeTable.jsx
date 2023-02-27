@@ -6,40 +6,50 @@ import * as FaIcons from 'react-icons/rx';
 import * as FaIconsBootStrap from 'react-icons/fa';
 
 function HistoriqueCommandeTable() {
-
+    const [toggleState, setToggleState] = useState(1);
     const navigate = useNavigate()
     const location = useLocation()
     const commandeId = location.pathname.split("/")[2]
 
     console.log(location.pathname.split("/")[2])
 
-    const [commande, setCommande] = useState({
-        commande: "",
-        platCommande: "",
-        quantitePlat: "",
-    });
+    const [platsCommande, setPlatsCommande] = useState([]);
 
-    const handleChange = (e) => {
-        setCommande(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    const toggleTab = (index) => {
+        setToggleState(index);
     };
 
-    console.log(commande);
+    useEffect(() => {
+        const fetchAllPlatsCommande = async () => {
+            try {
+                const res = await axios.get("http://localhost:5000/plats-commande");
+                setPlatsCommande(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllPlatsCommande();
+    }, []);
 
-    const handleClick = async e => {
-        e.preventDefault()
-        try {
-            await axios.post(`http://localhost:5000/commande-plat-add/${numeroCommande}`, commande)
-            navigate(0);
-        } catch (err) {
-            console.log(err);
-        }
-    };
+    console.log(platsCommande);
+
+    const addPlat = async (plats) => {
+        axios.post(`/commande-plat-add/${numeroCommande}`, {
+            platCommande: plats,
+            quantitePlat: 1, // Remplacez 1 par la quantité de plat commandée
+        })
+            .then((response) => {
+                navigate(0);
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
 
     const goingBack = async e => {
         navigate(-1);
     }
-
-    const [show, setShow] = useState(false);
 
     const [historiquecommande, setHistoriqueCommande] = useState([]);
 
@@ -80,38 +90,46 @@ function HistoriqueCommandeTable() {
                         <div><FaIcons.RxArrowLeft size={40} /></div>
                     </button>
                 </div>
-                <div className='w-2/4 bg-gray-50 border border-gris rounded-xl m-auto mt-20 mb-5 p-2 shadow-2xl left-96 top-16'>
-                    <h1 className="m-auto text-center text-3xl font-bold mt-2">Ajouter un plat</h1>
-                    <div className='m-auto mt-2 mb-5 p-2 flex flex-col justify-center items-center'>
-                        <div className='form'>
-                            <div className='flex'>
-                                <div>
-                                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-center"> Plat</label>
-                                    <input type="text" name="platCommande" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
+                <div className="mb-2">
+                    <button className={toggleState === 1 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
+                        onClick={() => toggleTab(1)} >
+                        Pizzas
+                    </button>
+                    <button className={toggleState === 2 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
+                        onClick={() => toggleTab(2)} >
+                        Pates
+                    </button>
+                    <button className={toggleState === 3 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
+                        onClick={() => toggleTab(3)} >
+                        Desserts
+                    </button>
+                    <button className={toggleState === 4 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
+                        onClick={() => toggleTab(4)} >
+                        Boissons
+                    </button>
+                </div>
+                <div className={toggleState === 1 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
+                    <div className='flex flex-wrap justify-center mb-2'>
+                        {
+                            platsCommande.map((plats) => (
+                                <div onClick={() => addPlat(plats.nomPlat)} className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer flex flex-wrap' key={plats.idPlat}>
+                                    <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
+                                        <div className='w-3/4 max-w-sm '>
+                                            <img className='border rounded-xl' src={plats.imgPlat} alt="" />
+                                        </div>
+                                        <div className=''>
+                                            <p className='text-bleu text-center text-base font-bold'>{plats.nomPlat}</p>
+                                            <p className='text-bleu text-center text-xs'>{plats.descriptionPlat}</p>
+                                            <p className='text-bleu text-center text-base font-bold'>{plats.prixPlat}€</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-center"> Quantitée</label>
-                                    <input type="number" name="quantitePlat" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
-                                </div>
-                            </div>
-                            <div className="text-center">
-                                <button onClick={handleClick} className="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 mt-4">
-                                    Ajouter
-                                </button>
-                                <button onClick={() => setShow(!show)} className="bg-rouge1 hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 mt-4">
-                                    Annuler
-                                </button>
-                            </div>
-                        </div>
+                            ))
+                        }
                     </div>
                 </div>
                 <thead className="bg-gray-50 items-center">
                     <tr>
-                        <th
-                            scope="col"
-                            className="py-3 pl-4 pr-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6 w-full">
-                            N° Commande
-                        </th>
                         <th
                             scope="col"
                             className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 w-full">
@@ -129,7 +147,6 @@ function HistoriqueCommandeTable() {
                 </thead>
                 {historiquecommande.map((histoCommande) => (
                     <tr key={histoCommande.id}>
-                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 border-solid border-2">{histoCommande.commande}</td>
                         <td className="whitespace-nowrap px-8 py-4 text-sm text-gray-500 border-solid border-2">{histoCommande.platCommande}</td>
                         <td className="whitespace-nowrap px-10 py-4 text-sm text-gray-500 border-solid border-2">{histoCommande.quantitePlat}</td>
                         <td className="whitespace-nowrap px-10 py-4 text-sm text-gray-500 border-solid border-2">
