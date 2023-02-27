@@ -115,17 +115,18 @@ function Salle() {
 
   const handleDelete = async (numeroTable) => {
     try {
-      await axios.delete("http://localhost:5000/table-delete/" + numeroTable);
-      const message = "Table Supprimée avec succès.";
-      localStorage.setItem("notification", JSON.stringify({ message, show: true }));
+      const response = await axios.delete("http://localhost:5000/table-delete/" + numeroTable);
+      if (response.data.code === "ER_ROW_IS_REFERENCED_2") {
+        const message = "Impossible de supprimer la table, elle possède une commande.";
+        localStorage.setItem("notification", JSON.stringify({ message, show: true }));
+      } else {
+        const message = "Table Supprimée avec succès.";
+        localStorage.setItem("notification", JSON.stringify({ message, show: true }));
+      }
+
       window.location.reload();
     } catch (err) {
       console.log(err);
-      let message = "Une erreur s'est produite lors de la suppression de la table.";
-      if (err.response && err.response.status === 409) {
-        message = "Cette table est utilisée dans une commande en cours. Supprimez la commande avant de supprimer la table.";
-      }
-      localStorage.setItem("notification", JSON.stringify({ message, show: true }));
     }
   };
 
@@ -183,7 +184,7 @@ function Salle() {
           <div className="flex-grow">
             <div className={toggleState === 1 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
               {notification.show && (
-                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded absolute right-0 transition duration-500 shadow-2xl " role="alert">
+                <div className={`${notification.message === 'Impossible de supprimer la table, elle possède une commande.' ? 'bg-red-100 text-red-700 border-red-400' : 'bg-green-100'} border border-green-400 text-green-700 px-4 py-3 rounded absolute right-0 transition duration-500 shadow-2xl role="alert"`}>
                   <strong className="font-bold">{notification.message}</strong>
                 </div>
               )}
