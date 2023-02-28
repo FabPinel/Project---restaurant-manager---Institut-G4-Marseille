@@ -107,7 +107,7 @@ function CommandesTable() {
                     <tr key={commande.numeroCommande}>
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 border-solid border-2">{commande.numeroCommande}</td>
                         <td className="whitespace-nowrap px-8 py-4 text-sm text-gray-500 border-solid border-2">{commande.table}</td>
-                        <td className="whitespace-nowrap px-10 py-4 text-sm text-gray-500 border-solid border-2">{commande.dateCommande}</td>
+                        <td className="whitespace-nowrap px-10 py-4 text-sm text-gray-500 border-solid border-2">{new Date(commande.dateCommande).toLocaleString()}</td>
                         <td className="whitespace-nowrap px-10 py-4 text-sm text-gray-500 border-solid border-2">
                             <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
                                 <Link to={`/HistoriqueCommandeTable/${commande.numeroCommande}`}>

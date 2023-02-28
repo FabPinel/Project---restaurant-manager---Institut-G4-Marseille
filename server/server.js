@@ -153,7 +153,7 @@ app.put("/tableUpdate-libre/:numeroTable", (req, res) => {
 
 //CREATE COMMANDE
 app.post("/commande-add/:numeroTable", (req, res) => {
-  const q = "INSERT INTO `commandestables` (`table`, `dateCommande`) VALUES (?, CONVERT_TZ(NOW(),'+00:00','+01:00'))";
+  const q = "INSERT INTO `commandestables` (`table`, `dateCommande`) VALUES (?, CONVERT_TZ(NOW(),'+00:00','+00:00'))";
   const table = req.params.numeroTable
 
   dataBase.query(q, [table], (err, data) => {
