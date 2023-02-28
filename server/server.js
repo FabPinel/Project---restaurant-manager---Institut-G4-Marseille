@@ -81,6 +81,51 @@ app.get("/salaries", (req, res) => {
 })
 //-------------------------------------------------------------------------------------------------
 
+// REQUETES PAGE STOCKS-----------------------------------------------------------------------------
+app.get("/ingredients", (req, res) => {
+  const ingredients = "SELECT * FROM ingredients"
+  dataBase.query(ingredients, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+app.post("/ajout-ingredients", (req, res) => {
+  const i = "INSERT INTO `ingredients` (`nomIngredient`, `datePeremption`, `coutIngredient`, `fournisseur`, `stock`, `iconeUrl`) VALUES (?)"
+  const values = [
+    req.body.nomIngredient,
+    req.body.datePeremption,
+    req.body.coutIngredient,
+    req.body.fournisseur,
+    req.body.stock,
+    req.body.iconeUrl,
+  ];
+  dataBase.query(i, [values], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("ingredient ajouté avec succès")
+  })
+})
+
+app.get("/fournisseur", (req, res) => {
+  const fourni = "SELECT * FROM fournisseurs"
+  dataBase.query(fourni, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+app.delete("/fournisseur/:id", (req, res) => {
+  const deleteF = req.params.id;
+  const f = "DELETE FROM fournisseurs where id = ?";
+
+  dataBase.query(f, [deleteF], (err, data) => {
+    if (err) return res.send(err);
+    return res.json("Fournisseur supprimé avec succès");
+  })
+})
+
+//-------------------------------------------------------------------------------------------------
+
 app.get("/api", (req, res) => {
   res.json({ "users": ["Cedric", "Fabien", "Jabir", "Aniss"] })
 })
