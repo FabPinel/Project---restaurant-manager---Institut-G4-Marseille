@@ -13,7 +13,6 @@ function UpdatePlat() {
     console.log(location.pathname.split("/")[2])
 
     const [Plat, setPlat] = useState({
-      id: "",
       nomPlat: "",
       DescriptionPlat: "",
       prixPlat: "",
@@ -53,12 +52,11 @@ function UpdatePlat() {
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">  </label>
                             <input type="text" name="nomPlat" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> </label>
-                            <input type="text" name="descriptionPlat" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
+                            <input type="text" name="DescriptionPlat" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">  </label>
                             <input type="number" name="prixPlat" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">  </label>
                             <select type="text" name="categorie" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' >
-                            <option selected></option>
                             <option value="Accompagnement">Accompagnement</option>
                             <option value="Alcool">Alcool</option>
                             <option value="Boissons">Boissons</option>
