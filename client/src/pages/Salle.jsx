@@ -184,7 +184,7 @@ function Salle() {
           <div className="flex-grow">
             <div className={toggleState === 1 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
               {notification.show && (
-                <div className={`${notification.message === 'Impossible de supprimer la table, elle possède une commande.' ? 'bg-red-100 text-red-700 border-red-400' : 'bg-green-100'} border border-green-400 text-green-700 px-4 py-3 rounded absolute right-0 transition duration-500 shadow-2xl role="alert"`}>
+                <div className={`${notification.message === 'Impossible de supprimer la table, elle possède une commande.' ? 'bg-red-100 text-red-700 border-red-400' : 'bg-green-100 border-green-400 text-green-700'} border  px-4 py-3 rounded absolute right-0 transition duration-500 shadow-2xl role="alert"`}>
                   <strong className="font-bold">{notification.message}</strong>
                 </div>
               )}
@@ -193,9 +193,6 @@ function Salle() {
               </div>
               <button onClick={() => setShow(!show)} className="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 ml-4">
                 Ajouter
-              </button>
-              <button className="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500">
-                Fusionner
               </button>
               {show &&
                 <div className='w-auto bg-gray-50 border border-gris rounded-xl m-auto mt-20 mb-5 p-2 absolute shadow-2xl left-96 top-16'>
@@ -252,7 +249,7 @@ function Salle() {
               <div className='flex flex-wrap justify-center'>
                 {
                   tableSalle1.map((salle1) => (
-                    <div className='w-72 transition duration-500 transform hover:-translate-y-2' key={salle1.numeroTable}>
+                    <div className='w-72 transition duration-500 transform hover:-translate-y-1' key={salle1.numeroTable}>
                       <div className={`${salle1.statutTable === 'Libre' ? 'bg-green-200' : salle1.statutTable === 'Occupée' ? 'bg-red-200' : salle1.statutTable === 'Réservée' ? 'bg-orange-200' : 'bg-gray-200'} mr-10 border border-gris rounded-xl mt-20 p-1`}>
                         <p className='text-bleu text-center text-2xl'>{salle1.numeroTable}</p>
                       </div>

@@ -39,6 +39,14 @@ app.get("/tables-salle1", (req, res) => {
   })
 })
 
+app.get("/plats-commande", (req, res) => {
+  const t = "SELECT * FROM `plats` WHERE categorie = 'Plats'"
+  dataBase.query(t, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
 //TOTAL RESERVATION SALLE1
 app.get("/nombres-reservations-salle1", (req, res) => {
   const nbr = "SELECT count(statutTable) FROM `tables`  WHERE salle = 'Salle1' AND statutTable = 'Réservée' HAVING count(statutTable) IS NOT NULL"
@@ -154,7 +162,6 @@ app.post("/commande-add/:numeroTable", (req, res) => {
   });
 });
 
-
 //CREATE COMMANDE PLAT
 app.post("/commande-plat-add/:numeroCommande", (req, res) => {
   const q = "INSERT INTO `contenircommandes` (`commande`, `platCommande`, `quantitePlat`) VALUES (?)"
@@ -167,6 +174,46 @@ app.post("/commande-plat-add/:numeroCommande", (req, res) => {
   dataBase.query(q, [values], (err, data) => {
     if (err) return res.json(err)
     return res.json("Plat ajouté avec succès.")
+  })
+})
+
+//UPDATE QUANTITE COMMANDE PLAT
+app.put("/commande-plat-update/:numeroCommande/:nomPlat", (req, res) => {
+  const commande = req.params.numeroCommande
+  const platCommande = req.params.nomPlat
+  const q = "UPDATE `contenircommandes` SET `quantitePlat`=? WHERE commande = ? AND platCommande = ?";
+  const values = [
+    req.body.quantitePlat,
+  ];
+
+  dataBase.query(q, [...values, commande, platCommande], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Quantitée +1")
+  })
+})
+
+
+//GET PLAT COMMANDE
+app.get("/commande-plat/:numeroCommande/:nomPlat", (req, res) => {
+  const q = "SELECT * FROM `contenircommandes` WHERE commande = ? AND platCommande = ? "
+  const commande = req.params.numeroCommande
+  const platCommande = req.params.nomPlat
+
+  dataBase.query(q, [commande, platCommande], (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+//GET PRIX TOTAL PAR PLAT
+app.get("/commande-plat-total/:numeroCommande/:nomPlat", (req, res) => {
+  const q = "SELECT contenircommandes.quantitePlat * plats.prixPlat AS total FROM `contenircommandes` INNER JOIN `plats` ON plats.nomPlat = contenircommandes.platCommande WHERE commande = ? AND platCommande = ? "
+  const commande = req.params.numeroCommande
+  const platCommande = req.params.nomPlat
+
+  dataBase.query(q, [commande, platCommande], (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
   })
 })
 
