@@ -127,7 +127,7 @@ function Plat() {
                         
                         <div className='flex justify-center p-1'>
                           <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
-                            <Link to={`/PlatUpdate/${Plats.Id}`}>
+                            <Link to={`/PlatUpdate/${Plats.id}`}>
                               <FaIconsBootStrap.FaPencilAlt size={16} />
                             </Link>
                           </button>

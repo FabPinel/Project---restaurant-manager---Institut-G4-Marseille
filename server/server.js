@@ -128,7 +128,6 @@ app.put("/PlatUpdate/:id", (req, res) => {
   const PlatsId = req.params.id;
   const q = "UPDATE `plats` SET `nomPlat`=?, `descriptionPlat`=?, `prixPlat`=?, `categorie`=? WHERE `plats`.`id`= ?";
   const values = [
-    req.body.id,
     req.body.nomPlat,
     req.body.descriptionPlat,
     req.body.prixPlat,

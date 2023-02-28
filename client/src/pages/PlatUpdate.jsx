@@ -14,10 +14,11 @@ function UpdatePlat() {
 
     const [Plat, setPlat] = useState({  
       nomPlat: "",
-      DescriptionPlat: "",
+      descriptionPlat: "",
       prixPlat: "",
       categorie: "",
     });
+    console.log(Plat)
 
     const handleChange = (e) => {
         setPlat(prev => ({ ...prev, [e.target.name]: e.target.value }))
@@ -28,7 +29,7 @@ function UpdatePlat() {
     const handleClick = async e => {
         e.preventDefault()
         try {
-            await axios.put("http://localhost:5000/PlatUpdate/" + Plat)
+            await axios.put("http://localhost:5000/PlatUpdate/" + platsId, Plat)
             navigate("/Plat");
         } catch (err) {
             console.log(err);
@@ -52,7 +53,7 @@ function UpdatePlat() {
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">  </label>
                             <input type="text" name="nomPlat" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> </label>
-                            <input type="text" name="DescriptionPlat" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
+                            <input type="text" name="descriptionPlat" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">  </label>
                             <input type="number" name="prixPlat" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' />
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">  </label>
