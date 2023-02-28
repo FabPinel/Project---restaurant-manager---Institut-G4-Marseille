@@ -113,7 +113,7 @@ app.post("/plat-add", (req, res) => {
   })
 })
 
-app.delete("/plat-delete/:id", (req, res) => {
+app.delete("/plat-delete/:idPlat", (req, res) => {
   const PlatsId = req.params.id;
   const q = "DELETE FROM `plats` WHERE nomPlat = ?"
 
@@ -124,9 +124,9 @@ app.delete("/plat-delete/:id", (req, res) => {
 })
 //---
 
-app.put("/PlatUpdate/:id", (req, res) => {
-  const PlatsId = req.params.id;
-  const q = "UPDATE `plats` SET `nomPlat`=?, `descriptionPlat`=?, `prixPlat`=?, `categorie`=? WHERE `plats`.`id`= ?";
+app.put("/PlatUpdate/:idPlat", (req, res) => {
+  const PlatsId = req.params.idPlat;
+  const q = "UPDATE `plats` SET `nomPlat`=?, `descriptionPlat`=?, `prixPlat`=?, `categorie`=? WHERE `idPlat`= ?";
   const values = [
     req.body.nomPlat,
     req.body.descriptionPlat,

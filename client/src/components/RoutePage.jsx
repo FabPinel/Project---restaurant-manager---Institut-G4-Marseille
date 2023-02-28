@@ -22,7 +22,7 @@ const RoutePage = () => {
           <Route path='/Stock' element={<Stock/>}/>
           <Route path='/Menu' element={<Menu/>}/>
           <Route path='/Plat' element={<Plat/>}/>
-          <Route path='/PlatUpdate/:id' element={<PlatUpdate/>}/>
+          <Route path='/PlatUpdate/:idPlat' element={<PlatUpdate/>}/>
           <Route path='/Planning' element={<Planning/>}/>
           <Route path='/Fournisseur' element={<Fournisseur/>}/>
         </Routes>   

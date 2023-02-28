@@ -62,7 +62,7 @@ function Plat() {
       <section>
           <div className="flex-grow">
             <div className={toggleState === 1 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
-              <div className='bg-gray-50 w-1/6 text-right border border-gris rounded-xl m-auto mt-24 mb-5 '>
+              <div className='bg-gray-50 w-1/6 text-right border '>
               </div>
               <button onClick={() => setShow(!show)} className="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 ml-4">
                 Ajouter
@@ -127,7 +127,7 @@ function Plat() {
                         
                         <div className='flex justify-center p-1'>
                           <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
-                            <Link to={`/PlatUpdate/${Plats.id}`}>
+                            <Link to={`/PlatUpdate/${Plats.idPlat}`}>
                               <FaIconsBootStrap.FaPencilAlt size={16} />
                             </Link>
                           </button>
