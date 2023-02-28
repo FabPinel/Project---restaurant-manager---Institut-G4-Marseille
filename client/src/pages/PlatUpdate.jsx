@@ -12,7 +12,7 @@ function UpdatePlat() {
 
     console.log(location.pathname.split("/")[2])
 
-    const [Plat, setPlat] = useState({
+    const [Plat, setPlat] = useState({  
       nomPlat: "",
       DescriptionPlat: "",
       prixPlat: "",
@@ -28,7 +28,7 @@ function UpdatePlat() {
     const handleClick = async e => {
         e.preventDefault()
         try {
-            await axios.put("http://localhost:5000/PlatUpdate/" + platsId, Plat)
+            await axios.put("http://localhost:5000/PlatUpdate/" + Plat)
             navigate("/Plat");
         } catch (err) {
             console.log(err);

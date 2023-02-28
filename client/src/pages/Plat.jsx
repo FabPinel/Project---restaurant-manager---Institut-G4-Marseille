@@ -27,7 +27,7 @@ function Plat() {
 
   const [Plat, setPlat] = useState({
     nomPlat: "",
-    DescriptionPlat: "",
+    descriptionPlat: "",
     prixPlat: "",
     categorie: "",
   });
