@@ -114,7 +114,7 @@ app.post("/plat-add", (req, res) => {
 })
 
 app.delete("/plat-delete/:idPlat", (req, res) => {
-  const PlatsId = req.params.id;
+  const PlatsId = req.params.idPlat;
   const q = "DELETE FROM `plats` WHERE nomPlat = ?"
 
   dataBase.query(q, [PlatsId], (err, data) => {
