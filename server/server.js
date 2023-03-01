@@ -39,13 +39,60 @@ app.get("/tables-salle1", (req, res) => {
   })
 })
 
-app.get("/plats-commande", (req, res) => {
-  const t = "SELECT * FROM `plats` WHERE categorie = 'Plats'"
+//AFFICHER LES PIZZAS BASE TOMATE
+app.get("/pizza-tomate", (req, res) => {
+  const t = "SELECT * FROM `plats` WHERE categorie = 'Pizzas - Tomate'"
   dataBase.query(t, (err, data) => {
     if (err) return res.json(err)
     return res.json(data)
   })
 })
+
+//AFFICHER LES PIZZAS BASE CREME
+app.get("/pizza-creme", (req, res) => {
+  const t = "SELECT * FROM `plats` WHERE categorie = 'Pizzas - Crème'"
+  dataBase.query(t, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+//AFFICHER LES PATES
+app.get("/pates", (req, res) => {
+  const t = "SELECT * FROM `plats` WHERE categorie = 'Pâtes'"
+  dataBase.query(t, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+//AFFICHER LES DESSERTS GOURMANT
+app.get("/desserts-gourmant", (req, res) => {
+  const t = "SELECT * FROM `plats` WHERE categorie = 'DessertGourmant'"
+  dataBase.query(t, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+//AFFICHER LES DESSERTS GLACE
+app.get("/desserts-glace", (req, res) => {
+  const t = "SELECT * FROM `plats` WHERE categorie = 'DessertGlace'"
+  dataBase.query(t, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+//AFFICHER LES BOISSONS
+app.get("/boissons", (req, res) => {
+  const t = "SELECT * FROM `plats` WHERE categorie = 'Boissons'"
+  dataBase.query(t, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
 
 //TOTAL RESERVATION SALLE1
 app.get("/nombres-reservations-salle1", (req, res) => {
