@@ -24,7 +24,7 @@ function HistoriqueCommandeTable() {
     useEffect(() => {
         const fetchAllPlatsCommande = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/plats-commande");
+                const res = await axios.get("http://localhost:5000/pizza-tomate");
                 setPlatsCommande(res.data);
             } catch (err) {
                 console.log(err);
@@ -33,6 +33,76 @@ function HistoriqueCommandeTable() {
         fetchAllPlatsCommande();
     }, []);
 
+    const [pizzaCreme, setPizzaCreme] = useState([]);
+
+    useEffect(() => {
+        const fetchAllPizzaCreme = async () => {
+            try {
+                const res = await axios.get("http://localhost:5000/pizza-creme");
+                setPizzaCreme(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllPizzaCreme();
+    }, []);
+
+
+    const [pates, setPates] = useState([]);
+
+    useEffect(() => {
+        const fetchAllPates = async () => {
+            try {
+                const res = await axios.get("http://localhost:5000/pates");
+                setPates(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllPates();
+    }, []);
+
+    const [desserts, setDesserts] = useState([]);
+
+    useEffect(() => {
+        const fetchAllDesserts = async () => {
+            try {
+                const res = await axios.get("http://localhost:5000/desserts-gourmant");
+                setDesserts(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllDesserts();
+    }, []);
+
+    const [dessertsGlace, setDessertsGlace] = useState([]);
+
+    useEffect(() => {
+        const fetchAllDessertsGlace = async () => {
+            try {
+                const res = await axios.get("http://localhost:5000/desserts-glace");
+                setDessertsGlace(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllDessertsGlace();
+    }, []);
+
+    const [boissons, setBoissons] = useState([]);
+
+    useEffect(() => {
+        const fetchAllBoissons = async () => {
+            try {
+                const res = await axios.get("http://localhost:5000/boissons");
+                setBoissons(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllBoissons();
+    }, []);
 
     const addPlat = async (plat) => {
         const platExiste = await axios.get(`/commande-plat/${numeroCommande}/${plat}`);
@@ -174,7 +244,7 @@ function HistoriqueCommandeTable() {
                     </button>
                     <button className={toggleState === 2 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
                         onClick={() => toggleTab(2)} >
-                        Pates
+                        Pâtes
                     </button>
                     <button className={toggleState === 3 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
                         onClick={() => toggleTab(3)} >
@@ -182,10 +252,16 @@ function HistoriqueCommandeTable() {
                     </button>
                     <button className={toggleState === 4 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
                         onClick={() => toggleTab(4)} >
+                        Petite faim
+                    </button>
+                    <button className={toggleState === 5 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
+                        onClick={() => toggleTab(5)} >
                         Boissons
                     </button>
                 </div>
                 <div className={toggleState === 1 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
+                    <h2 className='ml-32 font-bold text-xl'>Les tomates</h2>
+                    <div className='bg-gray-50 border border-black rounded-xl mt-1 flex w-4/5 m-auto ml-32 '></div>
                     <div className='flex flex-wrap justify-center mb-2'>
                         {
                             platsCommande.map((plats) => (
@@ -204,49 +280,162 @@ function HistoriqueCommandeTable() {
                             ))
                         }
                     </div>
+                    <h2 className='ml-32 font-bold text-xl'>Les crèmes </h2>
+                    <div className='bg-gray-50 border border-black rounded-xl mt-1 flex w-4/5 m-auto ml-32 '></div>
+                    <div className='flex flex-wrap justify-center mb-2'>
+                        {
+                            pizzaCreme.map((creme) => (
+                                <div onClick={() => addPlat(creme.nomPlat)} className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer flex flex-wrap' key={creme.nomPlat}>
+                                    <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
+                                        <div className='w-2/4'>
+                                            <img className='border rounded-xl' src={creme.imgPlat} alt="" />
+                                        </div>
+                                        <div className='w-2/4'>
+                                            <p className='text-bleu text-center text-base font-bold'>{creme.nomPlat}</p>
+                                            <p className='text-bleu text-center text-xs'>{creme.descriptionPlat}</p>
+                                            <p className='text-bleu text-center text-base font-bold'>{creme.prixPlat} €</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
-                <thead className="bg-gray-50 items-center">
-                    <tr>
-                        <th
-                            scope="col"
-                            className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 w-full">
-                            Plat
-                        </th>
-                        <th
-                            scope="col"
-                            className="px-20 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 w-full">
-                            Quantitée
-                        </th>
-                        <th
-                            scope="col"
-                            className="px-20 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 w-full">
-                            Prix
-                        </th>
-                        <th scope="col" className="relative py-3 pl-3 pr-4 sm:pr-6">
-                            <span className="sr-only">Edit</span>
-                        </th>
-                    </tr>
-                </thead>
-                {historiquecommande.map((histoCommande, index) => (
-                    <tr key={index}>
-                        <td className="whitespace-nowrap px-8 py-4 text-sm text-gray-500 border-solid border-2">{histoCommande.platCommande}</td>
-                        <td className="whitespace-nowrap px-10 py-4 text-sm text-gray-500 border-solid border-2">
-                            {histoCommande.quantitePlat}
-                            <button onClick={() => addQuantite(histoCommande.platCommande)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1 ml-2">
-                                <FaIconsBootStrap.FaRegArrowAltCircleUp size={16} />
-                            </button>
-                            <button onClick={() => deleteQuantite(histoCommande.platCommande)} className="text-white bg-rouge1 hover:bg-gris duration-500 rounded-md mr-2 p-1">
-                                <FaIconsBootStrap.FaRegArrowAltCircleDown size={16} />
-                            </button>
-                        </td>
-                        <td className="whitespace-nowrap px-8 py-4 text-sm text-gray-500 border-solid border-2">{totalPlatsCommande.find(plat => plat.platCommande === histoCommande.platCommande)?.totalPrix} €</td>
-                        <td className="whitespace-nowrap px-10 py-4 text-sm text-gray-500 border-solid border-2">
-                            <button onClick={() => handleDelete(histoCommande.id)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
-                                <FaIconsBootStrap.FaTrashAlt size={16} />
-                            </button>
-                        </td>
-                    </tr>
-                ))}
+                <div className={toggleState === 2 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
+                    <div className='flex flex-wrap justify-center mb-2'>
+                        {
+                            pates.map((pates) => (
+                                <div onClick={() => addPlat(pates.nomPlat)} className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer flex flex-wrap' key={pates.nomPlat}>
+                                    <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
+                                        <div className='w-2/4'>
+                                            <img className='border rounded-xl' src={pates.imgPlat} alt="" />
+                                        </div>
+                                        <div className='w-2/4'>
+                                            <p className='text-bleu text-center text-base font-bold'>{pates.nomPlat}</p>
+                                            <p className='text-bleu text-center text-xs'>{pates.descriptionPlat}</p>
+                                            <p className='text-bleu text-center text-base font-bold'>{pates.prixPlat} €</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+                <div className={toggleState === 3 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
+                    <h2 className='ml-32 font-bold text-xl'>Les gourmants</h2>
+                    <div className='bg-gray-50 border border-black rounded-xl mt-1 flex w-4/5 m-auto ml-32 '></div>
+                    <div className='flex flex-wrap justify-center mb-2'>
+                        {
+                            desserts.map((desserts) => (
+                                <div onClick={() => addPlat(desserts.nomPlat)} className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer flex flex-wrap' key={desserts.nomPlat}>
+                                    <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
+                                        <div className='w-2/4'>
+                                            <img className='border rounded-xl' src={desserts.imgPlat} alt="" />
+                                        </div>
+                                        <div className='w-2/4'>
+                                            <p className='text-bleu text-center text-base font-bold'>{desserts.nomPlat}</p>
+                                            <p className='text-bleu text-center text-xs'>{desserts.descriptionPlat}</p>
+                                            <p className='text-bleu text-center text-base font-bold'>{desserts.prixPlat} €</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                    <h2 className='ml-32 font-bold text-xl'>Les glaces</h2>
+                    <div className='bg-gray-50 border border-black rounded-xl mt-1 flex w-4/5 m-auto ml-32 '></div>
+                    <div className='flex flex-wrap justify-center mb-2'>
+                        {
+                            dessertsGlace.map((desserts) => (
+                                <div onClick={() => addPlat(desserts.nomPlat)} className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer flex flex-wrap' key={desserts.nomPlat}>
+                                    <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
+                                        <div className='w-2/4'>
+                                            <img className='border rounded-xl' src={desserts.imgPlat} alt="" />
+                                        </div>
+                                        <div className='w-2/4'>
+                                            <p className='text-bleu text-center text-base font-bold'>{desserts.nomPlat}</p>
+                                            <p className='text-bleu text-center text-xs'>{desserts.descriptionPlat}</p>
+                                            <p className='text-bleu text-center text-base font-bold'>{desserts.prixPlat} €</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+                <div className={toggleState === 5 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
+                    <h2 className='ml-32 font-bold text-xl'>Les Boissons</h2>
+                    <div className='bg-gray-50 border border-black rounded-xl mt-1 flex w-4/5 m-auto ml-32 '></div>
+                    <div className='flex flex-wrap justify-center mb-2'>
+                        {
+                            boissons.map((boissons) => (
+                                <div onClick={() => addPlat(boissons.nomPlat)} className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer flex flex-wrap' key={boissons.nomPlat}>
+                                    <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
+                                        <div className='w-2/4'>
+                                            <img className='border rounded-xl' src={boissons.imgPlat} alt="" />
+                                        </div>
+                                        <div className='w-2/4'>
+                                            <p className='text-bleu text-center text-base font-bold'>{boissons.nomPlat}</p>
+                                            <p className='text-bleu text-center text-xs'>{boissons.descriptionPlat}</p>
+                                            <p className='text-bleu text-center text-base font-bold'>{boissons.prixPlat} €</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+                {historiquecommande.length > 0 && (
+                    <>
+                        <thead className="bg-bleu items-center">
+                            <tr>
+                                <th
+                                    scope="col"
+                                    className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-white w-full">
+                                    Plat
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-20 py-3 text-center text-xs font-medium uppercase tracking-wide text-white w-full">
+                                    Quantitée
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-20 py-3 text-center text-xs font-medium uppercase tracking-wide text-white w-full">
+                                    Total
+                                </th>
+                                <th scope="col" className="relative py-3 pl-3 pr-4 sm:pr-6">
+                                    <span className="sr-only">Edit</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        {historiquecommande.map((histoCommande, index) => (
+                            <tr key={index}>
+                                <td className="whitespace-nowrap px-8 py-4 text-xl text-black border-solid border-2 bg-white">{histoCommande.platCommande}</td>
+                                <td className="whitespace-nowrap px-10 py-1 text-xl text-black border-solid border-2 bg-white">
+                                    <div className="flex">
+                                        {histoCommande.quantitePlat}
+                                        <div className="ml-12">
+                                            <button onClick={() => addQuantite(histoCommande.platCommande)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1 ml-2">
+                                                <FaIconsBootStrap.FaRegArrowAltCircleUp size={24} />
+                                            </button>
+                                            <button onClick={() => deleteQuantite(histoCommande.platCommande)} className="text-white bg-rouge1 hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                                                <FaIconsBootStrap.FaRegArrowAltCircleDown size={24} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td className="whitespace-nowrap px-8 py-4 text-xl text-black border-solid border-2 bg-white">{totalPlatsCommande.find(plat => plat.platCommande === histoCommande.platCommande)?.totalPrix} €</td>
+                                <td className="whitespace-nowrap px-10 py-4 text-xltext-black border-solid border-2 bg-white">
+                                    <button onClick={() => handleDelete(histoCommande.id)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                                        <FaIconsBootStrap.FaTrashAlt size={24} />
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </>
+                )}
+
 
             </section>
         </React.Fragment >
