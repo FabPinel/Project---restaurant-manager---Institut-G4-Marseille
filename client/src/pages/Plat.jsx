@@ -6,7 +6,6 @@ import * as FaIconsBootStrap from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom';
 
 function Plat() {
-  const [toggleState] = useState(1);
 
 
   const [Plats, setPlats] = useState([]);
@@ -123,6 +122,9 @@ function Plat() {
                         <p className='text-bleu text-center text-2xl'>Catégories : {Plats.categorie}</p>
                         <p className='text-bleu text-center text-2xl'>Description : {Plats.descriptionPlat}</p>
                         <p className='text-bleu text-center text-2xl'>Prix {Plats.prixPlat}</p>
+                        <div className='w-full flex justify-center p-2'>
+                                            <img className='border rounded-xl' src={Plats.imgPlat} alt="" />
+                                        </div>
                         
                         <div className='flex justify-center p-1'>
                           <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
