@@ -17,6 +17,7 @@ function CommandesTable() {
         numeroCommande: "",
         table: "",
         dateCommande: "",
+        statutCommande: ""
     });
 
     console.log(commande);
@@ -25,10 +26,10 @@ function CommandesTable() {
 
     console.log("numeroTable: " + numeroTable)
 
-    const handleClick = async e => {
-        e.preventDefault()
+    const handleClick = async (e, statut) => {
+        e.preventDefault();
         try {
-            await axios.post(`/commande-add/${numeroTable}`, commande)
+            await axios.post(`/commande-add/${numeroTable}`, { ...commande, statutCommande: statut });
             navigate(0);
         } catch (err) {
             console.log(err);
@@ -76,26 +77,35 @@ function CommandesTable() {
                         <div><FaIcons.RxArrowLeft size={40} /></div>
                     </button>
                 </div>
-                <button onClick={handleClick} className="bg-bleu hover:bg-gris text-white font-bold py-2 pFaRegClipboardx-4 rounded duration-500 mr-4 ml-4">
-                    <div className="flex">
-                        Ajouter <div><FaIconsBootStrap.FaRegClipboard size={20} /></div>
+                <div className='m-auto mt-15 mb-5 p-2 flex justify-center'>
+                    <div className='bg-bleu w-96 h-96 rounded-xl text-white shadow-2xl left-96 top-16 transition duration-500 transform hover:-translate-y-4 cursor-pointer' onClick={(e) => handleClick(e, "Sur place")}>
+                        <div className='justify-center flex pt-20'><FaIconsBootStrap.FaChair size={150} /></div>
+                        <div className='text-center text-white text-5xl mt-5'>
+                            <p className='font-bold'>Sur place</p>
+                        </div>
                     </div>
-                </button>
-                <thead className="bg-gray-50 items-center">
+                    <div className='bg-rouge2 w-96 h-96 ml-5 rounded-xl text-white shadow-2xl left-96 top-16 transition duration-500 transform hover:-translate-y-4 cursor-pointer' onClick={(e) => handleClick(e, "A emporter")}>
+                        <div className='justify-center flex pt-20'><FaIconsBootStrap.FaHandHolding size={150} /></div>
+                        <div className='text-center text-white text-5xl mt-5'>
+                            <p className='font-bold'>A emporter</p>
+                        </div>
+                    </div>
+                </div>
+                <thead className="bg-bleu items-center">
                     <tr>
                         <th
                             scope="col"
-                            className="py-3 pl-4 pr-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6 w-full">
+                            className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-white w-full">
                             N° Commande
                         </th>
                         <th
                             scope="col"
-                            className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 w-full">
-                            Table
+                            className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-white w-full">
+                            Statut
                         </th>
                         <th
                             scope="col"
-                            className="px-20 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 w-full">
+                            className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-white w-full">
                             Date commande
                         </th>
                         <th scope="col" className="relative py-3 pl-3 pr-4 sm:pr-6">
@@ -105,17 +115,17 @@ function CommandesTable() {
                 </thead>
                 {commandes.map((commande) => (
                     <tr key={commande.numeroCommande}>
-                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 border-solid border-2">{commande.numeroCommande}</td>
-                        <td className="whitespace-nowrap px-8 py-4 text-sm text-gray-500 border-solid border-2">{commande.table}</td>
-                        <td className="whitespace-nowrap px-10 py-4 text-sm text-gray-500 border-solid border-2">{new Date(commande.dateCommande).toLocaleString()}</td>
-                        <td className="whitespace-nowrap px-10 py-4 text-sm text-gray-500 border-solid border-2">
+                        <td className="whitespace-nowrap px-8 py-4 text-xl text-black border-solid border-2 bg-white">{commande.numeroCommande}</td>
+                        <td className="whitespace-nowrap px-8 py-4 text-xl text-black border-solid border-2 bg-white">{commande.statutCommande}</td>
+                        <td className="whitespace-nowrap px-8 py-4 text-xl text-black border-solid border-2 bg-white">{new Date(commande.dateCommande).toLocaleString()}</td>
+                        <td className="whitespace-nowrap px-8 py-4 text-xl text-black border-solid border-2 bg-white">
                             <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
                                 <Link to={`/HistoriqueCommandeTable/${commande.numeroCommande}`}>
-                                    <FaIconsBootStrap.FaEye size={16} />
+                                    <FaIconsBootStrap.FaEye size={24} />
                                 </Link>
                             </button>
-                            <button onClick={() => handleDelete(commande.numeroCommande)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
-                                <FaIconsBootStrap.FaTrashAlt size={16} />
+                            <button onClick={() => handleDelete(commande.numeroCommande)} className="text-white bg-rouge2 hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                                <FaIconsBootStrap.FaTrashAlt size={24} />
                             </button>
                         </td>
                     </tr>

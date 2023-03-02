@@ -200,10 +200,11 @@ app.put("/tableUpdate-libre/:numeroTable", (req, res) => {
 
 //CREATE COMMANDE
 app.post("/commande-add/:numeroTable", (req, res) => {
-  const q = "INSERT INTO `commandestables` (`table`, `dateCommande`) VALUES (?, CONVERT_TZ(NOW(),'+00:00','+00:00'))";
-  const table = req.params.numeroTable
+  const q = "INSERT INTO `commandestables` (`table`, `dateCommande`, `statutCommande`) VALUES (?, CONVERT_TZ(NOW(),'+00:00','+00:00'), ?)";
+  const table = req.params.numeroTable;
+  const { statutCommande } = req.body;
 
-  dataBase.query(q, [table], (err, data) => {
+  dataBase.query(q, [table, statutCommande], (err, data) => {
     if (err) return res.json(err);
     return res.json("Commande ajoutée avec succès.");
   });
