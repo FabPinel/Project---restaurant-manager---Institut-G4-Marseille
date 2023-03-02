@@ -61,7 +61,6 @@ function Plat() {
     <React.Fragment>
       <section>
           <div className="flex-grow">
-            <div className={toggleState === 1 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
               <div className='bg-gray-50 w-1/6 text-right border '>
               </div>
               <button onClick={() => setShow(!show)} className="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 ml-4">
@@ -141,7 +140,6 @@ function Plat() {
                 }
               </div>
             </div>
-          </div>
         
       </section>
       </React.Fragment>
