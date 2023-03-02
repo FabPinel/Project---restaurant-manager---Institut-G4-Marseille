@@ -78,14 +78,14 @@ function CommandesTable() {
                     </button>
                 </div>
                 <div className='m-auto mt-15 mb-5 p-2 flex justify-center'>
-                    <div className='bg-bleu w-96 h-96 rounded-xl text-white shadow-2xl left-96 top-16 transition duration-500 transform hover:-translate-y-4 cursor-pointer' onClick={(e) => handleClick(e, "Sur place")}>
-                        <div className='justify-center flex pt-20'><FaIconsBootStrap.FaChair size={150} /></div>
+                    <div className='bg-bleu w-72 h-72 rounded-xl text-white shadow-2xl left-96 top-16 transition duration-500 transform hover:-translate-y-4 cursor-pointer' onClick={(e) => handleClick(e, "Sur place")}>
+                        <div className='justify-center flex pt-12'><FaIconsBootStrap.FaChair size={125} /></div>
                         <div className='text-center text-white text-5xl mt-5'>
                             <p className='font-bold'>Sur place</p>
                         </div>
                     </div>
-                    <div className='bg-rouge2 w-96 h-96 ml-5 rounded-xl text-white shadow-2xl left-96 top-16 transition duration-500 transform hover:-translate-y-4 cursor-pointer' onClick={(e) => handleClick(e, "A emporter")}>
-                        <div className='justify-center flex pt-20'><FaIconsBootStrap.FaHandHolding size={150} /></div>
+                    <div className='bg-rouge2 w-72 h-72 ml-5 rounded-xl text-white shadow-2xl left-96 top-16 transition duration-500 transform hover:-translate-y-4 cursor-pointer' onClick={(e) => handleClick(e, "A emporter")}>
+                        <div className='justify-center flex pt-12'><FaIconsBootStrap.FaHandHolding size={125} /></div>
                         <div className='text-center text-white text-5xl mt-5'>
                             <p className='font-bold'>A emporter</p>
                         </div>
