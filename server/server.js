@@ -99,12 +99,13 @@ app.get("/Plat", (req, res) => {
 })
 
 app.post("/plat-add", (req, res) => {
-  const q = "INSERT INTO `plats` ( `nomPlat`, `descriptionPlat`, `prixPlat`, `categorie`) VALUES (?)"
+  const q = "INSERT INTO `plats` ( `nomPlat`, `descriptionPlat`, `prixPlat`, `categorie`, `imgPlat`) VALUES (?)"
   const values = [
     req.body.nomPlat,
     req.body.descriptionPlat,
     req.body.prixPlat,
     req.body.categorie,
+    req.body.imgPlat,
   ];
 
   dataBase.query(q, [values], (err, data) => {
@@ -126,12 +127,13 @@ app.delete("/plat-delete/:idPlat", (req, res) => {
 
 app.put("/PlatUpdate/:idPlat", (req, res) => {
   const PlatsId = req.params.idPlat;
-  const q = "UPDATE `plats` SET `nomPlat`=?, `descriptionPlat`=?, `prixPlat`=?, `categorie`=? WHERE `idPlat`= ?";
+  const q = "UPDATE `plats` SET `nomPlat`=?, `descriptionPlat`=?, `prixPlat`=?, `categorie`=?, `imgPlat`=? WHERE `idPlat`= ?";
   const values = [
     req.body.nomPlat,
     req.body.descriptionPlat,
     req.body.prixPlat,
     req.body.categorie,
+    req.body.imgPlat,
   ];
 
   dataBase.query(q, [...values, PlatsId], (err, data) => {
