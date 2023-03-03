@@ -83,26 +83,37 @@ app.get("/salaries", (req, res) => {
 
 // REQUETES PAGE STOCKS-----------------------------------------------------------------------------
 app.get("/ingredients", (req, res) => {
-  const ingredients = "SELECT * FROM ingredients"
+  const ingredients = "SELECT * FROM ingredients WHERE categorieIngredient = 'Ingredient'"
   dataBase.query(ingredients, (err, data) => {
     if (err) return res.json(err)
     return res.json(data)
   })
 })
 
-app.post("/ajout-ingredients", (req, res) => {
-  const i = "INSERT INTO `ingredients` (`nomIngredient`, `datePeremption`, `coutIngredient`, `fournisseur`, `stock`, `iconeUrl`) VALUES (?)"
-  const values = [
-    req.body.nomIngredient,
-    req.body.datePeremption,
-    req.body.coutIngredient,
-    req.body.fournisseur,
-    req.body.stock,
-    req.body.iconeUrl,
-  ];
-  dataBase.query(i, [values], (err, data) => {
+app.get("/ingredientConso", (req, res) => {
+  const ingredients = "SELECT * FROM ingredients WHERE categorieIngredient = 'Consommable'"
+  dataBase.query(ingredients, (err, data) => {
     if (err) return res.json(err)
-    return res.json("ingredient ajouté avec succès")
+    return res.json(data)
+  })
+})
+
+app.get("/ingredientBoisson", (req, res) => {
+  const ingredients = "SELECT * FROM ingredients WHERE categorieIngredient = 'Boisson'"
+  dataBase.query(ingredients, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+
+app.delete("/ingredient/:nomIngredient", (req, res) => {
+  const deleteI = req.params.nomIngredient;
+  const D = "DELETE FROM ingredients where nomIngredient = ?";
+
+  dataBase.query(D, [deleteI], (err, data) => {
+    if (err) return res.send(err);
+    return res.json("Ingredient supprimé avec succès");
   })
 })
 
@@ -121,6 +132,45 @@ app.delete("/fournisseur/:id", (req, res) => {
   dataBase.query(f, [deleteF], (err, data) => {
     if (err) return res.send(err);
     return res.json("Fournisseur supprimé avec succès");
+  })
+})
+
+
+app.post("/ajout-ingredients", (req, res) => {
+  const i = "INSERT INTO `ingredients` (`nomIngredient`, `datePeremption`, `coutIngredient`, `fournisseur`, `stock`, `iconeUrl`, `categorieIngredient`) VALUES (?)"
+  const values = [
+    req.body.nomIngredient,
+    req.body.datePeremption,
+    req.body.coutIngredient,
+    req.body.fournisseur,
+    req.body.stock,
+    req.body.iconeUrl,
+    req.body.categorieIngredient,
+  ];
+  dataBase.query(i, [values], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("ingredient ajouté avec succès")
+  })
+})
+
+app.post("/modifs-ingredients/:nomIngredient", (req, res) => {
+  const ingredientsM = req.params.nomIngredient;
+  const i = "UPDATE `ingredients` SET 'nomIngredient'=?, 'stock'=?,"
+  const values = [
+    req.body.nomIngredient,
+    req.body.stock,
+  ];
+  dataBase.query(i, [values, ingredientsM], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("ingredient ajouté avec succès")
+  })
+})
+
+app.get("/categorieStock", (req, res) => {
+  const categoriestock = "SELECT * FROM categoriestock"
+  dataBase.query(categoriestock, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
   })
 })
 
