@@ -66,7 +66,7 @@ function Menu() {
                         ))}
                         <div className="flex justify-center p-1">
                             <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
-                                <Link>
+                                <Link> 
                                     <FaIconsBootStrap.FaEye size={16} />
                                 </Link>
                             </button>
