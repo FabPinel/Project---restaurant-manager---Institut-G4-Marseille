@@ -47,6 +47,59 @@ app.get("/tables-salle2", (req, res) => {
     return res.json(data)
   })
 })
+//-------------------------------------------------------------------------------------------------
+
+// REQUETES PAGE RÉSERVATION - CRÉATION RÉSERVATION-----------------------------------------------------------------------------
+app.get("/reservations", (req, res) => {
+  const nbr = "SELECT * FROM `reservation`"
+  dataBase.query(nbr, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+app.post("/reservation-add", (req, res) => {
+  const q = "INSERT INTO `reservation` (`nbPersonnes`, `tableReserve`, `dateReserve`, `clientReserve`) VALUES (?)"
+  const values = [
+    req.body.nbPersonnes,
+    req.body.tableReserve,
+    req.body.dateReserve,
+    req.body.clientReserve,
+
+  ];
+
+  dataBase.query(q, [values], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Réservation ajoutée avec succès.")
+  })
+})
+// REQUETES PAGE RÉSERVATION - CRÉATION CLIENT-----------------------------------------------------------------------------
+
+app.get("/clients", (req, res) => {
+  const nbr = "SELECT * FROM `clients`"
+  dataBase.query(nbr, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+app.post("/clients-add", (req, res) => {
+  const q = "INSERT INTO `clients` (`nomClient`, `prenomClient`, `telephoneClient`) VALUES (?)"
+  const values = [
+    req.body.nomClient,
+    req.body.prenomClient,
+    req.body.telephoneClient,
+  ];
+
+  dataBase.query(q, [values], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Client ajouté avec succès.")
+  })
+})
+
+//-----------------------------------------------//
+
+
 
 //AFFICHAGE TABLES TERASSE
 app.get("/tables-terrasse", (req, res) => {
