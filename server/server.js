@@ -519,6 +519,10 @@ app.get("/ingredientConso", (req, res) => {
 app.get("/Plat", (req, res) => {
   const t = "SELECT * FROM `plats`"
   dataBase.query(t, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
 
 app.get("/ingredientBoisson", (req, res) => {
   const ingredients = "SELECT * FROM ingredients WHERE categorieIngredient = 'Boisson'"
