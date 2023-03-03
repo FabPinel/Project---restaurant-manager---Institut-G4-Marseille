@@ -454,6 +454,47 @@ app.get("/salaries", (req, res) => {
   })
 })
 //-------------------------------------------------------------------------------------------------
+// REQUETES PAGE menu-----------------------------------------------------------------------------
+app.get("/menu", (req, res) => {
+  const t = "SELECT * FROM `contenirmenu` WHERE menu='Menu du jour'"
+  dataBase.query(t, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+app.get("/carte", (req, res) => {
+  const t = "SELECT * FROM `contenirmenu` WHERE menu='Carte du restaurant'"
+  dataBase.query(t, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+
+app.post("/menu-add", (req, res) => {
+  const q = "INSERT INTO `contenirmenu` (`menu`, `platMenu`) VALUES (?)"
+  const values = [
+    req.body.menu,
+    req.body.platMenu,
+  ];
+
+  dataBase.query(q, [values], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Menu ajoutée avec succès.")
+  })
+})
+
+app.delete("/menu-delete/:menu", (req, res) => {
+  const menuId = req.params.menu;
+  const q = "DELETE FROM `contenirmenu` WHERE menu = ?"
+
+  dataBase.query(q, [menuId], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Menu supprimé avec succès.")
+  })
+})
+
 
 // REQUETES PAGE STOCKS-----------------------------------------------------------------------------
 app.get("/ingredients", (req, res) => {
