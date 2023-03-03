@@ -82,7 +82,15 @@ app.get("/salaries", (req, res) => {
 //-------------------------------------------------------------------------------------------------
 // REQUETES PAGE menu-----------------------------------------------------------------------------
 app.get("/menu", (req, res) => {
-  const t = "SELECT * FROM `contenirmenu`"
+  const t = "SELECT * FROM `contenirmenu` WHERE menu='Menu du jour'"
+  dataBase.query(t, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+app.get("/carte", (req, res) => {
+  const t = "SELECT * FROM `contenirmenu` WHERE menu='Carte du restaurant'"
   dataBase.query(t, (err, data) => {
     if (err) return res.json(err)
     return res.json(data)
