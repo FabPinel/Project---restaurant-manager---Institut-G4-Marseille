@@ -2,10 +2,10 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
+//import { FaPen } from "react-icons/fa";
+//import { FaTrash } from "react-icons/fa";
 
 
-
-    
 
 
 function Reservation() {
@@ -17,9 +17,17 @@ function Reservation() {
 
   // Afficher/faire Disparaitre
   const [show, setShow] = useState(false);
+  //const [show2, setShow2] = useState(false);//
 
 // Récupérer réservations
   const [reservation, setReservation] = useState([]);
+
+  const [reservationAdd, setReservationAdd] = useState({
+    nbPersonnes: "",
+    tableReserve: "",
+    dateReserve: "",
+    clientReserve: "",
+  });
 
   useEffect(() => {
     const fetchAllReservations = async () => {
@@ -32,7 +40,8 @@ function Reservation() {
     };
     fetchAllReservations();
   }, []);
-console.log(reservation);
+// console.log(reservation);
+
 
 
 // Les boutons du formulaire
@@ -40,16 +49,18 @@ console.log(reservation);
 const navigate = useNavigate();
 const [error, setError] = useState(false)
 
-const handleClick2 = async e => {
-  e.preventDefault();
+const handleClick2 = async ()  => {
   try{
-    await axios.post("http://localhost:5000/reservations");
+    const res = await axios.post("http://localhost:5000/reservation-add", reservationAdd);
+    console.log("Ajout d'une réservation" + reservationAdd.data);
     navigate(0);
   }catch(err){
     console.log(err);
     setError(true)
   }
+  console.log(reservationAdd)
 };
+
 
  const close = () => {
     setShow(false);
@@ -59,7 +70,6 @@ const handleClick2 = async e => {
 
   return (
     <React.Fragment>
-      
         <section>
           <br></br>
          <div className="px-4 sm:px-6 lg:px-8">
@@ -70,14 +80,16 @@ const handleClick2 = async e => {
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <button
             type="button" onClick={() => setShow(!show)}
-            className="inline-flex items-center justify-center rounded-md border border-transparent bg-bleu px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gris sm:w-auto">
+            className="inline-flex items-center justify-center rounded-md border border-transparent bg-bleu px-4 py-2 mr-5 text-sm font-medium text-white shadow-sm hover:bg-gris sm:w-auto">
             Nouvelle réservation
           </button>
-          <button
-            type="button" onClick={() => setShow(!show)}
+          
+          {/* <button
+            type="button" onClick={() => setShow2(!show2)}
             className="inline-flex items-center justify-center rounded-md border border-transparent bg-bleu px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gris sm:w-auto">
             Ajouter un client
-          </button>
+          </button> */}
+
         </div>
       </div> 
   <div className="mt-8 flex flex-col">
@@ -89,47 +101,43 @@ const handleClick2 = async e => {
                   <tr>
                     <th
                       scope="col"
-                      className="py-3 pl-4 pr-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6 w-64">
+                      className="py-3 pl-4 pr-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">
                       N° Réservation
                     </th>
                     <th
                       scope="col"
-                      className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 w-64">
+                      className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
                       Nombre de personnes
                     </th>
                     <th
                       scope="col"
-                      className="px-20 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 w-64">
+                      className="px-20 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
                       N° Table
                     </th>
                     <th
                       scope="col"
-                      className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 w-64">
+                      className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
                       Date et heure
                     </th>
                     <th
                       scope="col"
-                      className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 w-64">
+                      className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
                       N° Client
                     </th>
-                    <th scope="col" className="relative py-3 pl-3 pr-4 sm:pr-6">
-                      <span className="sr-only">Edit</span>
-                    </th>
+                    
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
                   
                    {reservation.map((reserver) => (
-                    <tr key={reserver.idReservation}>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{reserver.nbPersonnes}</td>
-                      <td className="whitespace-nowrap px-8 py-4 text-sm text-gray-500">{reserver.tableReserve}</td>
-                      <td className="whitespace-nowrap px-10 py-4 text-sm text-gray-500">{reserver.dateReserve}</td>
-                      <td className="whitespace-nowrap px-12 py-4 text-sm text-gray-500">{reserver.clientReserve}</td>
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <a href="../reservation" className="text-bleu hover:text-indigo-900">
-                          Modifier<span className="sr-only">, {reserver.name}</span>
-                        </a>
-                      </td>
+                    <tr className='text-center' key={reserver.idReservation}>
+                      <td className="whitespace-nowrap py-4 text-sm text-gray-500">{reserver.idReservation}</td>
+                      <td className="whitespace-nowrap py-4 text-sm   text-gray-500">{reserver.nbPersonnes}</td>
+                      <td className="whitespace-nowrap py-4 text-sm text-gray-500">{reserver.tableReserve}</td>
+                      <td className="whitespace-nowrap py-4 text-sm text-gray-500">{new Date(reserver.dateReserve).toLocaleString()}</td>
+                      <td className="whitespace-nowrap py-4 text-sm text-gray-500">{reserver.clientReserve}</td>
+
+                      
                     </tr>
                   ))}
                 </tbody>
@@ -140,7 +148,7 @@ const handleClick2 = async e => {
       </div>
     </div>
      {show && (
-      <form className="absolute right-[590px] top-34">
+      <form className="absolute right-[590px] top-34" onSubmit={handleClick2}>
       <div className="bg-white border-2 text-center px-4 rounded-lg border border-bleu">
        <div className="py-4">
         <label className="text-md">Nombre de personnes</label>
@@ -162,23 +170,20 @@ const handleClick2 = async e => {
   <button
     type="button"
     className="rounded-md border border-gray-300 bg-rouge1 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gris focus:outline-none"
-    onClick={close}
-  >
+    onClick={close} >
     Annuler
   </button>
   <button
     type="submit"
-    className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-bleu py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gris focus:outline-non"
-    onClick={handleClick2} 
-  >
+    className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-bleu py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gris focus:outline-non">
     Enregistrer
   </button>
-  {error && "Something went wrong!"}
-</div>
   
+      </div>
       </div>
       </form>
      )}
+
         </section>
     </React.Fragment>
   )
