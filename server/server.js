@@ -79,6 +79,39 @@ app.get("/salaries", (req, res) => {
     return res.json(data)
   })
 })
+
+
+//Requete ajout de salarié ---------------------------------------------------------------
+
+app.post("/ajout-salaries", (req, res) => {
+  const s = "INSERT into salaries (`mailSalarie`,`nomSalarie`,`prenomSalarie`,`naissanceSalarie`,`telephoneSalarie`,`adresseSalarie`,`salaireSalarie`,`posteSalaire`) VALUES (?)";
+  const values = [
+    req.body.mailSalarie,
+    req.body.nomSalarie,
+    req.body.prenomSalarie,
+    req.body.naissanceSalarie,
+    req.body.telephoneSalarie,
+    req.body.adresseSalarie,
+    req.body.salaireSalarie,
+    req.body.posteSalaire,
+];
+  dataBase.query(s, [values], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("salarie-ajouté avec succès")
+  })
+})
+
+
+//Requete de suppresion des salariés-----------------------------------------------------------------
+app.delete("/salaries/:id", (req, res) => {
+  const deleteS = req.params.id;
+  const q = " DELETE FROM salaries WHERE id = ? ";
+
+  dataBase.query(q, [deleteS], (err, data) => {
+    if (err) return res.send(err);
+    return res.json("supprimé avec succés");
+  });
+});
 //-------------------------------------------------------------------------------------------------
 
 app.get("/api", (req, res) => {

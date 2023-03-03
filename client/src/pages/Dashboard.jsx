@@ -8,7 +8,7 @@ import axios from 'axios';
  useEffect(() => {
   const fetchAllCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/categories"); //le "http://localhost:5000/..." doit être équivalent à celui dans le fichier server.js
+      const res = await axios.get("http://localhost:5000/categories"); //le "http://localhost:5000/..." doit être le même que celui dans le fichier server.js
       setCategories(res.data);
     } catch (err) {
       console.log(err);
