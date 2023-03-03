@@ -72,6 +72,11 @@ function Stock() {
   })
   // console.log(ingredient)
 
+  const [ingredientsChanges, setIngredientsChanges] = useState({
+    nomIngredient: "",
+    stock: "",
+  })
+
   const handleChange = (e) => {
     setIngredient((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
@@ -143,12 +148,12 @@ function Stock() {
         setIngredientBoisson(nouvelleListe);
     }
 
-    try {
-      await axios.put("http://localhost:5000/modifs-ingredients/"+nomIngredient)
-      navigate(0);
-    } catch (err){
-      console.log(err);
-    }
+    // try {
+    //   await axios.put("http://localhost:5000/modifs-ingredients/"+nomIngredient, stock)
+    //   navigate(0);
+    // } catch (err){
+    //   console.log(err);
+    // }
 };
 
   return (
