@@ -47,7 +47,7 @@ app.get("/nombres-reservations-salle1", (req, res) => {
 })
 //-------------------------------------------------------------------------------------------------
 
-// REQUETES PAGE RÉSERVATION-----------------------------------------------------------------------------
+// REQUETES PAGE RÉSERVATION - CRÉATION RÉSERVATION-----------------------------------------------------------------------------
 app.get("/reservations", (req, res) => {
   const nbr = "SELECT * FROM `reservation`"
   dataBase.query(nbr, (err, data) => {
@@ -71,6 +71,30 @@ app.post("/reservation-add", (req, res) => {
     return res.json("Réservation ajoutée avec succès.")
   })
 })
+// REQUETES PAGE RÉSERVATION - CRÉATION CLIENT-----------------------------------------------------------------------------
+
+app.get("/clients", (req, res) => {
+  const nbr = "SELECT * FROM `clients`"
+  dataBase.query(nbr, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+app.post("/clients-add", (req, res) => {
+  const q = "INSERT INTO `clients` (`nomClient`, `prenomClient`, `telephoneClient`) VALUES (?)"
+  const values = [
+    req.body.nomClient,
+    req.body.prenomClient,
+    req.body.telephoneClient,
+  ];
+
+  dataBase.query(q, [values], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Client ajouté avec succès.")
+  })
+})
+
 //-----------------------------------------------//
 
 
