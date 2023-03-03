@@ -8,6 +8,7 @@ import Menu from '../pages/Menu';
 import Plat from '../pages/Plat';
 import Planning from '../pages/Planning';
 import Fournisseur from '../pages/Fournisseur';
+import PlatUpdate from '../pages/PlatUpdate';
 import UpdateTable from '../pages/UpdateTable';
 import CommandesTable from '../pages/CommandesTable';
 import HistoriqueCommandeTable from '../pages/HistoriqueCommandeTable';
@@ -29,6 +30,7 @@ const RoutePage = () => {
           <Route path='/UpdateTable/:numeroTable' element={<UpdateTable />} />
           <Route path='/CommandesTable/:numeroTable/:numeroCommande?' element={<CommandesTable />} />
           <Route path='/HistoriqueCommandeTable/:numeroCommande' element={<HistoriqueCommandeTable />} />
+          <Route path='/PlatUpdate/:idPlat' element={<PlatUpdate/>}/>
         </Routes>
       </section>
 
