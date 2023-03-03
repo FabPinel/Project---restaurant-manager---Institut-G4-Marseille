@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 13 fév. 2023 à 13:11
+-- Généré le : mer. 15 fév. 2023 à 08:57
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -64,22 +64,6 @@ CREATE TABLE IF NOT EXISTS `clients` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `commandesclients`
---
-
-DROP TABLE IF EXISTS `commandesclients`;
-CREATE TABLE IF NOT EXISTS `commandesclients` (
-  `numeroCommande` int(10) NOT NULL,
-  `client` varchar(10) NOT NULL,
-  `plat` varchar(100) NOT NULL,
-  PRIMARY KEY (`numeroCommande`),
-  KEY `client` (`client`),
-  KEY `plat` (`plat`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `commandesfournisseur`
 --
 
@@ -93,6 +77,49 @@ CREATE TABLE IF NOT EXISTS `commandesfournisseur` (
   KEY `ingredient` (`ingredient`),
   KEY `fournisseur` (`fournisseur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `commandestables`
+--
+
+DROP TABLE IF EXISTS `commandestables`;
+CREATE TABLE IF NOT EXISTS `commandestables` (
+  `numeroCommande` int(10) NOT NULL AUTO_INCREMENT,
+  `table` int(10) NOT NULL,
+  `dateCommande` datetime(6) NOT NULL,
+  PRIMARY KEY (`numeroCommande`),
+  KEY `client` (`table`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `commandestables`
+--
+
+INSERT INTO `commandestables` (`numeroCommande`, `table`, `dateCommande`) VALUES
+(1, 1, '2023-02-15 09:54:59.000000');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `contenircommandes`
+--
+
+DROP TABLE IF EXISTS `contenircommandes`;
+CREATE TABLE IF NOT EXISTS `contenircommandes` (
+  `commande` int(10) NOT NULL,
+  `platCommande` varchar(50) NOT NULL,
+  KEY `platCommande` (`platCommande`),
+  KEY `commande` (`commande`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `contenircommandes`
+--
+
+INSERT INTO `contenircommandes` (`commande`, `platCommande`) VALUES
+(1, 'test');
 
 -- --------------------------------------------------------
 
@@ -318,8 +345,9 @@ CREATE TABLE IF NOT EXISTS `tables` (
 
 INSERT INTO `tables` (`numeroTable`, `placeTable`, `reservation`, `salle`, `statutTable`) VALUES
 (1, 2, NULL, 'Salle1', 'Libre'),
-(2, 2, NULL, 'Salle1', 'Libre'),
-(3, 2, NULL, 'Salle1', 'Libre');
+(2, 4, NULL, 'Salle1', 'Libre'),
+(3, 4, NULL, 'Salle1', 'Libre'),
+(4, 2, NULL, 'Salle1', 'Libre');
 
 --
 -- Contraintes pour les tables déchargées
@@ -332,16 +360,22 @@ ALTER TABLE `clients`
   ADD CONSTRAINT `clients_ibfk_1` FOREIGN KEY (`telephoneClient`) REFERENCES `reservation` (`clientReserve`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `commandesclients`
---
-ALTER TABLE `commandesclients`
-  ADD CONSTRAINT `commandesclients_ibfk_1` FOREIGN KEY (`client`) REFERENCES `clients` (`telephoneClient`) ON DELETE NO ACTION ON UPDATE CASCADE;
-
---
 -- Contraintes pour la table `commandesfournisseur`
 --
 ALTER TABLE `commandesfournisseur`
   ADD CONSTRAINT `commandesfournisseur_ibfk_1` FOREIGN KEY (`fournisseur`) REFERENCES `fournisseurs` (`nomFournisseur`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `commandestables`
+--
+ALTER TABLE `commandestables`
+  ADD CONSTRAINT `commandestables_ibfk_1` FOREIGN KEY (`table`) REFERENCES `tables` (`numeroTable`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `contenircommandes`
+--
+ALTER TABLE `contenircommandes`
+  ADD CONSTRAINT `contenircommandes_ibfk_1` FOREIGN KEY (`commande`) REFERENCES `commandestables` (`numeroCommande`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `contenirmenu`
