@@ -513,13 +513,6 @@ app.get("/ingredientConso", (req, res) => {
   })
 })
 
-
-// REQUETES PAGE PLATS-----------------------------------------------------------------------------
-
-app.get("/Plat", (req, res) => {
-  const t = "SELECT * FROM `plats`"
-  dataBase.query(t, (err, data) => {
-
 app.get("/ingredientBoisson", (req, res) => {
   const ingredients = "SELECT * FROM ingredients WHERE categorieIngredient = 'Boisson'"
   dataBase.query(ingredients, (err, data) => {
@@ -542,54 +535,8 @@ app.delete("/ingredient/:nomIngredient", (req, res) => {
 app.get("/fournisseur", (req, res) => {
   const fourni = "SELECT * FROM fournisseurs"
   dataBase.query(fourni, (err, data) => {
-
     if (err) return res.json(err)
     return res.json(data)
-  })
-})
-
-
-app.post("/plat-add", (req, res) => {
-  const q = "INSERT INTO `plats` ( `nomPlat`, `descriptionPlat`, `prixPlat`, `categorie`, `imgPlat`) VALUES (?)"
-  const values = [
-    req.body.nomPlat,
-    req.body.descriptionPlat,
-    req.body.prixPlat,
-    req.body.categorie,
-    req.body.imgPlat,
-  ];
-
-  dataBase.query(q, [values], (err, data) => {
-    if (err) return res.json(err)
-    return res.json("Plats ajoutée avec succès.")
-  })
-})
-
-app.delete("/plat-delete/:idPlat", (req, res) => {
-  const PlatsId = req.params.idPlat;
-  const q = "DELETE FROM `plats` WHERE nomPlat = ?"
-
-  dataBase.query(q, [PlatsId], (err, data) => {
-    if (err) return res.json(err)
-    return res.json("Plat suprimé avec succès.")
-  })
-})
-//---
-
-app.put("/PlatUpdate/:idPlat", (req, res) => {
-  const PlatsId = req.params.idPlat;
-  const q = "UPDATE `plats` SET `nomPlat`=?, `descriptionPlat`=?, `prixPlat`=?, `categorie`=?, `imgPlat`=? WHERE `idPlat`= ?";
-  const values = [
-    req.body.nomPlat,
-    req.body.descriptionPlat,
-    req.body.prixPlat,
-    req.body.categorie,
-    req.body.imgPlat,
-  ];
-
-  dataBase.query(q, [...values, PlatsId], (err, data) => {
-    if (err) return res.json(err)
-    return res.json("Plats mise à jour avec succès.")
   })
 })
 
