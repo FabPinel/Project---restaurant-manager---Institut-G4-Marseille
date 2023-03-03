@@ -84,6 +84,16 @@ app.get("/pates", (req, res) => {
   })
 })
 
+//AFFICHER LES SALADES
+app.get("/salades", (req, res) => {
+  const t = "SELECT * FROM `plats` WHERE categorie = 'Salade'"
+  dataBase.query(t, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+
 //AFFICHER LES DESSERTS GOURMANT
 app.get("/desserts-gourmant", (req, res) => {
   const t = "SELECT * FROM `plats` WHERE categorie = 'DessertGourmant'"
