@@ -54,7 +54,6 @@ function Menu() {
         }
     };
 
-    const [show, setShow] = useState(false);
     return (
         <React.Fragment>
             <section>
