@@ -62,6 +62,20 @@ function HistoriqueCommandeTable() {
         fetchAllPates();
     }, []);
 
+    const [salades, setSalades] = useState([]);
+
+    useEffect(() => {
+        const fetchAllSalades = async () => {
+            try {
+                const res = await axios.get("http://localhost:5000/salades");
+                setSalades(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllSalades();
+    }, []);
+
     const [desserts, setDesserts] = useState([]);
 
     useEffect(() => {
@@ -252,7 +266,7 @@ function HistoriqueCommandeTable() {
                     </button>
                     <button className={toggleState === 4 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
                         onClick={() => toggleTab(4)} >
-                        Petite faim
+                        Salades
                     </button>
                     <button className={toggleState === 5 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
                         onClick={() => toggleTab(5)} >
@@ -264,7 +278,7 @@ function HistoriqueCommandeTable() {
                     <div className='bg-gray-50 border border-black rounded-xl mt-1 flex w-4/5 m-auto ml-32 '></div>
                     <div className='flex flex-wrap justify-center mb-2'>
                         {
-                            platsCommande.map((plats) => (
+                            platsCommande.sort((a, b) => a.nomPlat.localeCompare(b.nomPlat)).map((plats) => (
                                 <div onClick={() => addPlat(plats.nomPlat)} className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer flex flex-wrap' key={plats.nomPlat}>
                                     <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
                                         <div className='w-2/4'>
@@ -284,7 +298,7 @@ function HistoriqueCommandeTable() {
                     <div className='bg-gray-50 border border-black rounded-xl mt-1 flex w-4/5 m-auto ml-32 '></div>
                     <div className='flex flex-wrap justify-center mb-2'>
                         {
-                            pizzaCreme.map((creme) => (
+                            pizzaCreme.sort((a, b) => a.nomPlat.localeCompare(b.nomPlat)).map((creme) => (
                                 <div onClick={() => addPlat(creme.nomPlat)} className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer flex flex-wrap' key={creme.nomPlat}>
                                     <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
                                         <div className='w-2/4'>
@@ -302,9 +316,11 @@ function HistoriqueCommandeTable() {
                     </div>
                 </div>
                 <div className={toggleState === 2 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
+                    <h2 className='ml-32 font-bold text-xl'>Les pâtes</h2>
+                    <div className='bg-gray-50 border border-black rounded-xl mt-1 flex w-4/5 m-auto ml-32 '></div>
                     <div className='flex flex-wrap justify-center mb-2'>
                         {
-                            pates.map((pates) => (
+                            pates.sort((a, b) => a.nomPlat.localeCompare(b.nomPlat)).map((pates) => (
                                 <div onClick={() => addPlat(pates.nomPlat)} className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer flex flex-wrap' key={pates.nomPlat}>
                                     <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
                                         <div className='w-2/4'>
@@ -326,7 +342,7 @@ function HistoriqueCommandeTable() {
                     <div className='bg-gray-50 border border-black rounded-xl mt-1 flex w-4/5 m-auto ml-32 '></div>
                     <div className='flex flex-wrap justify-center mb-2'>
                         {
-                            desserts.map((desserts) => (
+                            desserts.sort((a, b) => a.nomPlat.localeCompare(b.nomPlat)).map((desserts) => (
                                 <div onClick={() => addPlat(desserts.nomPlat)} className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer flex flex-wrap' key={desserts.nomPlat}>
                                     <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
                                         <div className='w-2/4'>
@@ -346,7 +362,7 @@ function HistoriqueCommandeTable() {
                     <div className='bg-gray-50 border border-black rounded-xl mt-1 flex w-4/5 m-auto ml-32 '></div>
                     <div className='flex flex-wrap justify-center mb-2'>
                         {
-                            dessertsGlace.map((desserts) => (
+                            dessertsGlace.sort((a, b) => a.nomPlat.localeCompare(b.nomPlat)).map((desserts) => (
                                 <div onClick={() => addPlat(desserts.nomPlat)} className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer flex flex-wrap' key={desserts.nomPlat}>
                                     <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
                                         <div className='w-2/4'>
@@ -363,12 +379,34 @@ function HistoriqueCommandeTable() {
                         }
                     </div>
                 </div>
+                <div className={toggleState === 4 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
+                    <h2 className='ml-32 font-bold text-xl'>Les Salades</h2>
+                    <div className='bg-gray-50 border border-black rounded-xl mt-1 flex w-4/5 m-auto ml-32 '></div>
+                    <div className='flex flex-wrap justify-center mb-2'>
+                        {
+                            salades.sort((a, b) => a.nomPlat.localeCompare(b.nomPlat)).map((salade) => (
+                                <div onClick={() => addPlat(salade.nomPlat)} className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer flex flex-wrap' key={salade.nomPlat}>
+                                    <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
+                                        <div className='w-2/4'>
+                                            <img className='border rounded-xl' src={salade.imgPlat} alt="" />
+                                        </div>
+                                        <div className='w-2/4'>
+                                            <p className='text-bleu text-center text-base font-bold'>{salade.nomPlat}</p>
+                                            <p className='text-bleu text-center text-xs'>{salade.descriptionPlat}</p>
+                                            <p className='text-bleu text-center text-base font-bold'>{salade.prixPlat} €</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
                 <div className={toggleState === 5 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
                     <h2 className='ml-32 font-bold text-xl'>Les Boissons</h2>
                     <div className='bg-gray-50 border border-black rounded-xl mt-1 flex w-4/5 m-auto ml-32 '></div>
                     <div className='flex flex-wrap justify-center mb-2'>
                         {
-                            boissons.map((boissons) => (
+                            boissons.sort((a, b) => a.nomPlat.localeCompare(b.nomPlat)).map((boissons) => (
                                 <div onClick={() => addPlat(boissons.nomPlat)} className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer flex flex-wrap' key={boissons.nomPlat}>
                                     <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
                                         <div className='w-2/4'>
