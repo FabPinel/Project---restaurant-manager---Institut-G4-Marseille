@@ -13,6 +13,7 @@ import CommandesTable from '../pages/CommandesTable';
 import HistoriqueCommandeTable from '../pages/HistoriqueCommandeTable';
 import PlatUpdate from '../pages/PlatUpdate';
 
+
 const RoutePage = () => {
   return (
     <React.Fragment>
