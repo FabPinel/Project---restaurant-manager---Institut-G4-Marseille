@@ -468,7 +468,7 @@ app.post("/ajout-salaries", (req, res) => {
     req.body.adresseSalarie,
     req.body.salaireSalarie,
     req.body.posteSalaire,
-];
+  ];
   dataBase.query(s, [values], (err, data) => {
     if (err) return res.json(err)
     return res.json("salarie-ajouté avec succès")
@@ -678,4 +678,20 @@ app.get("/categorieStock", (req, res) => {
 })
 
 //-------------------------------------------------------------------------------------------------
+
+//PAGE FOURNISSEUR-----------------------------------------------------------------------------------------------
+//CREATE TABLE
+app.post("/fournisseur-add", (req, res) => {
+  const q = "INSERT INTO `fournisseurs` (`nomFournisseur`, `type`) VALUES (?)"
+  const values = [
+    req.body.nomFournisseur,
+    req.body.type,
+  ];
+
+  dataBase.query(q, [values], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Fournisseur ajoutée avec succès.")
+  })
+})
+//------------------------------------------------------------------------------------------------
 app.listen(5000, () => { console.log("le Server est lancé sur le port 5000") })
