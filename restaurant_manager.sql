@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 31 jan. 2023 à 15:21
--- Version du serveur : 5.7.36
--- Version de PHP : 7.4.26
+-- Généré le : mer. 15 fév. 2023 à 08:57
+-- Version du serveur :  5.7.31
+-- Version de PHP : 7.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `restaurant manager`
+-- Base de données : `restaurant_manager`
 --
 
 -- --------------------------------------------------------
@@ -38,6 +38,10 @@ CREATE TABLE IF NOT EXISTS `categories` (
 --
 
 INSERT INTO `categories` (`nom`) VALUES
+('Accompagnement'),
+('Alcool'),
+('Boissons'),
+('Cocktail'),
 ('Dessert'),
 ('Entrées'),
 ('Plats');
@@ -50,28 +54,72 @@ INSERT INTO `categories` (`nom`) VALUES
 
 DROP TABLE IF EXISTS `clients`;
 CREATE TABLE IF NOT EXISTS `clients` (
-  `mailClient` varchar(100) NOT NULL,
   `nomClient` varchar(50) NOT NULL,
   `prenomClient` varchar(50) NOT NULL,
-  `telephoneClient` varchar(50) NOT NULL,
-  PRIMARY KEY (`telephoneClient`)
+  `telephoneClient` varchar(10) NOT NULL,
+  PRIMARY KEY (`telephoneClient`),
+  UNIQUE KEY `telephoneClient` (`telephoneClient`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `commandes`
+-- Structure de la table `commandesfournisseur`
 --
 
-DROP TABLE IF EXISTS `commandes`;
-CREATE TABLE IF NOT EXISTS `commandes` (
-  `numeroCommande` int(10) NOT NULL,
-  `client` varchar(100) NOT NULL,
-  `plat` varchar(100) NOT NULL,
-  PRIMARY KEY (`numeroCommande`),
-  KEY `client` (`client`),
-  KEY `plat` (`plat`)
+DROP TABLE IF EXISTS `commandesfournisseur`;
+CREATE TABLE IF NOT EXISTS `commandesfournisseur` (
+  `idCommande` int(10) NOT NULL AUTO_INCREMENT,
+  `ingredient` varchar(50) NOT NULL,
+  `quantiteIngredient` int(10) NOT NULL,
+  `fournisseur` varchar(100) NOT NULL,
+  PRIMARY KEY (`idCommande`),
+  KEY `ingredient` (`ingredient`),
+  KEY `fournisseur` (`fournisseur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `commandestables`
+--
+
+DROP TABLE IF EXISTS `commandestables`;
+CREATE TABLE IF NOT EXISTS `commandestables` (
+  `numeroCommande` int(10) NOT NULL AUTO_INCREMENT,
+  `table` int(10) NOT NULL,
+  `dateCommande` datetime(6) NOT NULL,
+  PRIMARY KEY (`numeroCommande`),
+  KEY `client` (`table`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `commandestables`
+--
+
+INSERT INTO `commandestables` (`numeroCommande`, `table`, `dateCommande`) VALUES
+(1, 1, '2023-02-15 09:54:59.000000');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `contenircommandes`
+--
+
+DROP TABLE IF EXISTS `contenircommandes`;
+CREATE TABLE IF NOT EXISTS `contenircommandes` (
+  `commande` int(10) NOT NULL,
+  `platCommande` varchar(50) NOT NULL,
+  KEY `platCommande` (`platCommande`),
+  KEY `commande` (`commande`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `contenircommandes`
+--
+
+INSERT INTO `contenircommandes` (`commande`, `platCommande`) VALUES
+(1, 'test');
 
 -- --------------------------------------------------------
 
@@ -81,11 +129,11 @@ CREATE TABLE IF NOT EXISTS `commandes` (
 
 DROP TABLE IF EXISTS `contenirmenu`;
 CREATE TABLE IF NOT EXISTS `contenirmenu` (
-  `menu` varchar(50) NOT NULL,
-  `plat` varchar(100) NOT NULL,
+  `menu` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
+  `platMenu` varchar(50) NOT NULL,
   KEY `menu` (`menu`),
-  KEY `plat` (`plat`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  KEY `plat` (`platMenu`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -98,7 +146,8 @@ CREATE TABLE IF NOT EXISTS `contenirplat` (
   `ingredient` varchar(50) NOT NULL,
   `plat` varchar(50) NOT NULL,
   `quantite` int(10) NOT NULL,
-  PRIMARY KEY (`ingredient`)
+  KEY `plat` (`plat`),
+  KEY `ingredient` (`ingredient`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -111,7 +160,7 @@ DROP TABLE IF EXISTS `fournisseurs`;
 CREATE TABLE IF NOT EXISTS `fournisseurs` (
   `nomFournisseur` varchar(100) NOT NULL,
   PRIMARY KEY (`nomFournisseur`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -139,10 +188,17 @@ CREATE TABLE IF NOT EXISTS `ingredients` (
 
 DROP TABLE IF EXISTS `menus`;
 CREATE TABLE IF NOT EXISTS `menus` (
-  `carteRestaurant` varchar(100) NOT NULL,
-  `menuDuJour` varchar(100) NOT NULL,
-  `plat` varchar(100) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+  `typeMenu` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
+  PRIMARY KEY (`typeMenu`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `menus`
+--
+
+INSERT INTO `menus` (`typeMenu`) VALUES
+('Carte du restaurant'),
+('Menu du jour');
 
 -- --------------------------------------------------------
 
@@ -158,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `plats` (
   `categorie` varchar(50) NOT NULL,
   PRIMARY KEY (`nomPlat`),
   KEY `categorie` (`categorie`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -172,11 +228,11 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   `nbPersonnes` int(11) NOT NULL,
   `tableReserve` int(11) NOT NULL,
   `dateReserve` date NOT NULL,
-  `client` varchar(50) NOT NULL,
+  `clientReserve` varchar(10) NOT NULL,
   PRIMARY KEY (`idReservation`),
-  UNIQUE KEY `nomClient` (`client`),
-  KEY `tableReserve` (`tableReserve`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  KEY `tableReserve` (`tableReserve`),
+  KEY `client` (`clientReserve`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -197,6 +253,16 @@ CREATE TABLE IF NOT EXISTS `salaries` (
   PRIMARY KEY (`mailSalarie`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `salaries`
+--
+
+INSERT INTO `salaries` (`mailSalarie`, `nomSalarie`, `prenomSalarie`, `naissanceSalarie`, `telephoneSalarie`, `adresseSalarie`, `salaireSalarie`, `posteSalaire`) VALUES
+('Aniss@gmail.com', 'BRIKI', 'Aniss', '2001-02-16', '0645362278', '21 Rue Marc Donadille', 1800, 'Serveur'),
+('Cedric@gmail.com', 'GAYRAUD', 'Cedric', '2003-03-23', '0605784634', '21 Rue Marc Donadille', 2500, 'Responsable'),
+('Fabien@gmail.com', 'PINEL', 'Fabien', '1998-08-10', '0693448912', '21 Rue Marc Donadille', 1800, 'Serveur'),
+('Jabir@gmail.com', 'MOHAMDI', 'Jabir', '1998-08-11', '0634447632', '21 Rue Marc Donadille', 1800, 'Serveur');
+
 -- --------------------------------------------------------
 
 --
@@ -207,14 +273,39 @@ DROP TABLE IF EXISTS `salles`;
 CREATE TABLE IF NOT EXISTS `salles` (
   `nomSalle` varchar(30) NOT NULL,
   `nombreCouvertTotal` int(20) NOT NULL,
-  `zone` varchar(30) NOT NULL,
-  `statutSalle` varchar(20) NOT NULL,
-  `salarie` varchar(100) NOT NULL,
-  `tableRestaurant` int(10) NOT NULL,
-  PRIMARY KEY (`nomSalle`),
-  KEY `salarie` (`salarie`),
-  KEY `table` (`tableRestaurant`)
+  `salleRemplie` tinyint(1) NOT NULL,
+  PRIMARY KEY (`nomSalle`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `salles`
+--
+
+INSERT INTO `salles` (`nomSalle`, `nombreCouvertTotal`, `salleRemplie`) VALUES
+('Salle1', 40, 0),
+('Salle2', 40, 0),
+('Terrasse', 70, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `statut`
+--
+
+DROP TABLE IF EXISTS `statut`;
+CREATE TABLE IF NOT EXISTS `statut` (
+  `nomStatut` varchar(20) NOT NULL,
+  PRIMARY KEY (`nomStatut`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `statut`
+--
+
+INSERT INTO `statut` (`nomStatut`) VALUES
+('Libre'),
+('Occupée'),
+('Réservée');
 
 -- --------------------------------------------------------
 
@@ -224,11 +315,9 @@ CREATE TABLE IF NOT EXISTS `salles` (
 
 DROP TABLE IF EXISTS `stocks`;
 CREATE TABLE IF NOT EXISTS `stocks` (
-  `ingredient` varchar(50) NOT NULL,
   `quantiteIngredient` int(10) NOT NULL,
   `statut` varchar(20) NOT NULL,
-  PRIMARY KEY (`ingredient`),
-  KEY `ingredient` (`ingredient`)
+  KEY `quantiteIngredient` (`quantiteIngredient`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -240,42 +329,94 @@ CREATE TABLE IF NOT EXISTS `stocks` (
 DROP TABLE IF EXISTS `tables`;
 CREATE TABLE IF NOT EXISTS `tables` (
   `numeroTable` int(10) NOT NULL,
-  `nombreCouvert` int(2) NOT NULL,
   `placeTable` int(1) NOT NULL,
-  `client` varchar(100) NOT NULL,
-  `reservation` int(11) NOT NULL,
+  `reservation` int(11) DEFAULT NULL,
+  `salle` varchar(30) NOT NULL,
+  `statutTable` varchar(20) NOT NULL DEFAULT 'Libre',
   PRIMARY KEY (`numeroTable`),
-  KEY `client` (`client`),
-  KEY `reservation` (`reservation`)
+  KEY `reservation` (`reservation`),
+  KEY `salle` (`salle`),
+  KEY `statutTable` (`statutTable`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `tables`
+--
+
+INSERT INTO `tables` (`numeroTable`, `placeTable`, `reservation`, `salle`, `statutTable`) VALUES
+(1, 2, NULL, 'Salle1', 'Libre'),
+(2, 4, NULL, 'Salle1', 'Libre'),
+(3, 4, NULL, 'Salle1', 'Libre'),
+(4, 2, NULL, 'Salle1', 'Libre');
 
 --
 -- Contraintes pour les tables déchargées
 --
 
 --
--- Contraintes pour la table `commandes`
+-- Contraintes pour la table `clients`
 --
-ALTER TABLE `commandes`
-  ADD CONSTRAINT `commande_client` FOREIGN KEY (`client`) REFERENCES `clients` (`telephoneClient`) ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE `clients`
+  ADD CONSTRAINT `clients_ibfk_1` FOREIGN KEY (`telephoneClient`) REFERENCES `reservation` (`clientReserve`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `commandesfournisseur`
+--
+ALTER TABLE `commandesfournisseur`
+  ADD CONSTRAINT `commandesfournisseur_ibfk_1` FOREIGN KEY (`fournisseur`) REFERENCES `fournisseurs` (`nomFournisseur`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `commandestables`
+--
+ALTER TABLE `commandestables`
+  ADD CONSTRAINT `commandestables_ibfk_1` FOREIGN KEY (`table`) REFERENCES `tables` (`numeroTable`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `contenircommandes`
+--
+ALTER TABLE `contenircommandes`
+  ADD CONSTRAINT `contenircommandes_ibfk_1` FOREIGN KEY (`commande`) REFERENCES `commandestables` (`numeroCommande`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `contenirmenu`
+--
+ALTER TABLE `contenirmenu`
+  ADD CONSTRAINT `contenirmenu_ibfk_1` FOREIGN KEY (`menu`) REFERENCES `menus` (`typeMenu`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `contenirmenu_ibfk_2` FOREIGN KEY (`platMenu`) REFERENCES `plats` (`nomPlat`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `contenirplat`
+--
+ALTER TABLE `contenirplat`
+  ADD CONSTRAINT `contenirplat_ibfk_1` FOREIGN KEY (`ingredient`) REFERENCES `ingredients` (`nomIngredient`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `contenirplat_ibfk_2` FOREIGN KEY (`plat`) REFERENCES `plats` (`nomPlat`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `ingredients`
+--
+ALTER TABLE `ingredients`
+  ADD CONSTRAINT `ingredients_ibfk_3` FOREIGN KEY (`stock`) REFERENCES `stocks` (`quantiteIngredient`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `ingredients_ibfk_4` FOREIGN KEY (`fournisseur`) REFERENCES `fournisseurs` (`nomFournisseur`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `plats`
+--
+ALTER TABLE `plats`
+  ADD CONSTRAINT `plats_ibfk_2` FOREIGN KEY (`categorie`) REFERENCES `categories` (`nom`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  ADD CONSTRAINT `reservation_table` FOREIGN KEY (`idReservation`) REFERENCES `tables` (`reservation`) ON DELETE NO ACTION ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `salles`
---
-ALTER TABLE `salles`
-  ADD CONSTRAINT `salles_salaries` FOREIGN KEY (`salarie`) REFERENCES `salaries` (`mailSalarie`) ON DELETE NO ACTION ON UPDATE CASCADE;
+  ADD CONSTRAINT `reservation_client` FOREIGN KEY (`clientReserve`) REFERENCES `clients` (`telephoneClient`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `tables`
 --
 ALTER TABLE `tables`
-  ADD CONSTRAINT `tables_salles` FOREIGN KEY (`numeroTable`) REFERENCES `salles` (`tableRestaurant`) ON DELETE NO ACTION ON UPDATE CASCADE;
+  ADD CONSTRAINT `tables_ibfk_1` FOREIGN KEY (`reservation`) REFERENCES `reservation` (`idReservation`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `tables_ibfk_2` FOREIGN KEY (`salle`) REFERENCES `salles` (`nomSalle`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `tables_ibfk_3` FOREIGN KEY (`statutTable`) REFERENCES `statut` (`nomStatut`) ON DELETE NO ACTION ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
