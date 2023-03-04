@@ -231,13 +231,13 @@ const handleEdit3 = (nomIngredient, stock) => {
             <form action="" className='absolute w-60 bg-white ' onSubmit={handleSubmit}>
               <div className='m-auto'>
                 <p className='text-center text-bleu text-lg'>Nom de l'ingrédient</p>
-                <input type="text" name='nomIngredient' className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} />
+                <input type="text" name='nomIngredient' className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} required />
                 <p className='text-center text-bleu text-lg'>Date de péremption</p>
-                <input type="text" name='datePeremption' className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} />
+                <input type="text" name='datePeremption' className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} required/>
                 <p className='text-center text-bleu text-lg'>Coût de l'ingrédient</p>
-                <input type="text" name='coutIngredient' className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} />
+                <input type="text" name='coutIngredient' className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} required />
                 <p className='text-center text-bleu text-lg'>Fournisseur</p>
-                <select name="fournisseur" id="fournisseur" className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} >
+                <select name="fournisseur" id="fournisseur" className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} required >
                   <option>Sélectionner un fournisseur</option>
                   {
                     fournisseurs.map((fournisseur) => (
@@ -246,11 +246,11 @@ const handleEdit3 = (nomIngredient, stock) => {
                   }
                 </select>
                 <p className='text-center text-bleu text-lg'>Stock</p>
-                <input type="text" name='stock' className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} />
+                <input type="text" name='stock' className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} required />
                 <p className='text-center text-bleu text-lg'>Url de l'icone</p>
-                <input type="text" name='iconeUrl' className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} />
+                <input type="text" name='iconeUrl' className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} required />
                 <p className='text-center text-bleu text-lg'>Catégorie</p>
-                <select name='categorieIngredient' id='categorieIngredient' className='block m-auto my-4' onChange={handleChange}>
+                <select name='categorieIngredient' id='categorieIngredient' className='block m-auto my-4' onChange={handleChange} required>
                 <option>Sélectionner une catégorie</option>
                 { 
                 categorieStock.map((categ) => (
@@ -278,8 +278,8 @@ const handleEdit3 = (nomIngredient, stock) => {
                   <img src={ingredient.iconeUrl} key={ingredient.nomIngredient} alt='pâte' className="text-bleu h-10"></img>
                   <button onClick={() => handleDelete(ingredient.nomIngredient)}>< FaIcons.AiOutlineMinusCircle size={28}/></button>
                   </div>
-                    <p className='text-sm text-center' onClick={() => handleEdit1(ingredient.nomIngredient)}>{ingredient.nomIngredient}</p>
-                    <p className='text-sm text-center' onClick={() => handleEdit1(ingredient.nomIngredient)}>{ingredient.stock}</p>
+                    <p className='text-sm text-center cursor-pointer' onClick={() => handleEdit1(ingredient.nomIngredient)}>{ingredient.nomIngredient}</p>
+                    <p className='text-sm text-center cursor-pointer' onClick={() => handleEdit1(ingredient.nomIngredient)}>{ingredient.stock}</p>
                 </div>
               ))
             }
@@ -295,8 +295,8 @@ const handleEdit3 = (nomIngredient, stock) => {
                   <img src={ingredientC.iconeUrl} key={ingredientC.nomIngredient} alt='pâte' className="text-bleu h-10"></img>
                   <button onClick={() => handleDelete(ingredientC.nomIngredient)}>< FaIcons.AiOutlineMinusCircle size={28}/></button>
                   </div>
-                    <p className='text-sm text-center'  onClick={() => handleEdit2(ingredientC.nomIngredient)}>{ingredientC.nomIngredient}</p>
-                    <p className='text-sm text-center' onClick={() => handleEdit2(ingredientC.stock)}>{ingredientC.stock}</p>
+                    <p className='text-sm text-center cursor-pointer'  onClick={() => handleEdit2(ingredientC.nomIngredient)}>{ingredientC.nomIngredient}</p>
+                    <p className='text-sm text-center cursor-pointer' onClick={() => handleEdit2(ingredientC.stock)}>{ingredientC.stock}</p>
                 </div>
               ))
             }
@@ -312,8 +312,8 @@ const handleEdit3 = (nomIngredient, stock) => {
                   <img src={ingredientB.iconeUrl} key={ingredientB.nomIngredient} alt='pâte' className="text-bleu h-10"></img>
                   <button onClick={() => handleDelete(ingredientB.nomIngredient)}>< FaIcons.AiOutlineMinusCircle size={28}/></button>
                   </div>
-                    <p className='text-sm text-center' onClick={() => handleEdit3(ingredientB.nomIngredient)}>{ingredientB.nomIngredient}</p>
-                    <p className='text-sm text-center' onClick={() => handleEdit3(ingredientB.stock)}>{ingredientB.stock}</p>
+                    <p className='text-sm text-center cursor-pointer' onClick={() => handleEdit3(ingredientB.nomIngredient)}>{ingredientB.nomIngredient}</p>
+                    <p className='text-sm text-center cursor-pointer' onClick={() => handleEdit3(ingredientB.stock)}>{ingredientB.stock}</p>
                 </div>
               ))
             }
