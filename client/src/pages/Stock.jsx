@@ -72,10 +72,10 @@ function Stock() {
   })
   // console.log(ingredient)
 
-  const [ingredientsChanges, setIngredientsChanges] = useState({
-    nomIngredient: "",
-    stock: "",
-  })
+  // const [ingredients, setIngredientsChanges] = useState({
+  //   nomIngredient: "",
+  //   stock: "",
+  // })
 
   const handleChange = (e) => {
     setIngredient((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -129,32 +129,98 @@ function Stock() {
     fetchAllCategorieStock();
   }, []);
 
-  const handleEdit = async (nomIngredient, stock) => {
+  const handleEdit1 = (nomIngredient, stock) => {
     const nouveauNom = prompt("Entrez le nouveau nom : ");
     const nouveauStock = prompt("Entrez le nouveau stock : ");
-    
+  
     if (nouveauNom && nouveauStock) {
-        const nouvelleListe = ingredientBoisson.map((ingredientB) => {
-            if (ingredientB.nomIngredient === nomIngredient) {
-                return {
-                    ...ingredientB,
-                    nomIngredient: nouveauNom,
-                    stock: nouveauStock
-                };
-            }
-            return ingredientB;
+      const nouvelleListe = ingredients.map((ingredientB) => {
+        if (ingredientB.nomIngredient === nomIngredient) {
+          return {
+            ...ingredientB,
+            nomIngredient: nouveauNom,
+            stock: nouveauStock,
+          };
+        }
+        return ingredientB;
+      });
+  
+      setIngredients(nouvelleListe);
+  
+      const ingredientsI = { nomIngredient: nouveauNom, stock: nouveauStock };
+      axios
+        .put("http://localhost:5000/modifs-ingredients/" + nomIngredient, ingredientsI)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
         });
-        
-        setIngredientBoisson(nouvelleListe);
     }
+  };
 
-    // try {
-    //   await axios.put("http://localhost:5000/modifs-ingredients/"+nomIngredient, stock)
-    //   navigate(0);
-    // } catch (err){
-    //   console.log(err);
-    // }
+const handleEdit2 = (nomIngredient, stock) => {
+  const nouveauNom = prompt("Entrez le nouveau nom : ");
+  const nouveauStock = prompt("Entrez le nouveau stock : ");
+
+  if (nouveauNom && nouveauStock) {
+    const nouvelleListe = ingredientConso.map((ingredientB) => {
+      if (ingredientB.nomIngredient === nomIngredient) {
+        return {
+          ...ingredientB,
+          nomIngredient: nouveauNom,
+          stock: nouveauStock,
+        };
+      }
+      return ingredientB;
+    });
+
+    setIngredientConso(nouvelleListe);
+
+    const ingredientsC = { nomIngredient: nouveauNom, stock: nouveauStock };
+    axios
+      .put("http://localhost:5000/modifs-ingredients/" + nomIngredient, ingredientsC)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 };
+
+
+const handleEdit3 = (nomIngredient, stock) => {
+  const nouveauNom = prompt("Entrez le nouveau nom : ");
+  const nouveauStock = prompt("Entrez le nouveau stock : ");
+
+  if (nouveauNom && nouveauStock) {
+    const nouvelleListe = ingredientBoisson.map((ingredientB) => {
+      if (ingredientB.nomIngredient === nomIngredient) {
+        return {
+          ...ingredientB,
+          nomIngredient: nouveauNom,
+          stock: nouveauStock,
+        };
+      }
+      return ingredientB;
+    });
+
+    setIngredientBoisson(nouvelleListe);
+
+    const ingredientsB = { nomIngredient: nouveauNom, stock: nouveauStock };
+    axios
+      .put("http://localhost:5000/modifs-ingredients/" + nomIngredient, ingredientsB)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+};
+    
+
 
   return (
     <React.Fragment>
@@ -212,8 +278,8 @@ function Stock() {
                   <img src={ingredient.iconeUrl} key={ingredient.nomIngredient} alt='pâte' className="text-bleu h-10"></img>
                   <button onClick={() => handleDelete(ingredient.nomIngredient)}>< FaIcons.AiOutlineMinusCircle size={28}/></button>
                   </div>
-                    <p className='text-sm text-center'>{ingredient.nomIngredient}</p>
-                    <p className='text-sm text-center'>{ingredient.stock}</p>
+                    <p className='text-sm text-center' onClick={() => handleEdit1(ingredient.nomIngredient)}>{ingredient.nomIngredient}</p>
+                    <p className='text-sm text-center' onClick={() => handleEdit1(ingredient.nomIngredient)}>{ingredient.stock}</p>
                 </div>
               ))
             }
@@ -229,8 +295,8 @@ function Stock() {
                   <img src={ingredientC.iconeUrl} key={ingredientC.nomIngredient} alt='pâte' className="text-bleu h-10"></img>
                   <button onClick={() => handleDelete(ingredientC.nomIngredient)}>< FaIcons.AiOutlineMinusCircle size={28}/></button>
                   </div>
-                    <p className='text-sm text-center'>{ingredientC.nomIngredient}</p>
-                    <p className='text-sm text-center'>{ingredientC.stock}</p>
+                    <p className='text-sm text-center'  onClick={() => handleEdit2(ingredientC.nomIngredient)}>{ingredientC.nomIngredient}</p>
+                    <p className='text-sm text-center' onClick={() => handleEdit2(ingredientC.stock)}>{ingredientC.stock}</p>
                 </div>
               ))
             }
@@ -246,8 +312,8 @@ function Stock() {
                   <img src={ingredientB.iconeUrl} key={ingredientB.nomIngredient} alt='pâte' className="text-bleu h-10"></img>
                   <button onClick={() => handleDelete(ingredientB.nomIngredient)}>< FaIcons.AiOutlineMinusCircle size={28}/></button>
                   </div>
-                    <p className='text-sm text-center' onClick={() => handleEdit(ingredientB.nomIngredient)}>{ingredientB.nomIngredient}</p>
-                    <p className='text-sm text-center' onClick={() => handleEdit(ingredientB.stock)}>{ingredientB.stock}</p>
+                    <p className='text-sm text-center' onClick={() => handleEdit3(ingredientB.nomIngredient)}>{ingredientB.nomIngredient}</p>
+                    <p className='text-sm text-center' onClick={() => handleEdit3(ingredientB.stock)}>{ingredientB.stock}</p>
                 </div>
               ))
             }

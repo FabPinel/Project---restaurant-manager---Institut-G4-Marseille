@@ -153,17 +153,17 @@ app.post("/ajout-ingredients", (req, res) => {
   })
 })
 
-app.post("/modifs-ingredients/:nomIngredient", (req, res) => {
+app.put("/modifs-ingredients/:nomIngredient", (req, res) => {
   const ingredientsM = req.params.nomIngredient;
-  const i = "UPDATE `ingredients` SET 'nomIngredient'=?, 'stock'=?,"
+  const i = "UPDATE `ingredients` SET `nomIngredient`=?, `stock`=? WHERE `nomIngredient`=?";
   const values = [
     req.body.nomIngredient,
     req.body.stock,
   ];
-  dataBase.query(i, [values, ingredientsM], (err, data) => {
-    if (err) return res.json(err)
-    return res.json("ingredient ajouté avec succès")
-  })
+  dataBase.query(i, [...values, ingredientsM], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("ingredient modifié avec succès");
+  });
 })
 
 app.get("/categorieStock", (req, res) => {
