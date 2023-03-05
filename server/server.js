@@ -680,7 +680,7 @@ app.get("/categorieStock", (req, res) => {
 //-------------------------------------------------------------------------------------------------
 
 //PAGE FOURNISSEUR-----------------------------------------------------------------------------------------------
-//CREATE TABLE
+//CREATE FOURNISSEUR
 app.post("/fournisseur-add", (req, res) => {
   const q = "INSERT INTO `fournisseurs` (`nomFournisseur`, `type`) VALUES (?)"
   const values = [
@@ -691,6 +691,38 @@ app.post("/fournisseur-add", (req, res) => {
   dataBase.query(q, [values], (err, data) => {
     if (err) return res.json(err)
     return res.json("Fournisseur ajoutée avec succès.")
+  })
+})
+
+//AFFICHER TOUTES LES COMMANDES
+app.get("/commandes-fournisseurs", (req, res) => {
+  const q = "SELECT * FROM commandesFournisseur"
+  dataBase.query(q, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+//CREATE COMMANDE FOURNISSEUR
+app.post("/commande-fournisseur-add", (req, res) => {
+  const q = "INSERT INTO commandesfournisseur (fournisseur, dateCommande, dateLivraison) VALUES (?, CONVERT_TZ(NOW(), '+00:00', '+00:00'), DATE(CONVERT_TZ(NOW(), '+00:00', '+00:00') + INTERVAL 3 DAY))"
+
+  const fournisseur = req.body.nomFournisseurCommande;
+
+  dataBase.query(q, [fournisseur], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Commande ajoutée avec succès.");
+  });
+});
+
+//DELETE COMMANDE FOURNISSEUR
+app.delete("/fournisseur-commande/:id", (req, res) => {
+  const deleteF = req.params.id;
+  const f = "DELETE FROM commandesfournisseur where idCommande = ?";
+
+  dataBase.query(f, [deleteF], (err, data) => {
+    if (err) return res.send(err);
+    return res.json("Commande fournisseur supprimée avec succès");
   })
 })
 //------------------------------------------------------------------------------------------------
