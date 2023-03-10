@@ -7,8 +7,12 @@ import { useNavigate, Link } from 'react-router-dom';
 
 function Plat() {
 
-
+  const [toggleState, setToggleState] = useState(1);
   const [Plats, setPlats] = useState([]);
+
+  const toggleTab = (index) => {
+    setToggleState(index);
+  };
 
   useEffect(() => {
     const fetchAllPlats = async () => {
@@ -60,8 +64,29 @@ function Plat() {
     <React.Fragment>
       <section>
         <div className="flex-grow">
-          <div className='bg-gray-50 w-1/6 text-right border '>
+          <div className="mb-2">
+            <button className={toggleState === 1 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
+              onClick={() => toggleTab(1)} >
+              Pizzas
+            </button>
+            <button className={toggleState === 2 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
+              onClick={() => toggleTab(2)} >
+              Pâtes
+            </button>
+            <button className={toggleState === 3 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
+              onClick={() => toggleTab(3)} >
+              Desserts
+            </button>
+            <button className={toggleState === 4 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
+              onClick={() => toggleTab(4)} >
+              Salades
+            </button>
+            <button className={toggleState === 5 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
+              onClick={() => toggleTab(5)} >
+              Boissons
+            </button>
           </div>
+
           <button onClick={() => setShow(!show)} className="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 ml-4">
             Ajouter
           </button>
@@ -115,9 +140,139 @@ function Plat() {
               </div>
             </div>
           }
+          <div className={toggleState === 1 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
+            <div className='flex flex-wrap'>
+              {
+                Plats.filter(Plats => Plats.categorie.includes("Pizzas")).sort((a, b) => a.nomPlat.localeCompare(b.nomPlat)).map((Plats) => (
+                  <div className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer' key={Plats.nomPlat}>
+                    <div className='cursor-pointer flex flex-wrap' >
+                      <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
+                        <div className='w-2/4'>
+                          <img className='border rounded-xl' src={Plats.imgPlat} alt="" />
+                        </div>
+                        <div className='w-2/4'>
+                          <p className='text-bleu text-center text-base font-bold'>{Plats.nomPlat}</p>
+                          <p className='text-bleu text-center text-xs'>{Plats.descriptionPlat}</p>
+                          <p className='text-bleu text-center text-base font-bold'>{Plats.prixPlat}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className='flex justify-center p-1'>
+                      <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                        <Link to={`/PlatUpdate/${Plats.idPlat}`}>
+                          <FaIconsBootStrap.FaPencilAlt size={16} />
+                        </Link>
+                      </button>
+                      <button onClick={() => handleDelete(Plats.nomPlat)} className="text-white bg-rouge2 hover:bg-gris duration-500 rounded-md text-center p-1">
+                        <FaIconsBootStrap.FaTrashAlt size={16} />
+                      </button>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+          <div className={toggleState === 2 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
+            <div className='flex flex-wrap'>
+              {
+                Plats.filter(Plats => Plats.categorie.includes("Pâtes")).sort((a, b) => a.nomPlat.localeCompare(b.nomPlat)).map((Plats) => (
+                  <div className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer' key={Plats.nomPlat}>
+                    <div className='cursor-pointer flex flex-wrap' >
+                      <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
+                        <div className='w-2/4'>
+                          <img className='border rounded-xl' src={Plats.imgPlat} alt="" />
+                        </div>
+                        <div className='w-2/4'>
+                          <p className='text-bleu text-center text-base font-bold'>{Plats.nomPlat}</p>
+                          <p className='text-bleu text-center text-xs'>{Plats.descriptionPlat}</p>
+                          <p className='text-bleu text-center text-base font-bold'>{Plats.prixPlat}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className='flex justify-center p-1'>
+                      <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                        <Link to={`/PlatUpdate/${Plats.idPlat}`}>
+                          <FaIconsBootStrap.FaPencilAlt size={16} />
+                        </Link>
+                      </button>
+                      <button onClick={() => handleDelete(Plats.nomPlat)} className="text-white bg-rouge2 hover:bg-gris duration-500 rounded-md text-center p-1">
+                        <FaIconsBootStrap.FaTrashAlt size={16} />
+                      </button>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+        <div className={toggleState === 3 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
           <div className='flex flex-wrap'>
             {
-              Plats.map((Plats) => (
+              Plats.filter(Plats => Plats.categorie.includes("Dessert")).sort((a, b) => a.nomPlat.localeCompare(b.nomPlat)).map((Plats) => (
+                <div className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer' key={Plats.nomPlat}>
+                  <div className='cursor-pointer flex flex-wrap' >
+                    <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
+                      <div className='w-2/4'>
+                        <img className='border rounded-xl' src={Plats.imgPlat} alt="" />
+                      </div>
+                      <div className='w-2/4'>
+                        <p className='text-bleu text-center text-base font-bold'>{Plats.nomPlat}</p>
+                        <p className='text-bleu text-center text-xs'>{Plats.descriptionPlat}</p>
+                        <p className='text-bleu text-center text-base font-bold'>{Plats.prixPlat}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='flex justify-center p-1'>
+                    <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                      <Link to={`/PlatUpdate/${Plats.idPlat}`}>
+                        <FaIconsBootStrap.FaPencilAlt size={16} />
+                      </Link>
+                    </button>
+                    <button onClick={() => handleDelete(Plats.nomPlat)} className="text-white bg-rouge2 hover:bg-gris duration-500 rounded-md text-center p-1">
+                      <FaIconsBootStrap.FaTrashAlt size={16} />
+                    </button>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+        <div className={toggleState === 4 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
+          <div className='flex flex-wrap'>
+            {
+              Plats.filter(Plats => Plats.categorie.includes("Salade")).sort((a, b) => a.nomPlat.localeCompare(b.nomPlat)).map((Plats) => (
+                <div className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer' key={Plats.nomPlat}>
+                  <div className='cursor-pointer flex flex-wrap' >
+                    <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
+                      <div className='w-2/4'>
+                        <img className='border rounded-xl' src={Plats.imgPlat} alt="" />
+                      </div>
+                      <div className='w-2/4'>
+                        <p className='text-bleu text-center text-base font-bold'>{Plats.nomPlat}</p>
+                        <p className='text-bleu text-center text-xs'>{Plats.descriptionPlat}</p>
+                        <p className='text-bleu text-center text-base font-bold'>{Plats.prixPlat}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='flex justify-center p-1'>
+                    <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                      <Link to={`/PlatUpdate/${Plats.idPlat}`}>
+                        <FaIconsBootStrap.FaPencilAlt size={16} />
+                      </Link>
+                    </button>
+                    <button onClick={() => handleDelete(Plats.nomPlat)} className="text-white bg-rouge2 hover:bg-gris duration-500 rounded-md text-center p-1">
+                      <FaIconsBootStrap.FaTrashAlt size={16} />
+                    </button>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+        <div className={toggleState === 5 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
+          <div className='flex flex-wrap'>
+            {
+              Plats.filter(Plats => Plats.categorie.includes("Boissons")).sort((a, b) => a.nomPlat.localeCompare(b.nomPlat)).map((Plats) => (
                 <div className='w-96 transition duration-500 transform hover:-translate-y-1 cursor-pointer' key={Plats.nomPlat}>
                   <div className='cursor-pointer flex flex-wrap' >
                     <div className='bg-gray-50 text-right mr-10 border border-gris rounded-xl mt-1 flex '>
