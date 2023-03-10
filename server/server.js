@@ -715,6 +715,17 @@ app.post("/commande-fournisseur-add", (req, res) => {
   });
 });
 
+//UPDATE COMMANDE FOURNISSEUR
+app.put("/fournisseur-commande-update/:id", (req, res) => {
+  const deleteF = req.params.id;
+  const f = "UPDATE commandesfournisseur SET `statutCommandeFournisseur`='A valider' WHERE idCommande = ?";
+
+  dataBase.query(f, [deleteF], (err, data) => {
+    if (err) return res.send(err);
+    return res.json("Commande fournisseur mise à jour avec succès");
+  })
+})
+
 //DELETE COMMANDE FOURNISSEUR
 app.delete("/fournisseur-commande/:id", (req, res) => {
   const deleteF = req.params.id;
@@ -723,6 +734,105 @@ app.delete("/fournisseur-commande/:id", (req, res) => {
   dataBase.query(f, [deleteF], (err, data) => {
     if (err) return res.send(err);
     return res.json("Commande fournisseur supprimée avec succès");
+  })
+})
+
+//AFFICHER INGREDIENTS COMMANDE 
+app.get("/ingredients-commandes/:numeroCommande", (req, res) => {
+  const numeroCommande = req.params.numeroCommande;
+  const t = "SELECT * FROM `contenircommandesfournisseur` WHERE `nCommandeFournisseur` = ?";
+  const values = [numeroCommande];
+
+  dataBase.query(t, values, (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
+
+//GET INGREDIENT COMMANDE FOURNISSEUR
+app.get("/ingredients-commandes/:numeroCommande/:ingredient", (req, res) => {
+  const q = "SELECT * FROM `contenircommandesfournisseur` WHERE nCommandeFournisseur = ? AND ingredient = ? "
+  const commande = req.params.numeroCommande
+  const ingredient = req.params.ingredient
+
+  dataBase.query(q, [commande, ingredient], (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+//INSERT INGREDIENT COMMANDE 
+app.post("/ingredient-commande-add/:numeroCommande", (req, res) => {
+  const q = "INSERT INTO `contenircommandesfournisseur` (`nCommandeFournisseur`, `ingredient`, `quantite`) VALUES (?)";
+  const values = [
+    req.params.numeroCommande,
+    req.body.ingredient,
+    req.body.quantite,
+  ];
+
+  dataBase.query(q, [values], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Ingredient ajouté avec succès.")
+  })
+})
+
+// UPDATE INGREDIENT COMMANDE FOURNISSEUR
+app.put("/commande-ingredient-update/:numeroCommande/:ingredient", (req, res) => {
+  const commande = req.params.numeroCommande
+  const ingredient = req.params.ingredient
+  const q = "UPDATE `contenircommandesfournisseur` SET `quantite`=? WHERE nCommandeFournisseur = ? AND ingredient = ?";
+  const values = [
+    req.body.quantite,
+  ];
+
+  dataBase.query(q, [...values, commande, ingredient], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Quantitée +1")
+  })
+})
+
+
+//DELETE INGREDIENT COMMANDE FOURNISSEUR
+app.delete("/ingredient-commande-delete/:id", (req, res) => {
+  const tableId = req.params.id;
+  const q = "DELETE FROM `contenircommandesfournisseur` WHERE id = ?"
+
+  dataBase.query(q, [tableId], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Ingrédient de la commande suprimé avec succès.")
+  })
+})
+
+//RECUPERER TOUS LES INGREDIENTS
+app.get("/get-ingredient/:ingredient", (req, res) => {
+  const ingredient = req.params.ingredient;
+  const selectIngredient = `SELECT * FROM ingredients WHERE nom = '${ingredient}'`;
+  dataBase.query(selectIngredient, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data[0]);
+  })
+})
+
+
+//UPDATE AJOUT QUANTITE INGREDIENT
+app.put("/update-ingredients/:nomIngredient", (req, res) => {
+  const ingredientsM = req.params.nomIngredient;
+  const i = "UPDATE `ingredients` SET `stock`=? WHERE `nomIngredient`=?";
+  const values = [
+    req.body.stock,
+  ];
+  dataBase.query(i, [...values, ingredientsM], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("ingredient modifié avec succès");
+  });
+})
+
+//JOINTURE INGREDIENTS + CONTENIRCOMMANDESFOURNISSEURS
+app.get("/join-ingredient-contenirCommandesFournisseurs", (req, res) => {
+  const selectIngredient = `SELECT * FROM contenircommandesfournisseur c INNER JOIN ingredients i ON c.ingredient = i.nomIngredient`;
+  dataBase.query(selectIngredient, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data[0]);
   })
 })
 //------------------------------------------------------------------------------------------------

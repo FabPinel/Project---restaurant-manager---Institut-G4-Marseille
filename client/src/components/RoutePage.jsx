@@ -12,6 +12,7 @@ import UpdateTable from '../pages/UpdateTable';
 import CommandesTable from '../pages/CommandesTable';
 import HistoriqueCommandeTable from '../pages/HistoriqueCommandeTable';
 import PlatUpdate from '../pages/PlatUpdate';
+import IngredientCommande from '../pages/IngredientsCommande';
 
 
 const RoutePage = () => {
@@ -32,6 +33,7 @@ const RoutePage = () => {
           <Route path='/CommandesTable/:numeroTable/:numeroCommande?' element={<CommandesTable />} />
           <Route path='/HistoriqueCommandeTable/:numeroCommande' element={<HistoriqueCommandeTable />} />
           <Route path='/PlatUpdate/:idPlat' element={<PlatUpdate />} />
+          <Route path='/IngredientsCommande/:numeroCommande' element={<IngredientCommande />} />
         </Routes>
       </section>
 
