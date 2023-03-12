@@ -1,7 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-// import * as FaIcons from 'react-icons/rx';
 import * as FaIconsBootStrap from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -159,7 +158,12 @@ function Plat() {
                     </div>
                     <div className='flex justify-center p-1'>
                       <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
-                        <Link to={`/PlatUpdate/${Plats.idPlat}`}>
+                        <Link to={`/ContenirPlat/${Plats.nomPlat}`}>
+                          <FaIconsBootStrap.FaList size={16} />
+                        </Link>
+                      </button>
+                      <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                        <Link to={`/PlatUpdate/${Plats.nomPlat}`}>
                           <FaIconsBootStrap.FaPencilAlt size={16} />
                         </Link>
                       </button>
@@ -225,6 +229,11 @@ function Plat() {
                   <div className='flex justify-center p-1'>
                     <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
                       <Link to={`/PlatUpdate/${Plats.idPlat}`}>
+                        <FaIconsBootStrap.FaList size={16} />
+                      </Link>
+                    </button>
+                    <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                      <Link to={`/PlatUpdate/${Plats.idPlat}`}>
                         <FaIconsBootStrap.FaPencilAlt size={16} />
                       </Link>
                     </button>
@@ -257,6 +266,11 @@ function Plat() {
                   <div className='flex justify-center p-1'>
                     <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
                       <Link to={`/PlatUpdate/${Plats.idPlat}`}>
+                        <FaIconsBootStrap.FaList size={16} />
+                      </Link>
+                    </button>
+                    <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                      <Link to={`/PlatUpdate/${Plats.idPlat}`}>
                         <FaIconsBootStrap.FaPencilAlt size={16} />
                       </Link>
                     </button>
@@ -287,6 +301,11 @@ function Plat() {
                     </div>
                   </div>
                   <div className='flex justify-center p-1'>
+                    <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                      <Link to={`/PlatUpdate/${Plats.idPlat}`}>
+                        <FaIconsBootStrap.FaList size={16} />
+                      </Link>
+                    </button>
                     <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
                       <Link to={`/PlatUpdate/${Plats.idPlat}`}>
                         <FaIconsBootStrap.FaPencilAlt size={16} />
