@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import * as FaIconsBootStrap from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Fournisseur() {
   const [toggleState, setToggleState] = useState(1);
@@ -109,7 +109,7 @@ function Fournisseur() {
           </button>
           <button className={toggleState === 2 ? "tabs p-4 text-center w-38 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-38 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
             onClick={() => toggleTab(2)} >
-            Commandes à réceptionner
+            Commandes à valider
           </button>
           <button className={toggleState === 3 ? "tabs p-4 text-center w-38 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-38 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
             onClick={() => toggleTab(3)} >
@@ -187,7 +187,75 @@ function Fournisseur() {
                 </th>
               </tr>
             </thead>
-            {commandesFournisseurs.map((commande) => (
+            {commandesFournisseurs.filter(commande => commande.statutCommandeFournisseur !== "A valider").map((commande) => (
+              <tr key={commande.id}>
+                <td className="whitespace-nowrap px-8 py-4 text-xl text-black border-solid border-2 bg-white">{commande.idCommande}</td>
+                <td className="whitespace-nowrap px-10 py-1 text-xl text-black border-solid border-2 bg-white">{commande.fournisseur}</td>
+                <td className="whitespace-nowrap px-8 py-4 text-xl text-black border-solid border-2 bg-white">{new Date(commande.dateCommande).toLocaleString()}</td>
+                <td className="whitespace-nowrap px-8 py-4 text-xl text-black border-solid border-2 bg-white">{new Date(commande.dateLivraison).toLocaleDateString()}</td>
+                <td className="whitespace-nowrap px-8 py-4 text-xl text-black border-solid border-2 bg-white">{commande.statutCommandeFournisseur}</td>
+                <td className="whitespace-nowrap px-10 py-4 text-xltext-black border-solid border-2 bg-white">
+                  {commande.statutCommandeFournisseur === "Terminé" && (
+                    <button onClick={() => handleDelete(commande.id)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md p-1">
+                      <Link to={`/IngredientsCommande/${commande.idCommande}`}>
+                        <FaIconsBootStrap.FaEye size={24} />
+                      </Link>
+                    </button>
+                  )}
+                  {commande.statutCommandeFournisseur === "En cours" && (
+                    <button onClick={() => handleDelete(commande.id)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md p-1">
+                      <Link to={`/IngredientsCommande/${commande.idCommande}`}>
+                        <FaIconsBootStrap.FaPencilAlt size={24} />
+                      </Link>
+                    </button>
+                  )}
+                  {commande.statutCommandeFournisseur === "En cours" && (
+                    <button onClick={() => handleDeleteCommande(commande.idCommande)} className="text-white bg-rouge2 hover:bg-gris duration-500 rounded-md ml-12 p-1">
+                      <FaIconsBootStrap.FaTrashAlt size={24} />
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </div>
+        </div>
+        <div className={toggleState === 2 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
+          <div className='mt-5'>
+            <thead className="bg-bleu items-center">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-white w-full">
+                  N°Commande
+                </th>
+                <th
+                  scope="col"
+                  className="px-20 py-3 text-center text-xs font-medium uppercase tracking-wide text-white w-full">
+                  Fournisseur
+                </th>
+                <th
+                  scope="col"
+                  className="px-20 py-3 text-center text-xs font-medium uppercase tracking-wide text-white w-full">
+                  Date commande
+                </th>
+                <th
+                  scope="col"
+                  className="px-20 py-3 text-center text-xs font-medium uppercase tracking-wide text-white w-full">
+                  Jour livraison
+                </th>
+                <th
+                  scope="col"
+                  className="px-20 py-3 text-center text-xs font-medium uppercase tracking-wide text-white w-full">
+                  Statut
+                </th>
+                <th
+                  scope="col"
+                  className="px-20 py-3 text-center text-xs font-medium uppercase tracking-wide text-white w-full">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            {commandesFournisseurs.filter(commande => commande.statutCommandeFournisseur === "A valider").map((commande) => (
               <tr key={commande.id}>
                 <td className="whitespace-nowrap px-8 py-4 text-xl text-black border-solid border-2 bg-white">{commande.idCommande}</td>
                 <td className="whitespace-nowrap px-10 py-1 text-xl text-black border-solid border-2 bg-white">{commande.fournisseur}</td>
@@ -196,18 +264,14 @@ function Fournisseur() {
                 <td className="whitespace-nowrap px-8 py-4 text-xl text-black border-solid border-2 bg-white">{commande.statutCommandeFournisseur}</td>
                 <td className="whitespace-nowrap px-10 py-4 text-xltext-black border-solid border-2 bg-white">
                   <button onClick={() => handleDelete(commande.id)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md p-1">
-                    <FaIconsBootStrap.FaPencilAlt size={24} />
-                  </button>
-                  <button onClick={() => handleDeleteCommande(commande.idCommande)} className="text-white bg-rouge2 hover:bg-gris duration-500 rounded-md ml-12 p-1">
-                    <FaIconsBootStrap.FaTrashAlt size={24} />
+                    <Link to={`/IngredientsCommande/${commande.idCommande}`}>
+                      <FaIconsBootStrap.FaEye size={24} />
+                    </Link>
                   </button>
                 </td>
               </tr>
             ))}
           </div>
-        </div>
-        <div className={toggleState === 2 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
-
         </div>
         <div className={toggleState === 3 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
           <div className='mt-5'>
