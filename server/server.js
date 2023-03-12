@@ -599,6 +599,92 @@ app.put("/PlatUpdate/:idPlat", (req, res) => {
   })
 })
 
+//AFFICHER INGREDIENTS PLAT 
+app.get("/ingredients-plat/:nomPlat", (req, res) => {
+  const nomPlat = req.params.nomPlat;
+  const t = "SELECT * FROM `contenirplat` WHERE `plat` = ?";
+  const values = [nomPlat];
+
+  dataBase.query(t, values, (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
+
+//GET INGREDIENT PLAT
+app.get("/ingredients-plat/:nomPlat/:ingredient", (req, res) => {
+  const q = "SELECT * FROM `contenirplat` WHERE plat = ? AND ingredient = ? "
+  const plat = req.params.nomPlat
+  const ingredient = req.params.ingredient
+
+  dataBase.query(q, [plat, ingredient], (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+
+// UPDATE INGREDIENT PLAT
+app.put("/plat-ingredient-update/:nomPlat/:ingredient", (req, res) => {
+  const plat = req.params.nomPlat
+  const ingredient = req.params.ingredient
+  const q = "UPDATE `contenirplat` SET `quantite`=? WHERE plat = ? AND ingredient = ?";
+  const values = [
+    req.body.quantite,
+  ];
+
+  dataBase.query(q, [...values, plat, ingredient], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Quantitée +1")
+  })
+})
+
+//DELETE INGREDIENT PLAT
+app.delete("/ingredient-plat-delete/:id", (req, res) => {
+  const plat = req.params.id;
+  const q = "DELETE FROM `contenirplat` WHERE id = ?"
+
+  dataBase.query(q, [plat], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Ingrédient du plat suprimé avec succès.")
+  })
+})
+
+//RECUPERER  PLAT 
+app.get("/plat/:nomPlat", (req, res) => {
+  const nomPlat = req.params.nomPlat;
+  const t = "SELECT * FROM `plats` WHERE `nomPlat` = ?";
+  const values = [nomPlat];
+
+  dataBase.query(t, values, (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
+
+//INSERT INGREDIENT PLAT 
+app.post("/ingredient-plat-add/:nomPlat", (req, res) => {
+  const q = "INSERT INTO `contenirplat` (`ingredient`, `plat`, `quantite`) VALUES (?)";
+  const values = [
+    req.body.ingredient,
+    req.params.nomPlat,
+    req.body.quantite,
+  ];
+
+  dataBase.query(q, [values], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Ingredient du plat ajouté avec succès.")
+  })
+})
+
+// GET CATEGORIE
+app.get("/categorie-plat", (req, res) => {
+  const fourni = "SELECT * FROM categories"
+  dataBase.query(fourni, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
 //-----------------------------------------------------------------------------------------------------------------------------
 
 app.get("/ingredientBoisson", (req, res) => {
