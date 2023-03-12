@@ -8,6 +8,7 @@ function Plat() {
 
   const [toggleState, setToggleState] = useState(1);
   const [Plats, setPlats] = useState([]);
+  const [Categories, setCategories] = useState([]);
 
   const toggleTab = (index) => {
     setToggleState(index);
@@ -23,6 +24,18 @@ function Plat() {
       }
     };
     fetchAllPlats();
+  }, []);
+
+  useEffect(() => {
+    const fetchAllCategories = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/categorie-plat");
+        setCategories(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllCategories();
   }, []);
 
   const navigate = useNavigate();
@@ -110,15 +123,13 @@ function Plat() {
                     </div>
                     <div>
                       <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-center"> Catégories du plat</label>
-                      <select type="text" name="categorie" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control' >
-                        <option selected></option>
-                        <option value="Accompagnement">Accompagnement</option>
-                        <option value="Alcool">Alcool</option>
-                        <option value="Boissons">Boissons</option>
-                        <option value="Cocktail">Cocktail</option>
-                        <option value="Dessert">Dessert</option>
-                        <option value="Entrées">Entrées</option>
-                        <option value="Plats">Plats</option>
+                      <select name="categorie" onChange={handleChange} className='bg-gray-50 border border-gris text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-bleu block w-48 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" form-control'>
+                        <option disabled selected> Veuillez sélectionner une catégorie </option>
+                        {Categories.map((categoriePlat) => (
+                          <option key={categoriePlat.id} value={categoriePlat.nom}>
+                            {categoriePlat.nom}
+                          </option>
+                        ))}
                       </select>
                     </div>
                     <div>
