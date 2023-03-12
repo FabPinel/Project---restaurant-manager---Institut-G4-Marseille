@@ -195,14 +195,25 @@ function Fournisseur() {
                 <td className="whitespace-nowrap px-8 py-4 text-xl text-black border-solid border-2 bg-white">{new Date(commande.dateLivraison).toLocaleDateString()}</td>
                 <td className="whitespace-nowrap px-8 py-4 text-xl text-black border-solid border-2 bg-white">{commande.statutCommandeFournisseur}</td>
                 <td className="whitespace-nowrap px-10 py-4 text-xltext-black border-solid border-2 bg-white">
-                  <button onClick={() => handleDelete(commande.id)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md p-1">
-                    <Link to={`/IngredientsCommande/${commande.idCommande}`}>
-                      <FaIconsBootStrap.FaPencilAlt size={24} />
-                    </Link>
-                  </button>
-                  <button onClick={() => handleDeleteCommande(commande.idCommande)} className="text-white bg-rouge2 hover:bg-gris duration-500 rounded-md ml-12 p-1">
-                    <FaIconsBootStrap.FaTrashAlt size={24} />
-                  </button>
+                  {commande.statutCommandeFournisseur === "Terminé" && (
+                    <button onClick={() => handleDelete(commande.id)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md p-1">
+                      <Link to={`/IngredientsCommande/${commande.idCommande}`}>
+                        <FaIconsBootStrap.FaEye size={24} />
+                      </Link>
+                    </button>
+                  )}
+                  {commande.statutCommandeFournisseur === "En cours" && (
+                    <button onClick={() => handleDelete(commande.id)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md p-1">
+                      <Link to={`/IngredientsCommande/${commande.idCommande}`}>
+                        <FaIconsBootStrap.FaPencilAlt size={24} />
+                      </Link>
+                    </button>
+                  )}
+                  {commande.statutCommandeFournisseur === "En cours" && (
+                    <button onClick={() => handleDeleteCommande(commande.idCommande)} className="text-white bg-rouge2 hover:bg-gris duration-500 rounded-md ml-12 p-1">
+                      <FaIconsBootStrap.FaTrashAlt size={24} />
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

@@ -11,10 +11,42 @@ function IngredientCommande() {
     const [ingredientBoisson, setIngredientBoisson] = useState([]);
     const navigate = useNavigate();
     const [ingredientsCommandes, setIngredientsCommandes] = useState([]);
+    const [commandeFournisseur, setCommandesFournisseur] = useState([]);
     const { numeroCommande } = useParams();
     const goingBack = async e => {
         navigate(-1);
     }
+
+    const [allStocks, setAllStocks] = useState([]);
+
+
+
+    useEffect(() => {
+        const fetchAllCommandesFournisseurs = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/get-commande-fournisseur/${numeroCommande}`);
+                setCommandesFournisseur(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllCommandesFournisseurs();
+    }, [numeroCommande]);
+
+
+    console.log(commandeFournisseur)
+    useEffect(() => {
+        const fetchStock = async () => {
+            try {
+                const res = await axios.get("http://localhost:5000/get-stocks");
+                setAllStocks(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchStock();
+    }, []);
+
 
     useEffect(() => {
         const fetchAllIngredients = async () => {
@@ -146,41 +178,24 @@ function IngredientCommande() {
         goingBack();
     }
 
-    const [join, setJoin] = useState([]);
-
-    useEffect(() => {
-        const fetchAllJoin = async () => {
-            try {
-                const res = await axios.get("http://localhost:5000//join-ingredient-contenirCommandesFournisseurs");
-                setJoin(res.data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        fetchAllJoin();
-    }, []);
-
-    const validerCommande = async () => {
+    const validerCommandes = async () => {
         try {
-            // Boucle sur la liste des ingrédients commandés
-            for (const ingredCommande of ingredientsCommandes) {
-                const { ingredient, quantite } = ingredCommande;
-                const res = await axios.get(`/get-ingredient/${ingredient}`);
-                const ingredientToUpdate = res.data;
-
-                // Ajoute la quantité commandée à la quantité existante de l'ingrédient
-                const newStock = ingredientToUpdate.stock + quantite;
-
-                // Met à jour la table ingredients avec le nouveau stock
-                await axios.put(`/update-ingredients/${ingredient}`, { stock: newStock });
-            }
-
-            // Revenir à la page précédente
+            const newStocks = [...allStocks]; // copier allStocks pour éviter de le modifier directement
+            ingredientsCommandes.forEach(({ ingredient, quantite }) => {
+                const index = newStocks.findIndex((item) => item.nomIngredient === ingredient); // trouver l'index de l'ingrédient dans newStocks
+                if (index !== -1) {
+                    newStocks[index].stock += quantite; // ajouter la quantité à l'élément correspondant dans newStocks
+                    axios.put(`http://localhost:5000/update-stock/${ingredient}`, { stock: newStocks[index].stock }); // mettre à jour la base de données pour cet ingrédient uniquement
+                }
+            });
+            setAllStocks(newStocks); // mettre à jour l'état de allStocks
+            axios.put(`/fournisseur-commande-termine-update/${numeroCommande}`)//changement de statut a terminé
             goingBack();
         } catch (err) {
-            console.error(err);
+            console.log(err);
         }
-    }
+    };
+
 
 
 
@@ -282,14 +297,16 @@ function IngredientCommande() {
                         </td>
                     </tr>
                 ))}
-                <button onClick={saveCommande} className="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 4 mb-5 mt-5">
-                    Enregistrer
-                </button>
-                <button onClick={validerCommande} className="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 4 mb-5 mt-5">
+                <div>
+                    <button onClick={saveCommande} className="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 4 mb-5 mt-5">
+                        Enregistrer
+                    </button>
+                    <button onClick={goingBack} className="bg-rouge2 hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 4 mb-5 mt-5">
+                        Annuler
+                    </button>
+                </div>
+                <button onClick={validerCommandes} className="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 4 mb-5 mt-5">
                     Valider
-                </button>
-                <button onClick={goingBack} className="bg-rouge2 hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 4 mb-5 mt-5">
-                    Annuler
                 </button>
             </section>
         </React.Fragment>
