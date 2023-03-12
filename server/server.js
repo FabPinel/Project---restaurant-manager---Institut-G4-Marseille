@@ -643,6 +643,15 @@ app.post("/ingredient-plat-add/:nomPlat", (req, res) => {
     return res.json("Ingredient du plat ajouté avec succès.")
   })
 })
+
+// GET CATEGORIE
+app.get("/categorie-plat", (req, res) => {
+  const fourni = "SELECT * FROM categories"
+  dataBase.query(fourni, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
 //-----------------------------------------------------------------------------------------------------------------------------
 
 app.get("/ingredientBoisson", (req, res) => {
