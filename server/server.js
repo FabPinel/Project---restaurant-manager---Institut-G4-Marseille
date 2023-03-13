@@ -29,6 +29,16 @@ app.get("/categories", (req, res) => { // pour chaque nouvelle requete il faut c
   })
 })
 
+// REQUETES PAGE DASHBOARD--------------------------------------------------------------------------------------------
+app.get("/categorie-ca", (req, res) => {
+  const ca = "SELECT plats.categorie, sum(plats.prixPlat) as CA FROM contenircommandes INNER JOIN plats ON plats.nomPlat = contenircommandes.platCommande INNER JOIN commandestables ON commandestables.numeroCommande = contenircommandes.commande GROUP BY plats.categorie"
+  dataBase.query(ca, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+//-------------------------------------------------------------------------------------------------------------------
 // REQUETES PAGE SALLE--------------------------------------------------------------------------------
 //AFFICHAGE TABLES SALLE1
 app.get("/tables-salle1", (req, res) => {
@@ -468,7 +478,7 @@ app.post("/ajout-salaries", (req, res) => {
     req.body.adresseSalarie,
     req.body.salaireSalarie,
     req.body.posteSalaire,
-];
+  ];
   dataBase.query(s, [values], (err, data) => {
     if (err) return res.json(err)
     return res.json("salarie-ajouté avec succès")
