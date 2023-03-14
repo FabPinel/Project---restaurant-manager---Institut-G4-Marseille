@@ -10,7 +10,10 @@ ChartJs.register(
 
 const Categories = () => {   //   il faut que ce soit une const et pas une fonction pour avoir des requetes sql
 
-  const [plats, setPlats] = useState([]);
+  const [platsDay, setPlatsDay] = useState([]);
+  const [platsWeek, setPlatsWeek] = useState([]);
+  const [platsMonth, setPlatsMonth] = useState([]);
+  const [platsYear, setPlatsYear] = useState([]);
   const [caDay, setCaDay] = useState(0);
   const [caWeek, setCaWeek] = useState(0);
   const [caMonth, setCaMonth] = useState(0);
@@ -63,7 +66,7 @@ const Categories = () => {   //   il faut que ce soit une const et pas une fonct
     const fetchAllPlats = async () => {
       try {
         const res = await axios.get("http://localhost:5000/categorie-ca-day");
-        setPlats(res.data);
+        setPlatsDay(res.data);
         const label = [];
         const data = [];
         for (var i of res.data) {
@@ -92,7 +95,7 @@ const Categories = () => {   //   il faut que ce soit une const et pas une fonct
     const fetchAllPlats = async () => {
       try {
         const res = await axios.get("http://localhost:5000/categorie-ca-week");
-        setPlats(res.data);
+        setPlatsWeek(res.data);
         const label = [];
         const data = [];
         for (var i of res.data) {
@@ -121,7 +124,7 @@ const Categories = () => {   //   il faut que ce soit une const et pas une fonct
     const fetchAllPlats = async () => {
       try {
         const res = await axios.get("http://localhost:5000/categorie-ca-month");
-        setPlats(res.data);
+        setPlatsMonth(res.data);
         const label = [];
         const data = [];
         for (var i of res.data) {
@@ -151,7 +154,7 @@ const Categories = () => {   //   il faut que ce soit une const et pas une fonct
     const fetchAllPlats = async () => {
       try {
         const res = await axios.get("http://localhost:5000/categorie-ca-year");
-        setPlats(res.data);
+        setPlatsYear(res.data);
         const label = [];
         const data = [];
         for (var i of res.data) {
@@ -175,7 +178,7 @@ const Categories = () => {   //   il faut que ce soit une const et pas une fonct
     fetchAllPlats();
   }, [])
 
-  console.log(plats);
+  console.log(platsDay);
 
   const [toggleState, setToggleState] = useState(1);
 
@@ -272,23 +275,59 @@ const Categories = () => {   //   il faut que ce soit une const et pas une fonct
               </button>
             </div>
             <div className={toggleState === 1 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
-              < Pie data={dataDay} />
-              <p className='font-semibold text-center text-xl'>Total : {caDay}€ </p>
+              {platsDay.length === 0 ? (
+                <div>
+                  <img src="https://image.noelshack.com/fichiers/2023/11/2/1678820107-graphnotfound.png" alt="graphNotFound" />
+                  <h2 className='text-xl mb-4 font-semibold text-center'>Aucun résultat pour aujourd'hui</h2>
+                </div>
+              ) : (
+                <>
+                  <Pie data={dataDay} />
+                  <p className='font-semibold text-center text-xl'>Total : {caDay}€ </p>
+                </>
+              )}
             </div>
 
             <div className={toggleState === 2 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
-              < Pie data={dataWeek} />
-              <p className='font-semibold text-center text-xl'>Total : {caWeek}€ </p>
+              {platsWeek.length === 0 ? (
+                <div>
+                  <img src="https://image.noelshack.com/fichiers/2023/11/2/1678820107-graphnotfound.png" alt="graphNotFound" />
+                  <h2 className='text-xl mb-4 font-semibold text-center'>Aucun résultat pour cette semaine</h2>
+                </div>
+              ) : (
+                <>
+                  < Pie data={dataWeek} />
+                  <p className='font-semibold text-center text-xl'>Total : {caWeek}€ </p>
+                </>
+              )}
             </div>
 
             <div className={toggleState === 3 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
-              < Pie data={dataMonth} />
-              <p className='font-semibold text-center text-xl'>Total : {caMonth}€ </p>
+              {platsMonth.length === 0 ? (
+                <div>
+                  <img src="https://image.noelshack.com/fichiers/2023/11/2/1678820107-graphnotfound.png" alt="graphNotFound" />
+                  <h2 className='text-xl mb-4 font-semibold text-center'>Aucun résultat pour ce mois</h2>
+                </div>
+              ) : (
+                <>
+                  < Pie data={dataMonth} />
+                  <p className='font-semibold text-center text-xl'>Total : {caMonth}€ </p>
+                </>
+              )}
             </div>
 
             <div className={toggleState === 4 ? "content  block" : "bg-white p-5 w-full h-full hidden"} >
-              < Pie data={dataYear} />
-              <p className='font-semibold text-center text-xl'>Total : {caYear}€ </p>
+              {platsYear.length === 0 ? (
+                <div>
+                  <img src="https://image.noelshack.com/fichiers/2023/11/2/1678820107-graphnotfound.png" alt="graphNotFound" />
+                  <h2 className='text-xl mb-4 font-semibold text-center'>Aucun résultat pour cette année</h2>
+                </div>
+              ) : (
+                <>
+                  < Pie data={dataYear} />
+                  <p className='font-semibold text-center text-xl'>Total : {caYear}€ </p>
+                </>
+              )}
             </div>
             {/* < Bar data={dataD} options={options} />  */}
 
