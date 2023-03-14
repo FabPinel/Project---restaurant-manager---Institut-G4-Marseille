@@ -267,7 +267,7 @@ const Categories = () => {   //   il faut que ce soit une const et pas une fonct
               </button>
               <button className={toggleState === 3 ? "tabs p-4 text-center w-20 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-20 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
                 onClick={() => toggleTab(3)} >
-                Moi
+                Mois
               </button>
               <button className={toggleState === 4 ? "tabs p-4 text-center w-20 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-20 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
                 onClick={() => toggleTab(4)} >
