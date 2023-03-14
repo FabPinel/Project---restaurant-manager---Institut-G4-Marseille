@@ -14,6 +14,7 @@ import HistoriqueCommandeTable from '../pages/HistoriqueCommandeTable';
 import PlatUpdate from '../pages/PlatUpdate';
 import IngredientCommande from '../pages/IngredientsCommande';
 import ContenirPlat from '../pages/ContenirPlat';
+import ContenirMenu from '../pages/ContenirMenu';
 
 
 const RoutePage = () => {
@@ -36,6 +37,7 @@ const RoutePage = () => {
           <Route path='/IngredientsCommande/:numeroCommande' element={<IngredientCommande />} />
           <Route path='/PlatUpdate/:nomPlat' element={<PlatUpdate />} />
           <Route path='/ContenirPlat/:nomPlat' element={<ContenirPlat />} />
+          <Route path='/ContenirMenu/:menu' element={<ContenirMenu />} />
         </Routes>
       </section>
 
