@@ -11,6 +11,10 @@ import Fournisseur from '../pages/Fournisseur';
 import UpdateTable from '../pages/UpdateTable';
 import CommandesTable from '../pages/CommandesTable';
 import HistoriqueCommandeTable from '../pages/HistoriqueCommandeTable';
+import PlatUpdate from '../pages/PlatUpdate';
+import IngredientCommande from '../pages/IngredientsCommande';
+import ContenirPlat from '../pages/ContenirPlat';
+
 
 const RoutePage = () => {
   return (
@@ -29,6 +33,9 @@ const RoutePage = () => {
           <Route path='/UpdateTable/:numeroTable' element={<UpdateTable />} />
           <Route path='/CommandesTable/:numeroTable/:numeroCommande?' element={<CommandesTable />} />
           <Route path='/HistoriqueCommandeTable/:numeroCommande' element={<HistoriqueCommandeTable />} />
+          <Route path='/IngredientsCommande/:numeroCommande' element={<IngredientCommande />} />
+          <Route path='/PlatUpdate/:nomPlat' element={<PlatUpdate />} />
+          <Route path='/ContenirPlat/:nomPlat' element={<ContenirPlat />} />
         </Routes>
       </section>
 

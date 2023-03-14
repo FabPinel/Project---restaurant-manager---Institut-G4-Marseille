@@ -17,6 +17,7 @@ module.exports = {
         5: "5px",
       },
       inset: {
+        '120': '420px',
         "550px": "550px",
       },
       fontSize: {
