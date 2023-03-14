@@ -21,6 +21,8 @@ dataBase.connect(function (err) { if (err) throw err; console.log("Connecté à 
 
 app.use(express.json())
 
+// REQUETES PAGE DASHBOARD--------------------------------------------------------------------------------------------
+
 app.get("/categories", (req, res) => { // pour chaque nouvelle requete il faut changer le "/" 
   const q = "SELECT * FROM categories"
   dataBase.query(q, (err, data) => {
@@ -29,14 +31,6 @@ app.get("/categories", (req, res) => { // pour chaque nouvelle requete il faut c
   })
 })
 
-// REQUETES PAGE DASHBOARD--------------------------------------------------------------------------------------------
-app.get("/categorie-ca", (req, res) => {
-  const ca = "SELECT plats.categorie, sum(plats.prixPlat) as CA FROM contenircommandes INNER JOIN plats ON plats.nomPlat = contenircommandes.platCommande INNER JOIN commandestables ON commandestables.numeroCommande = contenircommandes.commande GROUP BY plats.categorie"
-  dataBase.query(ca, (err, data) => {
-    if (err) return res.json(err)
-    return res.json(data)
-  })
-})
 
 //-------------------------------------------------------------------------------------------------------------------
 // REQUETES PAGE SALLE--------------------------------------------------------------------------------
