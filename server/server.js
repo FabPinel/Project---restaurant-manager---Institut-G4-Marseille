@@ -31,6 +31,79 @@ app.get("/categories", (req, res) => { // pour chaque nouvelle requete il faut c
   })
 })
 
+app.get("/categories", (req, res) => { // pour chaque nouvelle requete il faut changer le "/" 
+  const q = "SELECT * FROM categories"
+  dataBase.query(q, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+app.get("/categorie-ca-day", (req, res) => {
+  const ca = "SELECT plats.categorie, commandestables.dateCommande, SUM(plats.prixPlat) AS CA FROM contenircommandes INNER JOIN plats ON plats.nomPlat = contenircommandes.platCommande INNER JOIN commandestables ON commandestables.numeroCommande = contenircommandes.commande WHERE DAY(commandestables.dateCommande) = DAY(CURRENT_DATE()) GROUP BY plats.categorie"
+  dataBase.query(ca, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+app.get("/categorie-ca-week", (req, res) => {
+  const ca = "SELECT plats.categorie, commandestables.dateCommande, SUM(plats.prixPlat) AS CA FROM contenircommandes INNER JOIN plats ON plats.nomPlat = contenircommandes.platCommande INNER JOIN commandestables ON commandestables.numeroCommande = contenircommandes.commande WHERE YEARWEEK(commandestables.dateCommande) = YEARWEEK(CURDATE()) GROUP BY plats.categorie"
+  dataBase.query(ca, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+app.get("/categorie-ca-month", (req, res) => {
+  const ca = "SELECT plats.categorie, commandestables.dateCommande, SUM(plats.prixPlat) AS CA FROM contenircommandes INNER JOIN plats ON plats.nomPlat = contenircommandes.platCommande INNER JOIN commandestables ON commandestables.numeroCommande = contenircommandes.commande WHERE MONTH(commandestables.dateCommande) = MONTH(CURDATE()) GROUP BY plats.categorie"
+  dataBase.query(ca, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+app.get("/categorie-ca-year", (req, res) => {
+  const ca = "SELECT plats.categorie, commandestables.dateCommande, SUM(plats.prixPlat) AS CA FROM contenircommandes INNER JOIN plats ON plats.nomPlat = contenircommandes.platCommande INNER JOIN commandestables ON commandestables.numeroCommande = contenircommandes.commande WHERE YEAR(commandestables.dateCommande) = YEAR(CURRENT_DATE()) GROUP BY plats.categorie;"
+  dataBase.query(ca, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+
+
+app.get("/ca-day", (req, res) => {
+  const ca = "SELECT SUM(plats.prixPlat) AS CA FROM contenircommandes INNER JOIN plats ON plats.nomPlat = contenircommandes.platCommande INNER JOIN commandestables ON commandestables.numeroCommande = contenircommandes.commande WHERE DAY(commandestables.dateCommande) = DAY(CURRENT_DATE())"
+  dataBase.query(ca, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data[0].CA)
+  })
+})
+
+app.get("/ca-week", (req, res) => {
+  const ca = "SELECT SUM(plats.prixPlat) AS CA FROM contenircommandes INNER JOIN plats ON plats.nomPlat = contenircommandes.platCommande INNER JOIN commandestables ON commandestables.numeroCommande = contenircommandes.commande WHERE YEARWEEK(commandestables.dateCommande) = YEARWEEK(CURDATE())"
+  dataBase.query(ca, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data[0].CA) // renvoyer uniquement la valeur de CA
+  })
+})
+
+app.get("/ca-month", (req, res) => {
+  const ca = "SELECT SUM(plats.prixPlat) AS CA FROM contenircommandes INNER JOIN plats ON plats.nomPlat = contenircommandes.platCommande INNER JOIN commandestables ON commandestables.numeroCommande = contenircommandes.commande WHERE MONTH(commandestables.dateCommande) = MONTH(CURDATE())"
+  dataBase.query(ca, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data[0].CA)
+  })
+})
+
+app.get("/ca-year", (req, res) => {
+  const ca = "SELECT SUM(plats.prixPlat) AS CA FROM contenircommandes INNER JOIN plats ON plats.nomPlat = contenircommandes.platCommande INNER JOIN commandestables ON commandestables.numeroCommande = contenircommandes.commande WHERE YEAR(commandestables.dateCommande) = YEAR(CURRENT_DATE())"
+  dataBase.query(ca, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data[0].CA)
+  })
+})
 
 //-------------------------------------------------------------------------------------------------------------------
 // REQUETES PAGE SALLE--------------------------------------------------------------------------------
