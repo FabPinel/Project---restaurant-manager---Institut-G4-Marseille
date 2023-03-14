@@ -359,22 +359,16 @@ function ContenirMenu() {
                                 className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-white w-full">
                                 Prix
                             </th>
-                            <th
-                                scope="col"
-                                className="px-20 py-3 text-center text-xs font-medium uppercase tracking-wide text-white w-full">
-                                Catégorie
-                            </th>
                             <th scope="col" className="relative py-3 pl-3 pr-4 sm:pr-6">
                                 <span className="sr-only">Edit</span>
                             </th>
                         </tr>
                     </thead>
-                    {platsMenu.map((plat, index) => (
+                    {platsMenu.map((plat) => (
                         <tr key={plat.id}>
                             <td className="whitespace-nowrap px-8 py-4 text-xl text-black border-solid border-2 bg-white">{plat.platMenu}</td>
                             <td className="whitespace-nowrap px-10 py-1 text-xl text-black border-solid border-2 bg-white">{plat.descriptionPlat}</td>
                             <td className="whitespace-nowrap px-10 py-1 text-xl text-black border-solid border-2 bg-white">{plat.prixPlat}</td>
-                            <td className="whitespace-nowrap px-10 py-1 text-xl text-black border-solid border-2 bg-white">{plat.categorie}</td>
                             <td className="whitespace-nowrap px-10 py-4 text-xltext-black border-solid border-2 bg-white">
                                 <button onClick={() => handleDelete(plat.id)} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
                                     <FaIconsBootStrap.FaTrashAlt size={24} />
