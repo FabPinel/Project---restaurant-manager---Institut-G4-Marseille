@@ -12,7 +12,10 @@ function HistoriqueCommandeTable() {
     const commandeId = location.pathname.split("/")[2]
     const [historiquecommande, setHistoriqueCommande] = useState([]);
     const { numeroCommande } = useParams();
+    const [allStocks, setAllStocks] = useState([]);
+    const [commande, setCommande] = useState({});
 
+    console.log("statutcommande:" + commande.statutCommande);
     console.log(location.pathname.split("/")[2])
 
     const [platsCommande, setPlatsCommande] = useState([]);
@@ -31,6 +34,30 @@ function HistoriqueCommandeTable() {
             }
         };
         fetchAllPlatsCommande();
+    }, []);
+
+    useEffect(() => {
+        const fetchAllCommande = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/commande-get/${commandeId}`);
+                setCommande(res.data[0]);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllCommande();
+    }, [commandeId]);
+
+    useEffect(() => {
+        const fetchStock = async () => {
+            try {
+                const res = await axios.get("http://localhost:5000/get-stocks");
+                setAllStocks(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchStock();
     }, []);
 
     const [pizzaCreme, setPizzaCreme] = useState([]);
@@ -120,12 +147,28 @@ function HistoriqueCommandeTable() {
 
     const addPlat = async (plat) => {
         const platExiste = await axios.get(`/commande-plat/${numeroCommande}/${plat}`);
+        const platClic = await axios.get(`/plat-get/${plat}`);
         if (platExiste.data.length > 0) {
             const quantite = platExiste.data[0].quantitePlat + 1;
             axios.put(`/commande-plat-update/${numeroCommande}/${plat}`, {
                 quantitePlat: quantite,
             })
-                .then((response) => {
+                .then(async (response) => {
+                    console.log(response.data);
+                    // Soustraire les ingrédients et leur quantité au stock
+                    const ingredients = await axios.get(`http://localhost:5000/ingredients-plat/${plat}`);
+                    const newStocks = [...allStocks];
+                    ingredients.data.forEach(({ ingredient, quantite }) => {
+                        const index = newStocks.findIndex((item) => item.nomIngredient === ingredient);
+                        if (index !== -1) {
+                            newStocks[index].stock -= quantite;
+                            axios.put(`http://localhost:5000/update-stock/${ingredient}`, { stock: newStocks[index].stock });
+                        }
+                    });
+                    if (platClic.data[0].categorie === `Pizzas - Tomate` || platClic.data[0].categorie === `Pizzas - Crème`) {
+                        handleAEmporter();
+                    }
+                    setAllStocks(newStocks);
                     navigate(0);
                     console.log(response.data);
                 })
@@ -137,13 +180,40 @@ function HistoriqueCommandeTable() {
                 platCommande: plat,
                 quantitePlat: 1,
             })
-                .then((response) => {
-                    navigate(0);
+                .then(async (response) => {
                     console.log(response.data);
+                    // Soustraire les ingrédients et leur quantité au stock
+                    const ingredients = await axios.get(`http://localhost:5000/ingredients-plat/${plat}`);
+                    const newStocks = [...allStocks];
+                    ingredients.data.forEach(({ ingredient, quantite }) => {
+                        const index = newStocks.findIndex((item) => item.nomIngredient === ingredient);
+                        if (index !== -1) {
+                            newStocks[index].stock -= quantite;
+                            axios.put(`http://localhost:5000/update-stock/${ingredient}`, { stock: newStocks[index].stock });
+                        }
+                    });
+                    if (platClic.data[0].categorie === `Pizzas - Tomate` || platClic.data[0].categorie === `Pizzas - Crème`) {
+                        handleAEmporter();
+                    }
+                    setAllStocks(newStocks);
+                    navigate(0);
                 })
                 .catch((error) => {
                     console.error(error);
                 });
+        }
+    };
+
+    const handleAEmporter = async () => {
+        if (commande.statutCommande === `A emporter`) {
+            try {
+                const response = await axios.put("http://localhost:5000/boite-pizza");
+                console.log(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            console.log("Le statut de la commande n'est pas 'A emporter'");
         }
     }
 
