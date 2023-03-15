@@ -49,7 +49,7 @@ app.get("/tables-salle2", (req, res) => {
 })
 //-------------------------------------------------------------------------------------------------
 
-// REQUETES PAGE RÉSERVATION - CRÉATION RÉSERVATION-----------------------------------------------------------------------------
+// REQUETES PAGE RÉSERVATION - NOUVELLE RÉSERVATION-----------------------------------------------------------------------------
 app.get("/reservations", (req, res) => {
   const nbr = "SELECT * FROM `reservation`"
   dataBase.query(nbr, (err, data) => {
@@ -73,6 +73,17 @@ app.post("/reservation-add", (req, res) => {
     return res.json("Réservation ajoutée avec succès.")
   })
 })
+
+//DELETE RÉSERVATIONS
+app.delete("/reservations-delete/:id", (req, res) => {
+  const idReservation = req.params.id;
+  const q = "DELETE FROM `reservation` WHERE idReservation = ?"
+
+  dataBase.query(q, [idReservation], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Réservation suprimée avec succès.")
+  })
+})
 // REQUETES PAGE RÉSERVATION - CRÉATION CLIENT-----------------------------------------------------------------------------
 
 app.get("/clients", (req, res) => {
@@ -94,6 +105,17 @@ app.post("/clients-add", (req, res) => {
   dataBase.query(q, [values], (err, data) => {
     if (err) return res.json(err)
     return res.json("Client ajouté avec succès.")
+  })
+})
+
+//DELETE CLIENT
+app.delete("/clients-delete/:id", (req, res) => {
+  const clientId = req.params.id;
+  const q = "DELETE FROM `clients` WHERE id = ?"
+
+  dataBase.query(q, [clientId], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Client suprimée avec succès.")
   })
 })
 
