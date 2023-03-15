@@ -520,6 +520,52 @@ app.delete("/commande-delete/:id", (req, res) => {
     return res.json("Commande suprimée avec succès.")
   })
 })
+
+//GET INGREDIENT PLAT
+app.get("/ingredients-plat/:plat", (req, res) => {
+  const plat = req.params.plat;
+  const t = "SELECT * FROM `contenirplat` WHERE `plat` = ?";
+  const values = [plat];
+
+  dataBase.query(t, values, (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
+
+//GET COMMANDE
+app.get("/commande-get/:id", (req, res) => {
+  const tableId = req.params.id;
+  const q = "SELECT * FROM `commandestables` WHERE numeroCommande = ?"
+
+  dataBase.query(q, [tableId], (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+//GET PLAT CLICK
+app.get("/plat-get/:id", (req, res) => {
+  const plat = req.params.id;
+  const q = "SELECT * FROM `plats` WHERE nomPlat = ?"
+
+  dataBase.query(q, [plat], (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+//UPDATE -1 BOITE A PIZZA
+app.put("/boite-pizza", (req, res) => {
+  const q = "UPDATE `ingredients` SET stock = stock - 1 WHERE nomIngredient = 'Boite a pizza'";
+
+  dataBase.query(q, (err, data) => {
+    if (err) return res.json(err)
+    return res.json("Quantitée -1 pour les boites a pizza")
+  })
+})
+
+
 //-------------------------------------------------------------------------------------------------
 
 // REQUETES PAGE PLANNING-----------------------------------------------------------------------------
