@@ -67,7 +67,7 @@ function Reservation() {
     nbPersonnes: "",
     tableReserve: "",
     dateReserve: "",
-    clientReserve: "",
+    nomClient: "",
   });
 
   const handleChange = (e) => {

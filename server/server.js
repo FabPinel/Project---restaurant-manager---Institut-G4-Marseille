@@ -64,7 +64,7 @@ app.post("/reservation-add", (req, res) => {
     req.body.nbPersonnes,
     req.body.tableReserve,
     req.body.dateReserve,
-    req.body.clientReserve,
+    req.body.nomClient,
 
   ];
 
