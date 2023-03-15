@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 
 
-const Categories = () => {
+ const Categories = () => {   //   il faut que ce soit une const et pas une fonction pour avoir des requetes sql
  const [categories, setCategories] = useState([]);
 
  useEffect(() => {
   const fetchAllCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/categories"); //le "http://localhost:5000/..." doit être équivalent à celui dans le fichier server.js
+      const res = await axios.get("http://localhost:5000/categories"); //le "http://localhost:5000/..." doit être le même que celui dans le fichier server.js
       setCategories(res.data);
     } catch (err) {
       console.log(err);
