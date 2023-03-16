@@ -13,7 +13,7 @@ function Stock() {
   const close = () => {
     setShowform(false);
   }
- 
+
   const [ingredients, setIngredients] = useState([]);
   const [ingredientConso, setIngredientConso] = useState([]);
   const [ingredientBoisson, setIngredientBoisson] = useState([]);
@@ -107,7 +107,7 @@ function Stock() {
 
   const handleDelete = async (nomIngredient) => {
     try {
-      await axios.delete("http://localhost:5000/ingredient/"+ nomIngredient);
+      await axios.delete("http://localhost:5000/ingredient/" + nomIngredient);
       window.location.reload()
       navigate(0);
     } catch (err) {
@@ -116,7 +116,7 @@ function Stock() {
   };
 
 
-  
+
   useEffect(() => {
     const fetchAllCategorieStock = async () => {
       try {
@@ -132,7 +132,7 @@ function Stock() {
   const handleEdit1 = (nomIngredient, stock) => {
     const nouveauNom = prompt("Entrez le nouveau nom : ");
     const nouveauStock = prompt("Entrez le nouveau stock : ");
-  
+
     if (nouveauNom && nouveauStock) {
       const nouvelleListe = ingredients.map((ingredientB) => {
         if (ingredientB.nomIngredient === nomIngredient) {
@@ -144,9 +144,9 @@ function Stock() {
         }
         return ingredientB;
       });
-  
+
       setIngredients(nouvelleListe);
-  
+
       const ingredientsI = { nomIngredient: nouveauNom, stock: nouveauStock };
       axios
         .put("http://localhost:5000/modifs-ingredients/" + nomIngredient, ingredientsI)
@@ -159,67 +159,67 @@ function Stock() {
     }
   };
 
-const handleEdit2 = (nomIngredient, stock) => {
-  const nouveauNom = prompt("Entrez le nouveau nom : ");
-  const nouveauStock = prompt("Entrez le nouveau stock : ");
+  const handleEdit2 = (nomIngredient, stock) => {
+    const nouveauNom = prompt("Entrez le nouveau nom : ");
+    const nouveauStock = prompt("Entrez le nouveau stock : ");
 
-  if (nouveauNom && nouveauStock) {
-    const nouvelleListe = ingredientConso.map((ingredientB) => {
-      if (ingredientB.nomIngredient === nomIngredient) {
-        return {
-          ...ingredientB,
-          nomIngredient: nouveauNom,
-          stock: nouveauStock,
-        };
-      }
-      return ingredientB;
-    });
-
-    setIngredientConso(nouvelleListe);
-
-    const ingredientsC = { nomIngredient: nouveauNom, stock: nouveauStock };
-    axios
-      .put("http://localhost:5000/modifs-ingredients/" + nomIngredient, ingredientsC)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
+    if (nouveauNom && nouveauStock) {
+      const nouvelleListe = ingredientConso.map((ingredientB) => {
+        if (ingredientB.nomIngredient === nomIngredient) {
+          return {
+            ...ingredientB,
+            nomIngredient: nouveauNom,
+            stock: nouveauStock,
+          };
+        }
+        return ingredientB;
       });
-  }
-};
+
+      setIngredientConso(nouvelleListe);
+
+      const ingredientsC = { nomIngredient: nouveauNom, stock: nouveauStock };
+      axios
+        .put("http://localhost:5000/modifs-ingredients/" + nomIngredient, ingredientsC)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
 
 
-const handleEdit3 = (nomIngredient, stock) => {
-  const nouveauNom = prompt("Entrez le nouveau nom : ");
-  const nouveauStock = prompt("Entrez le nouveau stock : ");
+  const handleEdit3 = (nomIngredient, stock) => {
+    const nouveauNom = prompt("Entrez le nouveau nom : ");
+    const nouveauStock = prompt("Entrez le nouveau stock : ");
 
-  if (nouveauNom && nouveauStock) {
-    const nouvelleListe = ingredientBoisson.map((ingredientB) => {
-      if (ingredientB.nomIngredient === nomIngredient) {
-        return {
-          ...ingredientB,
-          nomIngredient: nouveauNom,
-          stock: nouveauStock,
-        };
-      }
-      return ingredientB;
-    });
-
-    setIngredientBoisson(nouvelleListe);
-
-    const ingredientsB = { nomIngredient: nouveauNom, stock: nouveauStock };
-    axios
-      .put("http://localhost:5000/modifs-ingredients/" + nomIngredient, ingredientsB)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
+    if (nouveauNom && nouveauStock) {
+      const nouvelleListe = ingredientBoisson.map((ingredientB) => {
+        if (ingredientB.nomIngredient === nomIngredient) {
+          return {
+            ...ingredientB,
+            nomIngredient: nouveauNom,
+            stock: nouveauStock,
+          };
+        }
+        return ingredientB;
       });
-  }
-};
-    
+
+      setIngredientBoisson(nouvelleListe);
+
+      const ingredientsB = { nomIngredient: nouveauNom, stock: nouveauStock };
+      axios
+        .put("http://localhost:5000/modifs-ingredients/" + nomIngredient, ingredientsB)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
 
 
   return (
@@ -233,7 +233,7 @@ const handleEdit3 = (nomIngredient, stock) => {
                 <p className='text-center text-bleu text-lg'>Nom de l'ingrédient</p>
                 <input type="text" name='nomIngredient' className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} required />
                 <p className='text-center text-bleu text-lg'>Date de péremption</p>
-                <input type="text" name='datePeremption' className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} required/>
+                <input type="text" name='datePeremption' className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} required />
                 <p className='text-center text-bleu text-lg'>Coût de l'ingrédient</p>
                 <input type="text" name='coutIngredient' className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} required />
                 <p className='text-center text-bleu text-lg'>Fournisseur</p>
@@ -251,13 +251,13 @@ const handleEdit3 = (nomIngredient, stock) => {
                 <input type="text" name='iconeUrl' className='block m-auto my-2 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm-text-md' onChange={handleChange} required />
                 <p className='text-center text-bleu text-lg'>Catégorie</p>
                 <select name='categorieIngredient' id='categorieIngredient' className='block m-auto my-4' onChange={handleChange} required>
-                <option>Sélectionner une catégorie</option>
-                { 
-                categorieStock.map((categ) => (
+                  <option>Sélectionner une catégorie</option>
+                  {
+                    categorieStock.map((categ) => (
                       <option key={categ.nom} value={categ.nom} className='h-10 w-32'>{categ.nom}</option>
-                )
-                )}
-               </select>
+                    )
+                    )}
+                </select>
                 <div className='flex justify-center mb-4'>
                   <button type='button' onClick={close} className='rounded-md border border-gray-300 bg-rouge1 py-2 px-4 text-sm font-medium text-white shadow-sm hover-bg-gris focus:outline hover:bg-gris'>
                     Annuler</button>
@@ -272,31 +272,31 @@ const handleEdit3 = (nomIngredient, stock) => {
 
           <div className='flex flex-wrap justify-between border-b border-black'>
             {
-              ingredients.map((ingredient) => (
+              ingredients.sort((a, b) => a.nomIngredient.localeCompare(b.nomIngredient)).map((ingredient) => (
                 <div className='w-22 h-26 bg-white border-2 border-gris rounded-xl mx-2 my-2'>
                   <div className='flex justify-center w-full h-10 border-b border-bleu'>
-                  <img src={ingredient.iconeUrl} key={ingredient.nomIngredient} alt='pâte' className="text-bleu h-10"></img>
-                  <button onClick={() => handleDelete(ingredient.nomIngredient)}>< FaIcons.AiOutlineMinusCircle size={28}/></button>
+                    <img src={ingredient.iconeUrl} key={ingredient.nomIngredient} alt='pâte' className="text-bleu h-10"></img>
+                    <button onClick={() => handleDelete(ingredient.nomIngredient)}>< FaIcons.AiOutlineMinusCircle size={28} /></button>
                   </div>
-                    <p className='text-sm text-center cursor-pointer' onClick={() => handleEdit1(ingredient.nomIngredient)}>{ingredient.nomIngredient}</p>
-                    <p className='text-sm text-center cursor-pointer' onClick={() => handleEdit1(ingredient.nomIngredient)}>{ingredient.stock}</p>
+                  <p className='text-sm text-center cursor-pointer' onClick={() => handleEdit1(ingredient.nomIngredient)}>{ingredient.nomIngredient}</p>
+                  <p className='text-sm text-center cursor-pointer' onClick={() => handleEdit1(ingredient.nomIngredient)}>{ingredient.stock}</p>
                 </div>
               ))
             }
           </div>
 
-        <h2 className='text-center text-2xl mt-4'>Consommable</h2>
+          <h2 className='text-center text-2xl mt-4'>Consommable</h2>
 
-        <div className='flex flex-wrap border-b border-black'>
+          <div className='flex flex-wrap border-b border-black'>
             {
-              ingredientConso.map((ingredientC) => (
+              ingredientConso.sort((a, b) => a.nomIngredient.localeCompare(b.nomIngredient)).map((ingredientC) => (
                 <div className='w-22 h-26 bg-white border-2 border-gris rounded-xl mx-2 my-2'>
                   <div className='flex justify-center w-full h-10 border-b border-bleu'>
-                  <img src={ingredientC.iconeUrl} key={ingredientC.nomIngredient} alt='pâte' className="text-bleu h-10"></img>
-                  <button onClick={() => handleDelete(ingredientC.nomIngredient)}>< FaIcons.AiOutlineMinusCircle size={28}/></button>
+                    <img src={ingredientC.iconeUrl} key={ingredientC.nomIngredient} alt='pâte' className="text-bleu h-10"></img>
+                    <button onClick={() => handleDelete(ingredientC.nomIngredient)}>< FaIcons.AiOutlineMinusCircle size={28} /></button>
                   </div>
-                    <p className='text-sm text-center cursor-pointer'  onClick={() => handleEdit2(ingredientC.nomIngredient)}>{ingredientC.nomIngredient}</p>
-                    <p className='text-sm text-center cursor-pointer' onClick={() => handleEdit2(ingredientC.stock)}>{ingredientC.stock}</p>
+                  <p className='text-sm text-center cursor-pointer' onClick={() => handleEdit2(ingredientC.nomIngredient)}>{ingredientC.nomIngredient}</p>
+                  <p className='text-sm text-center cursor-pointer' onClick={() => handleEdit2(ingredientC.stock)}>{ingredientC.stock}</p>
                 </div>
               ))
             }
@@ -304,16 +304,16 @@ const handleEdit3 = (nomIngredient, stock) => {
 
           <h2 className='text-center text-2xl mt-4'>Boissons</h2>
 
-        <div className='flex flex-wrap border-b border-black'>
+          <div className='flex flex-wrap border-b border-black'>
             {
-              ingredientBoisson.map((ingredientB) => (
+              ingredientBoisson.sort((a, b) => a.nomIngredient.localeCompare(b.nomIngredient)).map((ingredientB) => (
                 <div className='w-22 h-26 bg-white border-2 border-gris rounded-xl mx-2 my-2'>
                   <div className='flex justify-center w-full h-10 border-b border-bleu'>
-                  <img src={ingredientB.iconeUrl} key={ingredientB.nomIngredient} alt='pâte' className="text-bleu h-10"></img>
-                  <button onClick={() => handleDelete(ingredientB.nomIngredient)}>< FaIcons.AiOutlineMinusCircle size={28}/></button>
+                    <img src={ingredientB.iconeUrl} key={ingredientB.nomIngredient} alt='pâte' className="text-bleu h-10"></img>
+                    <button onClick={() => handleDelete(ingredientB.nomIngredient)}>< FaIcons.AiOutlineMinusCircle size={28} /></button>
                   </div>
-                    <p className='text-sm text-center cursor-pointer' onClick={() => handleEdit3(ingredientB.nomIngredient)}>{ingredientB.nomIngredient}</p>
-                    <p className='text-sm text-center cursor-pointer' onClick={() => handleEdit3(ingredientB.stock)}>{ingredientB.stock}</p>
+                  <p className='text-sm text-center cursor-pointer' onClick={() => handleEdit3(ingredientB.nomIngredient)}>{ingredientB.nomIngredient}</p>
+                  <p className='text-sm text-center cursor-pointer' onClick={() => handleEdit3(ingredientB.stock)}>{ingredientB.stock}</p>
                 </div>
               ))
             }
