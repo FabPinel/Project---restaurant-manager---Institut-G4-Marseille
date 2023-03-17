@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 //import { FaPen } from "react-icons/fa";
-//mport { FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa"
 
 
 
@@ -49,6 +49,16 @@ function Reservation() {
   }, []);
   console.log(clients);
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete("http://localhost:5000/clients-delete/" + id)
+      navigate(0);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+
 
   // Récupérer réservations
   const [reservation, setReservation] = useState([]);
@@ -57,7 +67,7 @@ function Reservation() {
     nbPersonnes: "",
     tableReserve: "",
     dateReserve: "",
-    clientReserve: "",
+    nomClient: "",
   });
 
   const handleChange = (e) => {
@@ -77,6 +87,15 @@ function Reservation() {
     fetchAllReservations();
   }, []);
   console.log(reservation);
+
+  const handleDeleteReserver = async (id) => {
+    try {
+      await axios.delete("http://localhost:5000/reservations-delete/" + id)
+      navigate(0);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
 
 
@@ -115,6 +134,7 @@ function Reservation() {
 
 
 
+
   return (
     <React.Fragment>
       <section>
@@ -136,7 +156,7 @@ function Reservation() {
           <div className="flex mt-4 sm:mt-0 ">
             <button
               type="button" onClick={() => setShow(!show)}
-              className="ml-auto rounded-md border border-transparent bg-bleu px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gris">
+              className="ml-[83.5%] rounded-md border border-transparent bg-bleu px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gris">
               Nouvelle réservation
             </button>
           </div>
@@ -145,37 +165,42 @@ function Reservation() {
             </div>
 
 
-            <div className="mt-8 flex flex-col">
+            <div className="mt-8 mx-8 flex flex-col text-center">
               <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                   <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                     <table className="min-w-full divide-y divide-gray-300">
-                      <thead className="bg-gray-50">
+                      <thead className="bg-bleu items-center">
                         <tr>
                           <th
                             scope="col"
-                            className="py-3 pl-4 pr-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">
+                            className="py-3 pl-4 pr-3 text-center text-xs font-medium uppercase tracking-wide text-white sm:pl-6">
                             N° Réservation
                           </th>
                           <th
                             scope="col"
-                            className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
+                            className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-white">
                             Nombre de personnes
                           </th>
                           <th
                             scope="col"
-                            className="px-20 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
+                            className="px-20 py-3 text-center text-xs font-medium uppercase tracking-wide text-white">
                             N° Table
                           </th>
                           <th
                             scope="col"
-                            className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
+                            className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-white">
                             Date et heure
                           </th>
                           <th
                             scope="col"
-                            className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
-                            N° Client
+                            className="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-white">
+                            Nom du client
+                          </th>
+
+                          <th
+                            scope="col"
+                            className="text-center text-xs font-medium uppercase tracking-wide text-white">
                           </th>
 
                         </tr>
@@ -190,8 +215,13 @@ function Reservation() {
                             <td className="whitespace-nowrap py-4 text-sm text-gray-500">{new Date(reserver.dateReserve).toLocaleString()}</td>
                             <td className="whitespace-nowrap py-4 text-sm text-gray-500">{reserver.clientReserve}</td>
 
+                            <button onClick={() => handleDeleteReserver(reserver.idReservation)} className="text-white bg-rouge2 hover:bg-gris duration-500 rounded-md mr-1 p-1 mt-3 mx-10">
+                              <FaTrash size={15} />
+                            </button>
 
                           </tr>
+
+
                         ))}
                       </tbody>
                     </table>
@@ -214,24 +244,34 @@ function Reservation() {
                   <input name="tableReserve" onChange={handleChange} type="number" className="text-center mt-1 block w-56 h-8 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm:text-md"></input>
                 </div>
                 <div className="py-4">
-                  <label className="text-md">Date de réservation</label>
-                  <input name="dateReserve" onChange={handleChange} type="date" placeholder='AAAA/MM/JJ' className="text-center mt-1 block w-56 h-8 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm:text-md"></input>
+                  <label className="text-md">Date et heure</label>
+                  <input name="dateReserve" onChange={handleChange} type="datetime-local" placeholder='AAAA/MM/JJ' className="text-center mt-1 block w-56 h-8 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm:text-md"></input>
                 </div>
                 <div className="py-4">
-                  <label className="text-md">Numéro de téléphone</label>
-                  <input name="clientReserve" onChange={handleChange} type="text" className="text-center mt-1 block w-56 h-8 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm:text-md"></input>
+                  <label className="text-md">Nom du client</label>
+                  <select name="nomClient" onChange={handleChange} type="text" className="text-center mt-1 block w-56 h-8 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm:text-md">
+                    <option disabled selected> Veuillez sélectionner un client </option>
+                    {clients.map((client) => (
+                      <option key={clients.id} value={client.nomClient}>
+                        {client.nomClient}
+                      </option>
+                    ))}
+                  </select>
+
                 </div>
                 <div className="flex justify-center my-4">
-                  <button
-                    type="button"
-                    className="rounded-md border border-gray-300 bg-rouge1 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gris focus:outline-none"
-                    onClick={() => setShow(!show)} >
-                    Annuler
-                  </button>
+
                   <button
                     type="submit"
-                    className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-bleu py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gris focus:outline-non">
+                    className="ml-4 inline-flex justify-center rounded-md border border-transparent bg-bleu py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gris focus:outline-non">
                     Enregistrer
+                  </button>
+
+                  <button
+                    type="button"
+                    className="rounded-md border border-gray-300 bg-rouge1 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gris focus:outline-none mx-4"
+                    onClick={() => setShow(!show)} >
+                    Annuler
                   </button>
 
                 </div>
@@ -250,31 +290,36 @@ function Reservation() {
         <div className={toggleState === 2 ? "content  block" : "bg-white p-5 w-full h-full hidden"}>
           {<button
             type="button" onClick={() => setShow2(!show2)}
-            className="flex ml-auto rounded-md border border-transparent bg-bleu px-4 py-2  text-sm font-medium text-white shadow-sm hover:bg-gris">
+            className="flex ml-[85.2%] rounded-md border border-transparent bg-bleu px-4 py-2  text-sm font-medium text-white shadow-sm hover:bg-gris">
             Ajouter un client
           </button>}
 
-          <div className="mt-8 flex flex-col">
-            <div className="-my-2 -mx-8 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+          <div className="mt-8 mx-8 flex flex-col text-center">
+            <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div className="inline-block min-w-[95%] py-2 align-middle md:px-6 lg:px-8">
                 <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                   <table className="min-w-full divide-y divide-gray-300">
-                    <thead className="bg-gray-50">
+                    <thead className="bg-bleu items-center">
                       <tr>
                         <th
                           scope="col"
-                          className="py-3 pl-4 pr-3 w-2/6 text-center text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">
+                          className="py-3 pl-4 pr-3 w-2/6 text-center text-xs font-medium uppercase tracking-wide text-white sm:pl-6">
                           Nom
                         </th>
                         <th
                           scope="col"
-                          className="px-3 py-3 w-2/6 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
+                          className="px-3 py-3 w-2/6 text-center text-xs font-medium uppercase tracking-wide text-white">
                           Prénom
                         </th>
                         <th
                           scope="col"
-                          className="px-20 py-3 w-2/6 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
+                          className="px-20 py-3 w-2/6 text-center text-xs font-medium uppercase tracking-wide text-white">
                           Numéro de téléphone
+                        </th>
+
+                        <th
+                          scope="col"
+                          className="text-center text-xs font-medium uppercase tracking-wide text-white">
                         </th>
 
                       </tr>
@@ -282,11 +327,16 @@ function Reservation() {
                     <tbody className="divide-y divide-gray-200 bg-white">
 
                       {clients.map((client) => (
-                          <tr className='text-center' key={client.telephoneClient}>
+                        <tr className='text-center' key={client.id}>
                           <td className="whitespace-nowrap py-4 text-sm text-gray-500">{client.nomClient}</td>
                           <td className="whitespace-nowrap py-4 text-sm   text-gray-500">{client.prenomClient}</td>
                           <td className="whitespace-nowrap py-4 text-sm text-gray-500">{client.telephoneClient}</td>
 
+
+
+                          <button onClick={() => handleDelete(client.id)} className="text-white bg-rouge2 hover:bg-gris duration-500 rounded-md mr-6 p-1 mt-3">
+                            <FaTrash size={15} />
+                          </button>
 
 
                         </tr>
@@ -315,16 +365,18 @@ function Reservation() {
                   <input name="telephoneClient" onChange={handleChangeClient} type="text" className="text-center mt-1 block w-56 h-8 rounded-md border border-gray-300 focus:outline-none focus:border-bleu focus:ring-1 focus:ring-bleu shadow-sm sm:text-md"></input>
                 </div>
                 <div className="flex justify-center my-4">
-                  <button
-                    type="button"
-                    className="rounded-md border border-gray-300 bg-rouge1 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gris focus:outline-none"
-                    onClick={() => setShow2(!show2)} >
-                    Annuler
-                  </button>
+
                   <button
                     type="submit"
                     className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-bleu py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gris focus:outline-non">
                     Enregistrer
+                  </button>
+
+                  <button
+                    type="button"
+                    className="rounded-md border border-gray-300 bg-rouge1 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gris focus:outline-none mx-4"
+                    onClick={() => setShow2(!show2)} >
+                    Annuler
                   </button>
 
                 </div>
@@ -340,3 +392,4 @@ function Reservation() {
 }
 
 export default Reservation
+
