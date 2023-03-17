@@ -527,7 +527,7 @@ function Salle() {
                 </div>
               )}
               <div className='bg-gray-50 w-1/6 text-right border border-gris rounded-xl m-auto mt-24 mb-5 '>
-                <p className='text-bleu text-center text-2xl'>Salle 2</p>
+                <p className='text-bleu text-center text-2xl'> Terasse</p>
               </div>
               <button onClick={() => setShow(!show)} className="bg-bleu hover:bg-gris text-white font-bold py-2 px-4 rounded duration-500 mr-4 ml-4">
                 Ajouter
