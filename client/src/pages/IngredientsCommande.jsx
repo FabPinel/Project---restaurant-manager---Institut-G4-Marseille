@@ -202,7 +202,7 @@ function IngredientCommande() {
 
     return (
         <React.Fragment>
-            <section>
+            <section className="h-screen">
                 <div>
                     <button onClick={goingBack} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 mt-5">
                         <div><FaIcons.RxArrowLeft size={40} /></div>
@@ -212,7 +212,7 @@ function IngredientCommande() {
 
                 <div className='flex flex-wrap justify-between border-b border-black'>
                     {
-                        ingredients.map((ingredient) => (
+                        ingredients.sort((a, b) => a.nomIngredient.localeCompare(b.nomIngredient)).map((ingredient) => (
                             <div onClick={() => addIngredient(ingredient.nomIngredient)} className='w-22 h-26 bg-white border-2 border-gris rounded-xl mx-2 my-2 transition duration-500 transform hover:-translate-y-1 cursor-pointer'>
                                 <div className='flex justify-center w-full h-10 border-b border-bleu'>
                                     <img src={ingredient.iconeUrl} key={ingredient.nomIngredient} alt='pâte' className="text-bleu h-10"></img>
@@ -228,7 +228,7 @@ function IngredientCommande() {
 
                 <div className='flex flex-wrap border-b border-black'>
                     {
-                        ingredientConso.map((ingredientC) => (
+                        ingredientConso.sort((a, b) => a.nomIngredient.localeCompare(b.nomIngredient)).map((ingredientC) => (
                             <div onClick={() => addIngredient(ingredientC.nomIngredient)} className='w-22 h-26 bg-white border-2 border-gris rounded-xl mx-2 my-2 transition duration-500 transform hover:-translate-y-1 cursor-pointer'>
                                 <div className='flex justify-center w-full h-10 border-b border-bleu'>
                                     <img src={ingredientC.iconeUrl} alt='pâte' className="text-bleu h-10"></img>
@@ -244,7 +244,7 @@ function IngredientCommande() {
 
                 <div className='flex flex-wrap border-b border-black'>
                     {
-                        ingredientBoisson.map((ingredientB) => (
+                        ingredientBoisson.sort((a, b) => a.nomIngredient.localeCompare(b.nomIngredient)).map((ingredientB) => (
                             <div onClick={() => addIngredient(ingredientB.nomIngredient)} className='w-22 h-26 bg-white border-2 border-gris rounded-xl mx-2 my-2 transition duration-500 transform hover:-translate-y-1 cursor-pointer'>
                                 <div className='flex justify-center w-full h-10 border-b border-bleu'>
                                     <img src={ingredientB.iconeUrl} key={ingredientB.nomIngredient} alt='pâte' className="text-bleu h-10"></img>

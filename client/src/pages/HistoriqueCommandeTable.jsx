@@ -309,7 +309,7 @@ function HistoriqueCommandeTable() {
 
     return (
         <React.Fragment>
-            <section>
+            <section className="h-screen">
                 <h1 className="m-auto text-center text-3xl font-bold mt-10">Commande n° {commandeId} </h1>
                 <div className='bg-gray-50 border border-gris rounded-xl mt-1 flex w-28 m-auto '>
                     <div className='ml-2'>

@@ -162,7 +162,7 @@ function ContenirMenu() {
 
     return (
         <React.Fragment>
-            <section>
+            <section className="h-full">
                 <h1 className="m-auto text-center text-3xl font-bold mt-10">{menuId} </h1>
                 <div>
                     <button onClick={goingBack} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2">

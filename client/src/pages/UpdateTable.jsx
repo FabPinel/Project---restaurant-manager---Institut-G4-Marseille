@@ -37,7 +37,7 @@ function UpdateTable() {
 
     return (
         <React.Fragment>
-            <section>
+            <section className="h-screen">
                 <h1 className="m-auto text-center text-3xl font-bold mt-10">Modification de la table {tableId} </h1>
                 <div>
                     <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2">

@@ -74,7 +74,7 @@ function Plat() {
   const [show, setShow] = useState(false);
   return (
     <React.Fragment>
-      <section>
+      <section className="h-screen">
         <div className="flex-grow">
           <div className="mb-2">
             <button className={toggleState === 1 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}
@@ -206,6 +206,11 @@ function Plat() {
                     </div>
                     <div className='flex justify-center p-1'>
                       <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
+                        <Link to={`/ContenirPlat/${Plats.nomPlat}`}>
+                          <FaIconsBootStrap.FaList size={16} />
+                        </Link>
+                      </button>
+                      <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
                         <Link to={`/PlatUpdate/${Plats.idPlat}`}>
                           <FaIconsBootStrap.FaPencilAlt size={16} />
                         </Link>
@@ -239,7 +244,7 @@ function Plat() {
                   </div>
                   <div className='flex justify-center p-1'>
                     <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
-                      <Link to={`/PlatUpdate/${Plats.idPlat}`}>
+                      <Link to={`/ContenirPlat/${Plats.nomPlat}`}>
                         <FaIconsBootStrap.FaList size={16} />
                       </Link>
                     </button>
@@ -276,7 +281,7 @@ function Plat() {
                   </div>
                   <div className='flex justify-center p-1'>
                     <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
-                      <Link to={`/PlatUpdate/${Plats.idPlat}`}>
+                      <Link to={`/ContenirPlat/${Plats.nomPlat}`}>
                         <FaIconsBootStrap.FaList size={16} />
                       </Link>
                     </button>
@@ -313,7 +318,7 @@ function Plat() {
                   </div>
                   <div className='flex justify-center p-1'>
                     <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1">
-                      <Link to={`/PlatUpdate/${Plats.idPlat}`}>
+                      <Link to={`/ContenirPlat/${Plats.nomPlat}`}>
                         <FaIconsBootStrap.FaList size={16} />
                       </Link>
                     </button>

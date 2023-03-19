@@ -1093,5 +1093,38 @@ app.get("/get-commande-fournisseur/:idCommande", (req, res) => {
     return res.json(data);
   });
 });
+
+//UPDATE LE STATUT DU SALARIÉ DANS LE PLANNING
+
+app.put("/salarie-planning/:cell_id", (req, res) => {
+  const cellID = req.params.cell_id;
+  const backgroundColor = req.body.backgroundColor;
+  const statut = backgroundColor === "#86efac" ? "inactive" : "active";
+  cellID.split("");
+  const id = cellID[5];
+  const q = "UPDATE salariesplanning SET statut= '" + statut + "' WHERE cell_id= '" + id + "'";
+  const values = [statut, cellID];
+  dataBase.query(q, values, (err, data) => {
+    if (err) return res.json(err);
+    return res.json(q);
+  });
+});
+
+
+app.get("/all-salaries-plannig", (req, res) => {
+  const sp = "SELECT * from salariesplanning"
+  dataBase.query(sp, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
+
+app.get("/planningS", (req, res) => {
+  const salariesP = "SELECT nomSalarie, background FROM contenirplanning"
+  dataBase.query(salariesP, (err, data) => {
+    if (err) return res.json(err)
+    return res.json(data)
+  })
+})
 //------------------------------------------------------------------------------------------------
 app.listen(5000, () => { console.log("le Server est lancé sur le port 5000") })

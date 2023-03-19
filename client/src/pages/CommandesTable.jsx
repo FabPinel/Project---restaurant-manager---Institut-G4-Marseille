@@ -70,7 +70,7 @@ function CommandesTable() {
 
     return (
         <React.Fragment>
-            <section>
+            <section className="h-screen">
                 <h1 className="m-auto text-center text-3xl font-bold mt-10">Commandes de la table {tableId} </h1>
                 <div>
                     <button onClick={goingBack} className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2">

@@ -102,16 +102,14 @@ function Reservation() {
   // Les boutons du formulaire
 
   const navigate = useNavigate();
-  const [error, setError] = useState(false)
 
   const handleClick2 = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/reservation-add", reservationAdd);
+      await axios.post("http://localhost:5000/reservation-add", reservationAdd);
       console.log("Ajout d'une réservation" + reservationAdd.data);
       navigate(0);
     } catch (err) {
       console.log(err);
-      setError(true)
     }
     console.log(reservationAdd)
 
@@ -120,12 +118,11 @@ function Reservation() {
 
   const handleClickClient = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/clients-add", clientsAdd);
+      await axios.post("http://localhost:5000/clients-add", clientsAdd);
       console.log("Ajout d'un client" + clientsAdd.data);
       navigate(0);
     } catch (err) {
       console.log(err);
-      setError(true)
     }
   }
 
@@ -137,7 +134,7 @@ function Reservation() {
 
   return (
     <React.Fragment>
-      <section>
+      <section className="h-screen">
 
         <div className="flex">
           <button className={toggleState === 1 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}

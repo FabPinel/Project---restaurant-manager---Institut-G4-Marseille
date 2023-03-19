@@ -20,7 +20,7 @@ function Menu() {
 
     return (
         <React.Fragment>
-            <section>
+            <section className="h-full">
                 <div className="w-fit m-auto">
                     <div className="flex justify-center p-1">
                         <button className="text-white bg-bleu hover:bg-gris duration-500 rounded-md mr-2 p-1 w-2/4">

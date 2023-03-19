@@ -250,7 +250,7 @@ const Categories = () => {   //   il faut que ce soit une const et pas une fonct
 
   return (
     <React.Fragment>
-      <section>
+      <section className="h-screen">
 
         <div className='flex justify-between mt-10 h-fit'>
           <div className='w-2/6 shadow ring-1 ring-black ring-opacity-10 rounded-xl p-4'>
@@ -376,11 +376,6 @@ const Categories = () => {   //   il faut que ce soit une const et pas une fonct
             </button>
           </div>
         </div>
-
-
-
-        <div className='w-full h-80 border-double border-8 border-rouge1 mt-10'>test div planning</div>
-
       </section>
     </React.Fragment>
   );

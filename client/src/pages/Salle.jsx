@@ -278,7 +278,7 @@ function Salle() {
 
   return (
     <React.Fragment>
-      <section>
+      <section className="h-screen">
         <div className="flex flex-col relative bg-blanc break-all w-full">
           <div className="flex">
             <button className={toggleState === 1 ? "tabs p-4 text-center w-28 cursor-pointer box-content relative bg-blanc border-t-4 border-rouge1 duration-500" : "p-4 text-center text-white w-28 cursor-pointer box-content relative bg-bleu border-t-4 border-blanc hover:bg-gris duration-500"}

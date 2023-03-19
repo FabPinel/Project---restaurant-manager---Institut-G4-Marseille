@@ -224,7 +224,7 @@ function Stock() {
 
   return (
     <React.Fragment>
-      <section>
+      <section className="h-screen">
         <div className="w-full h-full">
           <button type='button' onClick={open} className='w-40 h-12 text-white rounded-xl bg-bleu'>Créer un ingrédient</button>
           {showForm && (
@@ -265,8 +265,9 @@ function Stock() {
                     Enregistrer</button>
                 </div>
               </div>
-            </form>
-          )}
+            </form >
+          )
+          }
 
           <h2 className='text-center text-2xl'>Ingrédients</h2>
 
@@ -319,9 +320,9 @@ function Stock() {
             }
           </div>
 
-        </div>
-      </section>
-    </React.Fragment>
+        </div >
+      </section >
+    </React.Fragment >
   )
 }
 
