@@ -1,5 +1,4 @@
 ![Restaurant Manager](https://user-images.githubusercontent.com/97904320/226204013-4bd3f5db-fcb6-47bb-bdad-1e6edde4ff71.png)
-Screenshots :
 ![Dasboard](https://user-images.githubusercontent.com/97904320/226203963-ab589c26-8a36-42b6-ab48-498337bed7e6.jpg)
 ![Salle](https://user-images.githubusercontent.com/97904320/226204040-a898d4c0-c454-4c0a-8388-b4b2a5b7e3d4.jpg)
 ![Salle-commande](https://user-images.githubusercontent.com/97904320/226204049-e99fd981-9a13-496c-8893-9b8fdea3fa7f.jpg)
